@@ -1,0 +1,3 @@
+#ignored files/dirs
+doc
+i18n/*.mo

@@ -1,0 +1,7 @@
+appicon		ICON	"RummyCube.ico"
+joker		BITMAP	"joker.bmp"
+hand		BITMAP	"hand.bmp"
+gameboard	BITMAP	"gameboard.bmp"
+holder		BITMAP	"holder.bmp"
+
+#include <wx/msw/wx.rc>

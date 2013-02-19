@@ -1,0 +1,581 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: RummyCube 2.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-01-06 18:17+0100\n"
+"PO-Revision-Date: 2013-01-06 18:23+0100\n"
+"Last-Translator: Felix Wohlfrom <felix.wohlfrom@gmx.de>\n"
+"Language-Team: Felix Wohlfrom <felix.wohlfrom@gmx.de>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-KeywordsList: _;gettext;gettext_noop\n"
+"X-Poedit-Basepath: ../src\n"
+"X-Poedit-Language: Deutsch\n"
+"X-Poedit-Country: Deutschland\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPath-1: ./gui\n"
+"X-Poedit-SearchPath-2: ./game\n"
+"X-Poedit-SearchPath-3: ./game/player\n"
+"X-Poedit-SearchPath-4: ./game/stones\n"
+
+#: game/RummyCube.cpp:134
+msgid "File could not be opened"
+msgstr "Datei konnte nicht geöffnet werden"
+
+#: game/RummyCube.cpp:142
+msgid "The file that should be loaded is no RummyCube savegame"
+msgstr "Die Datei die geladen werden soll ist kein gespeichertes Spiel von Rummycube"
+
+#: game/RummyCube.cpp:150
+msgid "Wrong savegame version"
+msgstr "Falsche Version des gespeicherten Spiels"
+
+#: gui/AboutWindow.cpp:32
+msgid "About RummyCube"
+msgstr "Über RummyCube"
+
+#: gui/AboutWindow.cpp:64
+msgid "This program is licensed under "
+msgstr "Dieses Programm ist lizenziert unter folgender Lizenz: "
+
+#: gui/AboutWindow.cpp:69
+msgid "Build information"
+msgstr "Kompilierinformationen"
+
+#: gui/AboutWindow.cpp:71
+msgid "Compiler"
+msgstr "Compiler"
+
+#: gui/AboutWindow.cpp:73
+msgid "Compiler flags"
+msgstr "Compiler Parameter"
+
+#: gui/AboutWindow.cpp:77
+msgid "wxWidgets Version"
+msgstr "wxWidgets Version"
+
+#: gui/AboutWindow.cpp:83
+#: gui/PropertiesWindow.cpp:132
+msgid "&Ok"
+msgstr "&Ok"
+
+#: gui/CreateNetworkGameWindow.cpp:42
+msgid "Create Network game"
+msgstr "Netzwerkspiel erstellen"
+
+#: gui/CreateNetworkGameWindow.cpp:55
+msgid "Your IP-Address(es)"
+msgstr "Ihre IP-Adresse(n)"
+
+#: gui/CreateNetworkGameWindow.cpp:56
+msgid "Here you can see your IP-Address(es), pass them to the player who want to play with you"
+msgstr "Hier können sie ihre IP-Adresse(n) sehen, senden sie diese an den/die Spieler, mit denen sie Spielen möchten"
+
+#: gui/CreateNetworkGameWindow.cpp:65
+#: gui/JoinNetworkGameWindow.cpp:68
+#: gui/PropertiesWindow.cpp:50
+msgid "Number of stones that can be taken in first round"
+msgstr "Anzahl an Steinen, die in der ersten Runde gezogen werden können"
+
+#: gui/CreateNetworkGameWindow.cpp:66
+#: gui/CreateNetworkGameWindow.cpp:70
+msgid "Insert here the number of stones that you can get in the first round"
+msgstr "Geben sie hier die Anzahl der Steine an, die in der ersten Runde gezogen werden dürfen"
+
+#: gui/CreateNetworkGameWindow.cpp:73
+#: gui/JoinNetworkGameWindow.cpp:76
+#: gui/PropertiesWindow.cpp:58
+msgid "Sum of stone numbers that you need to play first time out"
+msgstr "Summe der Steinwerte, die beim ersten Ausspielen der Steine erreicht werden muss"
+
+#: gui/CreateNetworkGameWindow.cpp:74
+#: gui/CreateNetworkGameWindow.cpp:78
+#: gui/PropertiesWindow.cpp:59
+#: gui/PropertiesWindow.cpp:63
+msgid "Insert the sum that you need to play out first time"
+msgstr "Hier wird die Summe der Steinwerte eingetragen, die beim ersten Ausspielen erreicht werden muss"
+
+#: gui/CreateNetworkGameWindow.cpp:81
+#: gui/JoinNetworkGameWindow.cpp:89
+#: gui/PropertiesWindow.cpp:66
+msgid "Stones must be in one row"
+msgstr "Steine müssen sich in einer Reihe befinden"
+
+#: gui/CreateNetworkGameWindow.cpp:82
+#: gui/PropertiesWindow.cpp:67
+msgid "If this option is selected the sum that you need to play out first time has to be in one row"
+msgstr "Ist diese Option aktiviert, so muss sich die Summe der beim ersten Ausspielen gespielten Steinwerte in einer einzelnen Reihe befinden"
+
+#: gui/CreateNetworkGameWindow.cpp:88
+#: gui/PropertiesWindow.cpp:88
+msgid "Time limit on/off"
+msgstr "Zeitlimit an/aus"
+
+#: gui/CreateNetworkGameWindow.cpp:89
+#: gui/PropertiesWindow.cpp:89
+msgid "Click here to switch the time limit on and off"
+msgstr "Hier klicken um das Zeitlimit zu (de)aktivieren"
+
+#: gui/CreateNetworkGameWindow.cpp:92
+#: gui/PropertiesWindow.cpp:93
+msgid "minutes"
+msgstr "Minuten"
+
+#: gui/CreateNetworkGameWindow.cpp:110
+msgid "Connected player"
+msgstr "Verbundener Spieler"
+
+#: gui/CreateNetworkGameWindow.cpp:111
+#: gui/CreateNetworkGameWindow.cpp:115
+msgid "The name of the player which is connected to your game"
+msgstr "Der Name des Spielers, der mit ihnen Verbunden ist"
+
+#: gui/CreateNetworkGameWindow.cpp:126
+#: gui/JoinNetworkGameWindow.cpp:117
+msgid "&Start Game"
+msgstr "&Spiel starten"
+
+#: gui/CreateNetworkGameWindow.cpp:127
+#: gui/JoinNetworkGameWindow.cpp:118
+msgid "Click here to start a network game"
+msgstr "Hier klicken, um das Netzwerkspiel zu starten"
+
+#: gui/CreateNetworkGameWindow.cpp:131
+#: gui/JoinNetworkGameWindow.cpp:122
+#: gui/PropertiesWindow.cpp:136
+#: gui/TutorialWindow.cpp:45
+msgid "&Cancel"
+msgstr "&Abbrechen"
+
+#: gui/CreateNetworkGameWindow.cpp:132
+#: gui/JoinNetworkGameWindow.cpp:123
+msgid "Cancel the network game creation"
+msgstr "Doch kein Netzwerkspiel starten"
+
+#: gui/CreateNetworkGameWindow.cpp:151
+#: gui/CreateNetworkGameWindow.cpp:152
+#: gui/JoinNetworkGameWindow.cpp:144
+#: gui/JoinNetworkGameWindow.cpp:145
+msgid "Waiting for your opponent to start game"
+msgstr "Warte, bis ihr Gegner das Spiel startet"
+
+#: gui/CreateNetworkGameWindow.cpp:162
+msgid "Server could not be created. Port 3020 is already in use!"
+msgstr "Sever konnte nicht erstellt werden. Port 3020 ist bereits in Benutzung!"
+
+#: gui/CreateNetworkGameWindow.cpp:162
+#: gui/JoinNetworkGameWindow.cpp:336
+#: gui/MainWindow.cpp:832
+#: gui/MainWindow.cpp:889
+msgid "Error"
+msgstr "Fehler"
+
+#: gui/CreateNetworkGameWindow.cpp:377
+msgid "Game creator"
+msgstr "Spieleröffner"
+
+#: gui/CreateNetworkGameWindow.cpp:472
+#: gui/JoinNetworkGameWindow.cpp:197
+#: gui/MainWindow.cpp:483
+#: gui/MainWindow.cpp:484
+#: gui/PropertiesWindow.cpp:248
+#, c-format
+msgid "%d:%02d minutes"
+msgstr "%d:%02d Minuten"
+
+#: gui/JoinNetworkGameWindow.cpp:32
+msgid "Join Network game"
+msgstr "Einem Netzwerkspiel beitreten"
+
+#: gui/JoinNetworkGameWindow.cpp:45
+msgid "IP Address of the created game"
+msgstr "IP Adressen des erstellten Spiels"
+
+#: gui/JoinNetworkGameWindow.cpp:46
+msgid "Insert here the ip address of the server you want to connect to"
+msgstr "Geben sie hier die IP-Adresse des Servers ein, zu dem sie verbinden möchten"
+
+#: gui/JoinNetworkGameWindow.cpp:57
+msgid "Nickname"
+msgstr "Nickname"
+
+#: gui/JoinNetworkGameWindow.cpp:58
+msgid "Insert here your nickname so that your opponent knows against who he is playing"
+msgstr "Geben sie hier einen Nicknamen ein, so dass ihr Gegner erkennt, gegen wen er spielt"
+
+#: gui/JoinNetworkGameWindow.cpp:62
+msgid "&Connect"
+msgstr "&Verbinden"
+
+#: gui/JoinNetworkGameWindow.cpp:69
+#: gui/JoinNetworkGameWindow.cpp:73
+msgid "The number of stones that you can get in the first round"
+msgstr "Anzahl der Steine, die in der ersten Runde gezogen werden dürfen"
+
+#: gui/JoinNetworkGameWindow.cpp:77
+#: gui/JoinNetworkGameWindow.cpp:81
+msgid "The sum that you need to play out first time"
+msgstr "Hier wird die Summe der Steinwerte angezeigt, die beim ersten Ausspielen erreicht werden muss"
+
+#: gui/JoinNetworkGameWindow.cpp:90
+#: gui/JoinNetworkGameWindow.cpp:93
+msgid "If the sum that you need to play out first time has to be in one row"
+msgstr "Gibt an, ob sich die Summe der beim ersten Ausspielen gespielten Steinwerte in einer einzelnen Reihe befinden muss"
+
+#: gui/JoinNetworkGameWindow.cpp:101
+msgid "Time limit"
+msgstr "Zeitlimit an/aus"
+
+#: gui/JoinNetworkGameWindow.cpp:102
+#: gui/JoinNetworkGameWindow.cpp:105
+msgid "The time limit for one round"
+msgstr "Zeitlimit innerhalb einer Spielrunde"
+
+#: gui/JoinNetworkGameWindow.cpp:183
+msgid "Yes"
+msgstr "Ja"
+
+#: gui/JoinNetworkGameWindow.cpp:187
+msgid "No"
+msgstr "Nein"
+
+#: gui/JoinNetworkGameWindow.cpp:191
+msgid "None"
+msgstr ""
+
+#: gui/JoinNetworkGameWindow.cpp:274
+msgid ""
+"Currently there are to many players connected to the server.\n"
+"Please use another one."
+msgstr ""
+
+#: gui/JoinNetworkGameWindow.cpp:274
+msgid "To many players"
+msgstr "Zu viele Spieler"
+
+#: gui/JoinNetworkGameWindow.cpp:279
+msgid "You are using an older version for the game than the server. Please upgrade your game to the latest version."
+msgstr "Sie verwenden eine ältere Version des Spiels als der Server. Bitte aktualisieren sie ihr Spiel auf die aktuellste Version."
+
+#: gui/JoinNetworkGameWindow.cpp:279
+msgid "Wrong version"
+msgstr "Falsche Version"
+
+#: gui/JoinNetworkGameWindow.cpp:336
+msgid ""
+"Could not connect to other player.\n"
+"Please make sure that the server is running, you have the correct address and the port is open in the firewall."
+msgstr ""
+
+#: gui/JoinNetworkGameWindow.cpp:350
+msgid "Please enter a nickname before connecting"
+msgstr "Bitte einen Nicknamen eingeben, um eine Verbindung zu starten"
+
+#: gui/JoinNetworkGameWindow.cpp:350
+msgid "Enter nickname"
+msgstr "Nickname eingeben"
+
+#: gui/MainWindow.cpp:176
+msgid "&New Game\tCtrl+N"
+msgstr "&Neues Spiel\tCtrl+N"
+
+#: gui/MainWindow.cpp:177
+#: gui/MainWindow.cpp:298
+msgid "&Pass (Next Round)\tN"
+msgstr "&Weiter (Nächste Runde)\tN"
+
+#: gui/MainWindow.cpp:179
+msgid "&Load Game...\tCtrl+L"
+msgstr "&Lade Spiel...\tCtrl+L"
+
+#: gui/MainWindow.cpp:180
+msgid "&Save Game...\tCtrl+S"
+msgstr "Spiel &speichern...\tCtrl+S"
+
+#: gui/MainWindow.cpp:182
+msgid "&Tutorial..."
+msgstr "&Tutorial..."
+
+#: gui/MainWindow.cpp:188
+msgid "&Close Game\tAlt+F4"
+msgstr "&Spiel beenden\tAlt+F4"
+
+#: gui/MainWindow.cpp:197
+#, c-format
+msgid "System-Default (%s)"
+msgstr "System-Standard (%s)"
+
+#: gui/MainWindow.cpp:220
+msgid "&Settings...\tCtrl+P"
+msgstr "&Einstellungen...\tCtrl+P"
+
+#: gui/MainWindow.cpp:221
+#: gui/MainWindow.cpp:295
+msgid "Move &All Stones\tA"
+msgstr "&Alle Steine Bewegen\tA"
+
+#: gui/MainWindow.cpp:221
+#: gui/MainWindow.cpp:295
+msgid "Move all stones in the moved row"
+msgstr "Alle Steine bewegen"
+
+#: gui/MainWindow.cpp:223
+msgid "S&ounds"
+msgstr "S&ounds"
+
+#: gui/MainWindow.cpp:223
+msgid "Enable/disable sounds"
+msgstr "Toneffekte ein/ausschalten"
+
+#: gui/MainWindow.cpp:225
+msgid "&Language"
+msgstr "&Sprache"
+
+#: gui/MainWindow.cpp:229
+msgid "Create &Network Game..."
+msgstr "&Netzwerkspiel erstellen..."
+
+#: gui/MainWindow.cpp:231
+msgid "&Join A Game..."
+msgstr "Einem Spiel &beitreten..."
+
+#: gui/MainWindow.cpp:235
+#: gui/MainWindow.cpp:297
+msgid "&Test Stones On Gameboard\tT"
+msgstr "&Prüfe ausgelegte Steine\tT"
+
+#: gui/MainWindow.cpp:237
+msgid "&Search For Updates..."
+msgstr "Suche nach &Updates..."
+
+#: gui/MainWindow.cpp:243
+msgid "&About RummyCube..."
+msgstr "&Über RummyCube..."
+
+#: gui/MainWindow.cpp:249
+msgid "&Game"
+msgstr "&Spiel"
+
+#: gui/MainWindow.cpp:250
+msgid "Options"
+msgstr "&Optionen"
+
+#: gui/MainWindow.cpp:251
+msgid "&Multiplayer"
+msgstr "&Mehrspielermodus"
+
+#: gui/MainWindow.cpp:253
+#: gui/MainWindow.cpp:255
+msgid "&Help"
+msgstr "&Hilfe"
+
+#: gui/MainWindow.cpp:348
+msgid "Do you really want to close the game?"
+msgstr "Möchten sie das Programm wirklich beenden?"
+
+#: gui/MainWindow.cpp:348
+#: gui/MainWindow.cpp:693
+#: gui/MainWindow.cpp:723
+#: gui/MainWindow.cpp:752
+#: gui/MainWindow.cpp:776
+#: gui/MainWindow.cpp:1020
+#: gui/MainWindow.cpp:1105
+#: gui/MainWindow.cpp:1127
+#: gui/PropertiesWindow.cpp:213
+#: gui/PropertiesWindow.cpp:230
+msgid "RummyCube"
+msgstr "RummyCube"
+
+#: gui/MainWindow.cpp:434
+#, c-format
+msgid "Please get a stone (%d more) or click here to get all at once"
+msgstr "Bitte Stein ziehen (noch %d) oder hier klicken um alle Steine auf einmal zu ziehen"
+
+#: gui/MainWindow.cpp:440
+#: gui/MainWindow.cpp:441
+msgid "Please get a stone"
+msgstr "Bitte Stein ziehen"
+
+#: gui/MainWindow.cpp:446
+#: gui/MainWindow.cpp:447
+msgid "It's your turn"
+msgstr "Sie sind an der Reihe"
+
+#: gui/MainWindow.cpp:693
+msgid "Do you really want to close the current game and start a new one?"
+msgstr "Möchten sie wirklich das aktuelle Spiel beenden und ein neues starten?"
+
+#: gui/MainWindow.cpp:723
+msgid "At least one stone doesn't lie on the game board as told in the rules (shown in gray). Do you want to continue and move ALL stones to the position they had at the beginning of the round?"
+msgstr "Mindestens ein Stein auf dem Spielbrett liegt nicht wie in den Spielregeln erlaubt (dargestellt in Grau). Möchten sie fortfahren und ALLE Steine an die Position bewegen, die sie zu Beginn der Runde hatten?"
+
+#: gui/MainWindow.cpp:752
+msgid "You won the game. Congratulations! Do you want to start a new singleplayer game? Otherwise game will be closed."
+msgstr "Sie haben gewonnen. Glückwunsch! Möchten sie ein weiteres Einzelspielerspiel starten? Sonst wird das Spiel geschlossen."
+
+#: gui/MainWindow.cpp:768
+#: gui/MainWindow.cpp:769
+#: gui/MainWindow.cpp:1012
+#: gui/MainWindow.cpp:1013
+#, c-format
+msgid "Player %s: I'm playing"
+msgstr "Spieler %s: Ich bin an der Reihe"
+
+#: gui/MainWindow.cpp:776
+#: gui/MainWindow.cpp:1020
+#, c-format
+msgid ""
+"Player %s won the game.\n"
+"Do you want to try it one more time? Otherwise game will be closed."
+msgstr ""
+"Spieler %s hat das Spiel gewonnen.\n"
+"Möchten sie einen weiteren Versuch starten? Sonst wird das Spiel geschlossen."
+
+#: gui/MainWindow.cpp:822
+msgid "Load a game"
+msgstr "Ein Spiel laden"
+
+#: gui/MainWindow.cpp:822
+#: gui/MainWindow.cpp:871
+msgid "RummyCube Savegame (*.rcs)|*.rcs"
+msgstr "RummyCube Gespeichertes Spiel (*.rcs)|*.rcs"
+
+#: gui/MainWindow.cpp:832
+msgid "Error during file loading:\n"
+msgstr "Fehler beim laden der Datei:\n"
+
+#: gui/MainWindow.cpp:871
+msgid "Save current game"
+msgstr "Aktuelles Spiel speichern"
+
+#: gui/MainWindow.cpp:889
+msgid "Error during file saving"
+msgstr "Fehler beim speichern der Datei"
+
+#: gui/MainWindow.cpp:1105
+msgid "At least one stone doesn't lie on the game board as told in the rules (shown in gray). ALL stones will be moved to the position they had at the beginning of the round!"
+msgstr "Mindestens ein Stein auf dem Spielbrett liegt nicht wie in den Spielregeln erlaubt (dargestellt in Grau).ALLE Steine werden an die Position bewegen, die sie zu Beginn der Runde hatten!"
+
+#: gui/MainWindow.cpp:1127
+#, c-format
+msgid ""
+"Player %s disconnected.\n"
+"A new singleplayer game will be started."
+msgstr ""
+"Spieler %s hat das Spiel beendet.\n"
+"Ein neues Einzelspielerspiel wird gestartet."
+
+#: gui/PropertiesWindow.cpp:39
+msgid "Settings"
+msgstr "Einstellungen"
+
+#: gui/PropertiesWindow.cpp:51
+#: gui/PropertiesWindow.cpp:55
+msgid "Insert here the number of Stones that you can get in the first round"
+msgstr "Geben sie hier die Anzahl der Steine an, die in der ersten Runde gezogen werden dürfen"
+
+#: gui/PropertiesWindow.cpp:73
+msgid "Number of PC-Players"
+msgstr "Anzahl an PC-Spielern"
+
+#: gui/PropertiesWindow.cpp:74
+#: gui/PropertiesWindow.cpp:82
+msgid "Choose the number of computer players here"
+msgstr "Gib hier die Anzahl der vom PC gesteuerten Mitspieler an"
+
+#: gui/PropertiesWindow.cpp:110
+msgid "Holder"
+msgstr "Halter"
+
+#: gui/PropertiesWindow.cpp:111
+msgid "Table"
+msgstr "Spielbrett"
+
+#: gui/PropertiesWindow.cpp:114
+msgid "Click here to choose another background picture for the holder"
+msgstr "Hier klicken um ein anderes Hintergrundbild für den Steinhalter zu verwenden"
+
+#: gui/PropertiesWindow.cpp:119
+msgid "Click here to choose another background picture for the gameboard"
+msgstr "Hier klicken um ein anderes Hintergrundbild für das Spielbrett zu verwenden"
+
+#: gui/PropertiesWindow.cpp:122
+msgid "Standard"
+msgstr "Standard"
+
+#: gui/PropertiesWindow.cpp:124
+msgid "Click here to use the default pictures"
+msgstr "Hier klicken um die Standardbilder zu verwenden"
+
+#: gui/PropertiesWindow.cpp:129
+msgid "&Reset"
+msgstr "&Zurücksetzen"
+
+#: gui/PropertiesWindow.cpp:130
+msgid "Reset all settings"
+msgstr "Alle Einstellungen zurücksetzen"
+
+#: gui/PropertiesWindow.cpp:133
+msgid "Save settings and close this window"
+msgstr "Speichert die Einstellungen und schließt das Fenster"
+
+#: gui/PropertiesWindow.cpp:137
+msgid "Cancel changes and close this window"
+msgstr "Änderungen verwerfen und das Fenster schließen"
+
+#: gui/PropertiesWindow.cpp:143
+msgid "These Settings are used the next time you start a new game"
+msgstr "Diese Einstellungen werden beim nächsten Start eines neuen Spiels verwendet"
+
+#: gui/PropertiesWindow.cpp:174
+msgid "Please select image"
+msgstr "Bitte wählen sie ein Bild aus"
+
+#: gui/PropertiesWindow.cpp:175
+msgid "All Image Files (*.bmp; *.gif; *.png; *.jpg; *.jpeg; *.pcx; *.pnm; *.tiff; *.tga; *.iff; *.xpm)|*.bmp; *.gif; *.png; *.jpg; *.jpeg; *.pcx; *.pnm; *.tiff; *.tga; *.iff; *.xpm"
+msgstr "Alle unterstützten Bildformate (*.bmp; *.gif; *.png; *.jpg; *.jpeg; *.pcx; *.pnm; *.tiff; *.tga; *.iff; *.xpm)|*.bmp; *.gif; *.png; *.jpg; *.jpeg; *.pcx; *.pnm; *.tiff; *.tga; *.iff; *.xpm"
+
+#: gui/PropertiesWindow.cpp:213
+msgid "Do you really want to reset the settings?"
+msgstr "Möchten sie die Einstellungen wirklich zurücksetzen?"
+
+#: gui/PropertiesWindow.cpp:230
+msgid "Do you really want to use the default pictures?"
+msgstr "Möchten sie wirklich die Standardbilder verwenden?"
+
+#: gui/TutorialWindow.cpp:24
+msgid "Tutorial"
+msgstr "Tutorial"
+
+#: gui/TutorialWindow.cpp:30
+msgid "Tutorial 1: Game rules"
+msgstr ""
+
+#: gui/TutorialWindow.cpp:31
+msgid "Tutorial 2: Select a stone"
+msgstr ""
+
+#: gui/TutorialWindow.cpp:32
+msgid "Tutorial 3: Some other stuff"
+msgstr ""
+
+#: gui/TutorialWindow.cpp:33
+msgid "Select tutorial"
+msgstr "Tutorial auswählen"
+
+#: gui/TutorialWindow.cpp:41
+msgid "&Start Tutorial"
+msgstr "&Tutorial starten"
+
+#: gui/TutorialWindow.cpp:42
+msgid "Start the selected tutorial"
+msgstr "Das gewählte Tutorial starten"
+
+#: gui/TutorialWindow.cpp:46
+msgid "Cancel tutorial selection"
+msgstr "Tutorialauswahl abbrechen"
+
