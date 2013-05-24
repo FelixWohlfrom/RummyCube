@@ -66,8 +66,6 @@ if(wxWidgets_FOUND)
     
 	# Build subdirs and include for build
 	foreach(SUB ${SUBDIRS})
-		include_directories(${PROJECT_SOURCE_DIR}/${SUB})
-		link_directories(${PROJECT_BINARY_DIR}/${SUB})
 		add_subdirectory(${SUB})
 	endforeach(SUB)
 	
@@ -75,6 +73,12 @@ if(wxWidgets_FOUND)
 	source_group("Header Files" FILES src/Main.h src/Version.h)
 	add_executable(RummyCube ${GUI_TYPE} ${RSRC} src/Main.cpp src/Main.h)
 	target_link_libraries(RummyCube Gui)
+
+	# Configure tests
+	add_subdirectory(libs/gtest-1.6.0)
+	enable_testing ()
+	add_test(NAME RummyCubeTest COMMAND RummyCubeTest)
+
 # No wxWidgets found, inform user
 else(wxWidgets_FOUND)
 	message("wxWidgets not found!")
