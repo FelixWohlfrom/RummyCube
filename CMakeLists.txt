@@ -46,6 +46,7 @@ if(wxWidgets_FOUND)
 		set(RSRC src/gui/resources/msw/RummyCube.rc)
 
 		if (MSVC)
+			add_definitions(-D_VARIADIC_MAX=10)
 			set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -D_CRT_SECURE_NO_WARNINGS")
 			include_directories("C:/Program Files (x86)/Visual Leak Detector/include")
 			if (CMAKE_CL_64)
