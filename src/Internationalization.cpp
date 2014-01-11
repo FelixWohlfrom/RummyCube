@@ -21,8 +21,12 @@ Internationalization::Internationalization() :
 	locale(NULL), isDefaultLang(false), localePath(), defaultLang(), installedLangs()
 {
 	// Initialize path to locales
-	wxStandardPaths stdPaths;
-	localePath = wxPathOnly(stdPaths.GetExecutablePath()) + _T("/i18n");
+	#if wxCHECK_VERSION(3,0,0)
+	    wxStandardPaths stdPaths = wxStandardPaths::Get();
+	    localePath = wxPathOnly(stdPaths.GetExecutablePath()) + _T("/i18n");
+	#else
+	    localePath = wxPathOnly(wxStandardPaths::Get().GetExecutablePath()) + _T("/i18n");
+	#endif
 
 	// Get id of default language
 	int defaultLangId = wxLocale::GetSystemLanguage();
