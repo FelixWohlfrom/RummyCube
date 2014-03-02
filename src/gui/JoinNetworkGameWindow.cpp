@@ -354,8 +354,9 @@ void JoinNetworkGameWindow::OnCancelClick(wxCommandEvent& WXUNUSED(e))
 	}
 	else
 	{
-		if (sock != NULL)
+		if (sock != NULL && sock->IsConnected())
 		{
+			// This fails, if the socket is not connected
 			sock->Destroy();
 		}
 		this->EndModal(wxID_CANCEL);
