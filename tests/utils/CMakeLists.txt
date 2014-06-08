@@ -1,6 +1,7 @@
 # Build all files in this directory
 SET(SOURCE
 	DummyApp.cpp
+	utils.cpp
 )
 
 SET(HEADERS
