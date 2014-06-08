@@ -15,4 +15,4 @@ SET(HEADERS
 
 source_group("Header Files" FILES ${HEADERS})
 add_library(Stones ${SOURCE} ${HEADERS})
-target_link_libraries(Stones Player ${wxWidgets_LIBRARIES})
+target_link_libraries(Stones Settings)

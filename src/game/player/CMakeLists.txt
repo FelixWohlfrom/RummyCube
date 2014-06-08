@@ -25,4 +25,3 @@ SET(HEADERS
 
 source_group("Header Files" FILES ${HEADERS})
 add_library(Player ${SOURCE} ${HEADERS})
-target_link_libraries(Player Stones)

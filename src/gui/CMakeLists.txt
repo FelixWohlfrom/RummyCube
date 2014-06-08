@@ -21,4 +21,4 @@ SET(HEADERS
 
 source_group("Header Files" FILES ${HEADERS})
 add_library(Gui ${SOURCE} ${HEADERS})
-target_link_libraries(Gui Game Stones Player I18n Network ${wxWidgets_LIBRARIES})
+target_link_libraries(Gui Game I18n Network ${wxWidgets_LIBRARIES})

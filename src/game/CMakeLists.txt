@@ -6,14 +6,12 @@ SET(SOURCE
 	CountdownTimer.cpp
 	RummyCube.cpp
 	RummyCubeNetwork.cpp
-	Settings.cpp
 )
 
 SET(HEADERS
 	CountdownTimer.h
 	RummyCube.h
 	RummyCubeNetwork.h
-	Settings.h
 )
 
 # Build subdirs and include for build
@@ -23,6 +21,7 @@ foreach(SUB ${SUBDIRS})
 	add_subdirectory(${SUB})
 endforeach(SUB)
 
-source_group("Header Files" FILES ${HEADERS})
+source_group("Header Files" FILES ${HEADERS} Settings.h)
 add_library(Game ${SOURCE} ${HEADERS})
-target_link_libraries(Game Player)
+add_library(Settings Settings.cpp Settings.h)
+target_link_libraries(Game Settings Player Stones)
