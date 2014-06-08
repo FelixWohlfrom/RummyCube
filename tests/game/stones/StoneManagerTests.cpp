@@ -14,12 +14,12 @@ TEST(StoneManager, checkIfStoneFromIntIsUnique)
 {
 	DummyApp* testApp = utils::createAndShowTestApp();
 
-	StoneManager testManager;
-	wxPanel* testPanel = new wxPanel(testApp->getTestWindow());
+	StoneManager* testManager = new StoneManager();
+	wxPanel* testPanel = new wxPanel(testApp->getTestWindow(), wxID_ANY, wxPoint(0, 0), wxSize(100, 100));
 
-	testManager.createStones(testPanel);
+	testManager->createStones(testPanel);
 
-	std::vector<Gamestone*> stones = testManager.getStones();
+	std::vector<Gamestone*> stones = testManager->getStones();
 
 	for (std::vector<Gamestone*>::iterator firstStone(stones.begin()); firstStone != stones.end(); ++firstStone)
 	{
@@ -32,6 +32,8 @@ TEST(StoneManager, checkIfStoneFromIntIsUnique)
 		}
 	}
 
-	// TODO Leads to segfault. Is this really needed?
-	// wxEntryCleanup();
+	wxDELETE(testManager);
+	testApp->OnExit();
+
+	wxEntryCleanup();
 }

@@ -24,16 +24,16 @@ class DummyApp: public wxApp
 		 */
 		wxWindow* getTestWindow();
 
+		/**
+		 * This method is called on closing of the application.
+		 */
+		int OnExit();
+
 	private:
 		/**
 		 * This method is called on initialization of the application.
 		 */
 		bool OnInit();
-
-		/**
-		 * This method is called on closing of the application.
-		 */
-		int OnExit();
 
 		wxWindow* testWindow;
 };
