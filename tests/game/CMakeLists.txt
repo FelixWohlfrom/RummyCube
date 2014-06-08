@@ -13,6 +13,11 @@ foreach(SUB ${SUBDIRS})
 	add_subdirectory(${SUB})
 endforeach(SUB)
 
-add_executable(GameTests ${SOURCE})
+if(WIN32)
+	include_directories(../../src/gui/resources/msw)
+	set(RSRC ../../src/gui/resources/msw/RummyCube.rc)
+endif(WIN32)
+
+add_executable(GameTests ${RSRC} ${SOURCE})
 add_test(NAME GameTests COMMAND GameTests)
 target_link_libraries(GameTests Game Utils gtest gtest_main)
