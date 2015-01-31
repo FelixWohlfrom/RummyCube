@@ -65,9 +65,8 @@ class MainWindow : public wxFrame
 			GAME_IDLE,
 			GAME_OPPONENT_PLAYING,
 			GAME_CLOSING,
-			GAME_RESTARTING,
-			GAME_CREATE_NETWORKGAME,
-			GAME_JOIN_NETWORKGAME
+			GAME_RESTART_GAME,
+			GAME_JOIN_NETWORK_GAME
 		};
 
 		/**
@@ -79,6 +78,12 @@ class MainWindow : public wxFrame
 		 * The game model
 		 */
 		RummyCube* game;
+
+		/**
+		 * The model of the following game.
+		 * Needed if currently the ai is playing and needs to be stopped first.
+		 */
+		RummyCube* nextGame;
 
 		/**
 		 * The heap contains the stones on game startup

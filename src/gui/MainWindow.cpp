@@ -76,7 +76,7 @@ END_EVENT_TABLE()
 
 MainWindow::MainWindow() :
 	wxFrame(NULL, wxID_ANY, wxTheApp->GetAppName()), gameState(GAME_IDLE),
-	game(NULL), heap(NULL), board(NULL), holder(NULL), infoLabel(NULL),
+	game(NULL), nextGame(NULL), heap(NULL), board(NULL), holder(NULL), infoLabel(NULL),
 	timerLabel(NULL), timerLabelUpdater(this, ID_UPDATETIMERLABEL), mainMenu(NULL)
 {
 	// This is needed to allow jpeg/png/gif/... image handling
@@ -378,18 +378,44 @@ void MainWindow::OnResize(wxSizeEvent& e)
 void MainWindow::restartGame()
 {
 	// Reset menu entries, cursor and settings
-	mainMenu->Enable(wxID_OPEN, true);
-	mainMenu->Enable(wxID_SAVE, true);
-	mainMenu->Enable(ID_PASS, false);
-	this->SetCursor(wxCursor(wxCURSOR_ARROW));
-	Gamestone::canMoveStones = true;
+	if (this->gameState == GAME_JOIN_NETWORK_GAME)
+	{
+		// If we join a network game, we need to set the settings different as the opponent is currently playing
+		this->SetCursor(wxCursor(wxCURSOR_WAIT));
+		mainMenu->Enable(ID_PASS, false);
+		mainMenu->Enable(wxID_OPEN, false);
+		mainMenu->Enable(wxID_SAVE, false);
+		Gamestone::canMoveStones = false;
+		game->getTimer()->pause();
+	}
+	else
+	{
+		// Otherwise we set the settings like we can start playing
+		mainMenu->Enable(wxID_OPEN, true);
+		mainMenu->Enable(wxID_SAVE, true);
+		mainMenu->Enable(ID_PASS, false);
+		this->SetCursor(wxCursor(wxCURSOR_ARROW));
+		Gamestone::canMoveStones = true;
+	}
 
 	// Reset game
 	wxDELETE(game);
-	game = new RummyCube();
-	this->gameState = GAME_IDLE;
+	if (nextGame != NULL) {
+		game = nextGame;
+		nextGame = NULL;
+	} else {
+		game = new RummyCube();
+	}
 
 	this->initStones();
+
+	if (this->gameState == GAME_JOIN_NETWORK_GAME)
+	{
+		wxCommandEvent evt;
+		this->OnNextRound(evt);
+	}
+
+	this->gameState = GAME_IDLE;
 }
 
 void MainWindow::initStones()
@@ -455,7 +481,8 @@ void MainWindow::setInfoLabelText()
 
 void MainWindow::setTimerLabelText()
 {
-	if (game->getTimer()->getTime() > -1)
+	if (game != NULL && game->getTimer() != NULL &&
+			game->getTimer()->getTime() > -1)
 	{
 		// Mark background red if < 10 seconds left
 		if (game->getTimer()->timeLeft() <= 10 &&
@@ -684,19 +711,18 @@ void MainWindow::OnNewGame(wxCommandEvent& WXUNUSED(e))
 	wxMessageDialog newGame(this, _("Do you really want to close the current game and start a new one?"), _("RummyCube"), wxYES_NO | wxICON_QUESTION);
 	if (newGame.ShowModal() == wxID_YES)
 	{
-		if (gameState == GAME_OPPONENT_PLAYING)
+		if (gameState != GAME_IDLE)
 		{
 			game->stopGame();
-			gameState = GAME_RESTARTING;
+			gameState = GAME_RESTART_GAME;
 		}
 		else
 		{
 			this->restartGame();
 		}
 	}
-
 	// Resume timer if was running
-	if (timeLimitRunning)
+	else if (timeLimitRunning)
 	{
 		game->getTimer()->resume();
 	}
@@ -782,12 +808,12 @@ void MainWindow::OnNextRound(wxCommandEvent& WXUNUSED(e))
 	gameState = GAME_IDLE;
 	switch (state)
 	{
-		case GAME_CLOSING:		this->Close(true);
-								return;
-		case GAME_RESTARTING:	this->restartGame();
-								return;
-		// TODO Handle other events
-		default:				break;
+		case GAME_CLOSING:				this->Close(true);
+										return;
+		case GAME_RESTART_GAME     :
+		case GAME_JOIN_NETWORK_GAME:	this->restartGame();
+										return;
+		default:						break;
 	}
 
 	Gamestone::canMoveStones = true;
@@ -952,18 +978,19 @@ void MainWindow::OnCreateNetworkGame(wxCommandEvent& WXUNUSED(e))
 			((NetworkPlayer*)(*player))->setCloseEventHandler(this);
 		}
 
+		nextGame = networkGame.getGame();
+
 		if (gameState != GAME_IDLE)
 		{
-			gameState = GAME_CREATE_NETWORKGAME;
 			game->stopGame();
+			gameState = GAME_RESTART_GAME;
 		}
 		else
 		{
-			wxDELETE(game);
-			game = networkGame.getGame();
-			this->initStones();
+			this->restartGame();
 		}
 	}
+	// Show dialog and resume timer if no network game was created
 	else if (timeLimitRunning)
 	{
 		game->getTimer()->resume();
@@ -984,72 +1011,21 @@ void MainWindow::OnJoinNetworkGame(wxCommandEvent& WXUNUSED(e))
 		std::deque<OpponentPlayer*> opponentPlayers = game->getOpponentPlayers();
 		((NetworkPlayer*)(*(opponentPlayers.begin())))->setCloseEventHandler(this);
 
-		// Reset stones
-		game = networkGame.getGame();
-		this->initStones();
+		nextGame = networkGame.getGame();
 
 		// TODO Receive initial stone positions from host
 
-		// Let the players play which are before current player
-		this->SetCursor(wxCursor(wxCURSOR_WAIT));
-		mainMenu->Enable(ID_PASS, false);
-		mainMenu->Enable(wxID_OPEN, false);
-		mainMenu->Enable(wxID_SAVE, false);
-		Gamestone::canMoveStones = false;
-		game->getTimer()->pause();
-
-		gameState = GAME_OPPONENT_PLAYING;
-		for (std::deque<OpponentPlayer*>::iterator player(opponentPlayers.begin()); player != opponentPlayers.end(); ++player)
+		if (gameState != GAME_IDLE)
 		{
-			infoLabel->SetLabel(wxString::Format(_("Player %s: I'm playing"), (*player)->getPlayerName().c_str()));
-			infoLabel->SetToolTip(wxString::Format(_("Player %s: I'm playing"), (*player)->getPlayerName().c_str()));
-			wxYield();
-
-			(*player)->play();
-
-			if ((*player)->hasWon())
-			{
-				wxMessageDialog youWon(this, wxString::Format(_("Player %s won the game.\nDo you want to try it one more time? Otherwise game will be closed."), (*player)->getPlayerName().c_str()), _("RummyCube"), wxYES_NO | wxICON_QUESTION);
-				if (youWon.ShowModal() == wxID_YES)
-				{
-					this->restartGame();
-				}
-				else
-				{
-					this->Close(true);
-				}
-				return;
-			}
+			game->stopGame();
+			gameState = GAME_JOIN_NETWORK_GAME;
+		} else {
+			gameState = GAME_JOIN_NETWORK_GAME;
+			this->restartGame();
 		}
-
-		// Check gamestate, can be changed during wxYield calls in (*player)->play()
-		GameState state = gameState;
-		gameState = GAME_IDLE;
-		switch (state)
-		{
-			case GAME_CLOSING:		this->Close(true);
-									return;
-			case GAME_RESTARTING:	this->restartGame();
-									return;
-			// TODO Handle other events
-			default:				break;
-		}
-
-		Gamestone::canMoveStones = true;
-		game->getTimer()->start();
-		this->setInfoLabelText();
-		if (game->getStoneCountOnHeap() == 0)
-		{
-			mainMenu->Enable(ID_PASS, true);
-		}
-		mainMenu->Enable(wxID_OPEN, true);
-		mainMenu->Enable(wxID_SAVE, true);
-		this->SetCursor(wxCursor(wxCURSOR_ARROW));
-		return;
 	}
-
 	// Show dialog and resume timer if no network game was created
-	if (timeLimitRunning)
+	else if (timeLimitRunning)
 	{
 		game->getTimer()->resume();
 	}
@@ -1082,7 +1058,8 @@ void MainWindow::OnTimeLimitTimer(wxTimerEvent& WXUNUSED(e))
 	setTimerLabelText();
 
 	// If no more time is left, force round finish
-	if (game->getTimer()->getTime() > -1 &&
+	if (game != NULL && game->getTimer() != NULL &&
+		game->getTimer()->getTime() > -1 &&
 			game->getTimer()->timeLeft() == 0)
 	{
 		// If the player still has some stones left to take, take random stones from holder
@@ -1120,7 +1097,7 @@ void MainWindow::OnNetworkGameClosed(NetworkGameClosedEvent& e)
 	if (gameState == GAME_OPPONENT_PLAYING)
 	{
 		game->stopGame();
-		gameState = GAME_RESTARTING;
+		gameState = GAME_RESTART_GAME;
 	}
 	else
 	{
