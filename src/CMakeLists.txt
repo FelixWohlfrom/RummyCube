@@ -5,7 +5,7 @@ set(VERSION_MINOR 9)
 set(VERSION_BETA TRUE)
 
 # The subdirectories to build
-set(SUBDIRS main)
+set(SUBDIRS main test)
 
 # Minimum cmake version
 cmake_minimum_required(VERSION 3.0.2)
@@ -19,6 +19,10 @@ SET(CMAKE_AUTOUIC ON)
 
 # Find the QtWidgets library
 find_package(Qt5Widgets REQUIRED)
+
+# Enable testing
+enable_testing()
+find_package(Qt5Test REQUIRED)
 
 # Set compiler flags on g++
 if(CMAKE_COMPILER_IS_GNUCXX)
