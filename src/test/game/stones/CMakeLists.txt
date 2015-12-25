@@ -4,10 +4,12 @@ set(CLASSESUNDERTESTDIR game/stones)
 # Build all files in this directory
 SET(SOURCE
 	GamestoneDragNDropTest.cpp
+	JokerDragNDropTest.cpp
 )
 
 SET(HEADERS
 	GamestoneDragNDropTest.h
+	JokerDragNDropTest.h
 )
 
 foreach(SUB ${CLASSESUNDERTESTDIR})
