@@ -47,6 +47,18 @@ void MainWindow::dragEnterEvent(QDragEnterEvent *event)
 
 void MainWindow::dropEvent(QDropEvent *event)
 {
-	event->setDropAction(Qt::CopyAction);
-	event->accept();
+    if (event->mimeData()->hasFormat(GAMESTONE_MIMETYPE)
+			&& !event->dropAction() == Qt::IgnoreAction)
+    {
+        event->setDropAction(Qt::MoveAction);
+	    event->accept();
+
+        QByteArray itemData = event->mimeData()->data(GAMESTONE_MIMETYPE);
+        QDataStream dataStream(&itemData, QIODevice::ReadOnly);
+        QPoint offset;
+        dataStream >> offset;
+
+        ((Gamestone*)event->source())->move(event->pos() - offset);
+    }
+
 }

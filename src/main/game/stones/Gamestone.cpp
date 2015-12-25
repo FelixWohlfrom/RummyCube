@@ -735,6 +735,43 @@ std::ostream &operator<<(std::ostream &stream, Gamestone* stone)
 
     return stream;
 }
+
+/******************************************/
+/*     HELPER CLASSES FOR DRAG'N'DROP     */
+/******************************************/
+QPixmap* Gamestone::renderPixmap(Gamestone* firstInRow)
+{
+    QPixmap* widgetPixmap = new QPixmap(this->countStonesInRow() * this->width, this->height);
+
+    Gamestone* stone = firstInRow;
+    int stoneCount(0);
+    while (stone != NULL)
+    {
+        QPoint offset(stoneCount * this->width, 0);
+        stone->render(widgetPixmap, offset);
+        stone = stone->getNext();
+        stoneCount++;
+    }
+
+
+    return widgetPixmap;
+}
+
+void Gamestone::showRow(Gamestone* firstInRow, bool show)
+{
+    Gamestone* stone(firstInRow);
+    while (stone != NULL)
+    {
+        if (show)
+        {
+            stone->show();
+        }
+        else
+        {
+            stone->hide();
+        }
+        stone = stone->getNext();
+    }
 }
 
 /******************************************/
@@ -929,91 +966,67 @@ void Gamestone::mouseReleaseEvent(QMouseEvent* event)
 
 void Gamestone::mouseMoveEvent(QMouseEvent* event)
 {
-	if (this->stoneParent == HEAP || !Gamestone::canMoveStones)
-	{
-		return;
-	}
-	if (!(event->buttons() & Qt::LeftButton))
-	{
-		return;
-	}
-	if ((event->pos() - dragStartPosition).manhattanLength()
-			< QApplication::startDragDistance())
-	{
-		return;
-	}
+    if (this->stoneParent == HEAP || !Gamestone::canMoveStones)
+    {
+        return;
+    }
+    if (!(event->buttons() & Qt::LeftButton))
+    {
+        return;
+    }
+    if ((event->pos() - dragStartPosition).manhattanLength()
+            < QApplication::startDragDistance())
+    {
+        return;
+    }
 
-	// Just do anything if we can move the stones. We must be dragging, since qt just sends
-	// the events if left curser is pressed
-	if (this->stoneParent != HEAP && Gamestone::canMoveStones)
-	{
-		// If not all stones should be moved, remove previous and next stone
-		if (!stoneManager->moveAllStonesInRow)
-		{
-			this->setPrev(NULL);
-			this->setNext(NULL);
-		}
+    // Just do anything if we can move the stones. We must be dragging, since qt just sends
+    // the events if left curser is pressed
+    if (this->stoneParent != HEAP && Gamestone::canMoveStones)
+    {
+        // If not all stones should be moved, remove previous and next stone
+        if (!stoneManager->moveAllStonesInRow)
+        {
+            this->setPrev(NULL);
+            this->setNext(NULL);
+        }
 
-		// render the current gamestone to pixmap
-		QPixmap *widgetPixmap = new QPixmap(this->size());
-		this->render(widgetPixmap);
+        // Find first stone in row, since all following actions are relative
+        // to the first stone in the row
+        Gamestone* firstInRow(this);
+        while (firstInRow->getPrev() != NULL)
+        {
+            firstInRow = firstInRow->getPrev();
+        }
 
-		// Create drag object and store the tragged stone
-		QDrag *drag = new QDrag(this);
-		QMimeData *mimeData = new QMimeData;
-		mimeData->setData(GAMESTONE_MIMETYPE, NULL);
+        // Create drag object and store the tragged stone
+        QByteArray itemData;
+        QDataStream dataStream(&itemData, QIODevice::WriteOnly);
+        dataStream << QPoint(dragStartPosition);
+        QDrag *drag = new QDrag(this);
+        QMimeData *mimeData = new QMimeData;
+        mimeData->setData(GAMESTONE_MIMETYPE, itemData);
 
-		drag->setMimeData(mimeData);
-		drag->setPixmap(*widgetPixmap);
-		drag->setHotSpot(dragStartPosition);
+        // render the pixmap
+        QPixmap* widgetPixmap = renderPixmap(firstInRow);
 
-		stoneManager->draggedStone = this;
+        drag->setMimeData(mimeData);
+        drag->setPixmap(*widgetPixmap);
+        drag->setHotSpot(dragStartPosition + QPoint(this->pos().x() - firstInRow->pos().x(), 0));
 
-		// Move actions display that we are dragging over a gamestone,
-		// copy actions display that we are dragging over a window.
-		Qt::DropAction dropResult = drag->exec(Qt::MoveAction | Qt::CopyAction);
+        this->showRow(firstInRow, false);
+        stoneManager->draggedStone = this;
 
-		std::cout << dropResult << std::endl;
+        // Execute drag'n'drop
+        Qt::DropAction dropResult = drag->exec(Qt::MoveAction);
 
-		if (dropResult == Qt::CopyAction)
-		{
-			std::cout << "Dropping on window" << std::endl;
-		}
-		else if (dropResult == Qt::MoveAction)
-		{
-			std::cout << "Dropping" << std::endl;
+        // Drag'n'drop finished, so we clean up everything now
+        stoneManager->draggedStone = NULL;
+        this->showRow(firstInRow, true);
+        this->moveAddedStones();
+        this->setCursor(Qt::OpenHandCursor);
 
-			// If not moving from heap to holder, check if stone is dragging over another
-			Gamestone* draggingOver = (Gamestone*) drag->target();
-
-			// If we are dragging over a joker, check from jokers side if can be dropped
-			if (((!draggingOver->isJoker() && this->acceptDropping(*draggingOver))
-					|| (draggingOver->isJoker()
-							&& draggingOver->acceptDropping(*this))))
-			{
-				// Do dropping
-				// First try to drop depending on "hard" conditions (color, number etc.)
-				if (!this->appendStone(*draggingOver))
-				{
-					// No "hard" condition matched, so drop depending on mouse position
-					if (this->pos().x() + event->pos().x()
-							> draggingOver->pos().x()
-									+ draggingOver->getWidth() / 2)
-					{
-						draggingOver->setNext(this);
-					}
-					else
-					{
-						draggingOver->setPrev(this);
-					}
-				}
-
-				draggingOver->moveAddedStones();
-			}
-
-			stoneManager->draggedStone = NULL;
-
-			this->setCursor(Qt::OpenHandCursor);
-		}
-	}
+        delete drag;
+        delete widgetPixmap;
+    }
 }

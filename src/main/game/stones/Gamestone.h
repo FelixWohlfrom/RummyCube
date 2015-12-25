@@ -466,6 +466,23 @@ class Gamestone : public QWidget
 		 */
 		bool canMoveRowToBoard() const;
 
+        /**
+         * Shows or hides a complete row.
+         *
+         * @param firstInRow The first stone in row that should be shown or hidden
+         * @param show True if the row should be shown, false if it should be hidden
+         */
+        void showRow(Gamestone* firstInRow, bool show);
+
+        /**
+         * Renders the row containing the current stone into a pixmap. This is required
+         * for drag'n'drop.
+         *
+         * @param firstInRow The first stone in the row from which the pixmap should be rendered
+         * @return The pixmap of the current row
+         */
+        QPixmap* renderPixmap(Gamestone* firstInRow);
+
 		/**
 		 * Draws the stone.
 		 */
