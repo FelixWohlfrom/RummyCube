@@ -10,24 +10,36 @@
 #include "../../network/Network.h"
 #include "../stones/StoneManager.h"
 
-#include <wx/datstrm.h>
-#include <wx/sckstrm.h>
+HumanPlayerClient::HumanPlayerClient(StoneManager& stoneManager, QTcpSocket& sock,
+        int stonesAtBeginning, int sumAtBeginning, bool stonesInOneRow) :
+    HumanPlayer(stoneManager, stonesAtBeginning, sumAtBeginning, stonesInOneRow), sock(sock),
+    isFirstRound(true)
+{}
 
-HumanPlayerClient::HumanPlayerClient(StoneManager& stoneManager, wxSocketBase& sock, int initialStonesLeftToTake, int sumInFirstRound, bool stonesInOneRow) :
-	HumanPlayer(stoneManager, initialStonesLeftToTake, sumInFirstRound, stonesInOneRow), sock(sock) {};
+HumanPlayerClient::~HumanPlayerClient() {}
 
-HumanPlayerClient::~HumanPlayerClient() {};
+void HumanPlayerClient::newRound()
+{
+    if (isFirstRound)
+    {
+        isFirstRound = false;
+    }
+    else
+    {
+        HumanPlayer::newRound();
+    }
+}
 
 void HumanPlayerClient::roundFinished()
 {
-	HumanPlayer::roundFinished();
+    HumanPlayer::roundFinished();
 
-	Network::writeBoardStatus(sock, stoneManager);
+    Network::writeBoardStatus(sock, stoneManager);
 
-	if (this->hasWon())
-	{
-		Network::write(sock, _T("playerWon"));
-	}
+    if (this->hasWon())
+    {
+        Network::write(sock, "playerWon");
+    }
 
-	Network::write(sock, _T("roundFinished"));
+    Network::write(sock, "roundFinished");
 }

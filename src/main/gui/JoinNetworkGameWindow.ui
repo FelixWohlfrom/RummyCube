@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>JoinNetworkGameWindow</class>
+ <widget class="QDialog" name="JoinNetworkGameWindow">
+  <property name="windowModality">
+   <enum>Qt::ApplicationModal</enum>
+  </property>
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>405</width>
+    <height>280</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="windowTitle">
+   <string>Join Network Game</string>
+  </property>
+  <property name="modal">
+   <bool>true</bool>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QStackedWidget" name="statusDisplay">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="autoFillBackground">
+      <bool>false</bool>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::Box</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
+     </property>
+     <property name="currentIndex">
+      <number>0</number>
+     </property>
+     <widget class="QWidget" name="networkGameSettings">
+      <layout class="QGridLayout" name="gridLayout" columnstretch="0,1,0">
+       <item row="0" column="0">
+        <widget class="QLabel" name="ipAddressLabel">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="toolTip">
+          <string>Insert here the ip address of the server you want to connect to</string>
+         </property>
+         <property name="text">
+          <string>IP Address of the created game:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QLabel" name="nicknameLabel">
+         <property name="toolTip">
+          <string>Insert here your nickname so that your opponent knows against who he is playing</string>
+         </property>
+         <property name="text">
+          <string>Nickname:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="2">
+        <widget class="QLabel" name="sumAtBeginning">
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QLineEdit" name="nickname">
+         <property name="toolTip">
+          <string>Insert here your nickname so that your opponent knows against who he is playing</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="2">
+        <widget class="QLabel" name="stonesAtBeginning">
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="2">
+        <widget class="QPushButton" name="connectButton">
+         <property name="toolTip">
+          <string>Click here to connect to the server</string>
+         </property>
+         <property name="text">
+          <string>Co&amp;nnect</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="2">
+        <widget class="QLabel" name="stonesInOneRow">
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="2">
+        <widget class="QLabel" name="timeLimit">
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1" colspan="2">
+        <widget class="QLineEdit" name="ipAddress">
+         <property name="toolTip">
+          <string>Insert here the ip address of the server you want to connect to</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="readOnly">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0" colspan="2">
+        <widget class="QLabel" name="stonesAtBeginningLabel">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="toolTip">
+          <string>The number of stones that you can get in the first round</string>
+         </property>
+         <property name="text">
+          <string>Number of stones that can be taken in first round:</string>
+         </property>
+         <property name="textFormat">
+          <enum>Qt::PlainText</enum>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="0" colspan="2">
+        <widget class="QLabel" name="sumAtBeginningLabel">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="toolTip">
+          <string>The sum that you need to play out first time</string>
+         </property>
+         <property name="text">
+          <string>Sum of stone numbers that you need to play first time out:</string>
+         </property>
+         <property name="textFormat">
+          <enum>Qt::PlainText</enum>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="0" colspan="2">
+        <widget class="QLabel" name="stonesInOneRowLabel">
+         <property name="toolTip">
+          <string>If the sum that you need to play out first time has to be in one row</string>
+         </property>
+         <property name="text">
+          <string>Stones must be in one row:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="0" colspan="2">
+        <widget class="QLabel" name="timeLimitLabel">
+         <property name="toolTip">
+          <string>The time limit for one round</string>
+         </property>
+         <property name="text">
+          <string>Time limit:</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="waitForOpponent">
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <item>
+        <spacer name="waitForOpponentTopSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QLabel" name="waitForOpponentLabel">
+         <property name="toolTip">
+          <string>Waiting for your opponent to start game...</string>
+         </property>
+         <property name="text">
+          <string>Waiting for your opponent to start game...</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="waitForOpponentBottomSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="buttonLayout" stretch="0,0,0">
+     <property name="sizeConstraint">
+      <enum>QLayout::SetDefaultConstraint</enum>
+     </property>
+     <item>
+      <spacer name="buttonSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="startGameButton">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="toolTip">
+        <string>Click here to start a network game</string>
+       </property>
+       <property name="text">
+        <string>&amp;Start game</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="cancelButton">
+       <property name="toolTip">
+        <string>Cancel network game creation</string>
+       </property>
+       <property name="text">
+        <string>&amp;Cancel</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>startGameButton</sender>
+   <signal>clicked()</signal>
+   <receiver>JoinNetworkGameWindow</receiver>
+   <slot>startGameClickEvent()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>288</x>
+     <y>261</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>208</x>
+     <y>141</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>cancelButton</sender>
+   <signal>clicked()</signal>
+   <receiver>JoinNetworkGameWindow</receiver>
+   <slot>cancelClickEvent()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>369</x>
+     <y>261</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>208</x>
+     <y>141</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>connectButton</sender>
+   <signal>clicked()</signal>
+   <receiver>JoinNetworkGameWindow</receiver>
+   <slot>connectClickEvent()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>348</x>
+     <y>54</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>199</x>
+     <y>139</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>

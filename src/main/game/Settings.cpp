@@ -20,15 +20,11 @@ Settings* Settings::getInstance()
 {
     if (INSTANCE == NULL)
     {
-        // Under windows, settings are stored in %appdata%/RummyCube/settings.conf
-        // Under linux, its ~/.RummyCube/settings.conf
-        QString settingsFile(QStandardPaths::displayName(QStandardPaths::AppDataLocation) + "/settings.conf");
-
-        // TODO Reimplement
-        /*if (!wxDirExists(wxPathOnly(settingsFile)))
-        {
-            wxMkdir(wxPathOnly(settingsFile));
-        }*/
+        // TODO Verify that under windows, settings are stored in %appdata%/RummyCube/settings.conf
+        // TODO Verify under linux, its ~/.RummyCube/settings.conf
+        QString settingsFile(
+                QStandardPaths::displayName(QStandardPaths::AppDataLocation)
+                + "/RummyCube/settings.conf");
 
         INSTANCE = new Settings(settingsFile);
     }

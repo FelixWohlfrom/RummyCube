@@ -7,13 +7,15 @@
 
 #include "OpponentPlayer.h"
 
-OpponentPlayer::OpponentPlayer(wxString name, StoneManager& stoneManager, int initialStonesLeftToTake, int sumInFirstRound, bool stonesInOneRow) :
-	Player(name, stoneManager, initialStonesLeftToTake, sumInFirstRound, stonesInOneRow), stopPlayerPlaying(false)
-{};
+OpponentPlayer::OpponentPlayer(QString name, StoneManager& stoneManager,
+        int initialStonesLeftToTake, int sumInFirstRound, bool stonesInOneRow) :
+    Player(name, stoneManager, initialStonesLeftToTake, sumInFirstRound, stonesInOneRow),
+    stopPlayerPlaying(false)
+{}
 
-OpponentPlayer::~OpponentPlayer() {};
+OpponentPlayer::~OpponentPlayer() {}
 
 void OpponentPlayer::stopPlaying()
 {
-	stopPlayerPlaying = true;
+    stopPlayerPlaying = true;
 }

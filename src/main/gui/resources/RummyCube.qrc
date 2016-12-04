@@ -1,0 +1,10 @@
+<!DOCTYPE RCC>
+<RCC version="1.0">
+    <qresource prefix="images">
+    	<file alias="icon">msw/RummyCube.ico</file>
+        <file alias="gameboard">gameboard.bmp</file>
+        <file alias="hand">hand.bmp</file>
+        <file alias="holder">holder.bmp</file>
+        <file alias="joker">joker.bmp</file>
+    </qresource>
+</RCC>

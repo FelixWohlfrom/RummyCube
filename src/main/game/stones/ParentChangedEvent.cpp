@@ -7,45 +7,32 @@
 
 #include "ParentChangedEvent.h"
 
-// For wxwidgets
-DEFINE_EVENT_TYPE(wxPARENT_CHANGED)
+ParentChangedEvent::ParentChangedEvent(Gamestone::StoneParent parent, Gamestone* sender,
+        bool stoneMoved) :
+    vetoed(false), parent(parent), sender(sender), moved(stoneMoved)
+{}
 
-ParentChangedEvent::ParentChangedEvent(wxEventType commandType, int parent, Gamestone* sender, bool stoneMoved, int id) :
-	wxCommandEvent(commandType, id), vetoed(false), parent(parent), sender(sender), moved(stoneMoved)
-{};
-
-ParentChangedEvent::ParentChangedEvent(const ParentChangedEvent& orig) :
-	wxCommandEvent(orig), vetoed(orig.vetoed), parent(orig.parent), sender(orig.sender), moved(orig.moved)
-{};
-
-ParentChangedEvent::~ParentChangedEvent() {};
-
-wxEvent* ParentChangedEvent::Clone() const
+int ParentChangedEvent::getParent() const
 {
-	return new ParentChangedEvent(*this);
+    return parent;
 }
 
-int ParentChangedEvent::GetParent() const
+Gamestone* ParentChangedEvent::getSender() const
 {
-	return parent;
+    return sender;
 }
 
-Gamestone* ParentChangedEvent::GetSender() const
+bool ParentChangedEvent::getStoneMoved() const
 {
-	return sender;
+    return moved;
 }
 
-bool ParentChangedEvent::GetStoneMoved() const
+bool ParentChangedEvent::getVeto() const
 {
-	return moved;
+    return vetoed;
 }
 
-bool ParentChangedEvent::GetVeto() const
+void ParentChangedEvent::veto(bool veto)
 {
-	return vetoed;
-}
-
-void ParentChangedEvent::Veto(bool veto)
-{
-	this->vetoed = veto;
+    this->vetoed = veto;
 }

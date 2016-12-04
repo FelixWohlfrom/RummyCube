@@ -12,69 +12,90 @@
 
 #include "../../network/Network.h"
 
-#include <wx/socket.h>
+#include <QObject>
+#include <QTcpSocket>
 
-class NetworkPlayer: public OpponentPlayer
+/**
+ * The base class for all network players. It will parse the gameboard status
+ * and other status updates from other players. Inheritance has to be QObject
+ * first to make the moc tool happy.
+ */
+class NetworkPlayer: public QObject, public OpponentPlayer
 {
-	public:
-		/**
-		 * Creates a new opponent player for network game on client
-		 *
-		 * @param name The name of the player
-		 * @param stoneManager The stone manager on which the player can play
-		 * @param sock The socket on which the network player should work
-		 */
-		NetworkPlayer(wxString name, StoneManager& stoneManager, wxSocketBase& sock);
+    Q_OBJECT
 
-		/**
-		 * Destructor.
-		 */
-		virtual ~NetworkPlayer();
+    public:
+        /**
+         * Creates a new opponent player for network game on client.
+         *
+         * @param name The name of the player
+         * @param stoneManager The stone manager on which the player can play
+         * @param sock The socket on which the network player should work
+         * @param stonesAtBeginning The initial stones that the player can take
+         * @param sumAtBeginning The sum that is needed for the player to play out first time
+         * @param stonesInOneRow If the sum needs to be in one row or can be split in multiple rows
+         */
+        NetworkPlayer(QString name, StoneManager& stoneManager, QTcpSocket& sock,
+                int stonesAtBeginning, int sumAtBeginning, bool stonesInOneRow);
 
-		/**
-		 * Lets the player play
-		 */
-		virtual void play() = 0;
+        /**
+         * Virtual destructor to avoid warnings.
+         */
+        virtual ~NetworkPlayer();
 
-		/**
-		 * Returns if the player has won.
-		 *
-		 * @return If the player has won or not
-		 */
-		bool hasWon();
+        /**
+         * Lets the player play.
+         */
+        virtual void play() = 0;
 
-		/**
-		 * Sets the event handler for NetworkCloseEvents to given handler
-		 *
-		 * @param newHandler The handler to set.
-		 */
-		void setCloseEventHandler(wxEvtHandler* newHandler);
+        /**
+         * Returns if the player has won.
+         *
+         * @return If the player has won or not
+         */
+        bool hasWon();
 
-	protected:
-		/**
-		 * If the player has won the game or not
-		 */
-		bool playerHasWon;
+        /**
+         * Returns the socket of the current player.
+         *
+         * @return The socket
+         */
+        QTcpSocket& getSocket();
 
-		/**
-		 * Stores if the player finished his round or not
-		 */
-		bool roundFinished;
+    protected:
+        /**
+         * If the player has won the game or not.
+         */
+        bool playerHasWon;
 
-		/**
-		 * The socket on which the network player works
-		 */
-		wxSocketBase& sock;
+        /**
+         * Stores if the player finished his round or not.
+         */
+        bool roundFinished;
 
-		/**
-		 * The event handler for network close events
-		 */
-		wxEvtHandler* handler;
+        /**
+         * The socket on which the network player works.
+         */
+        QTcpSocket& sock;
 
-		/**
-		 * Parses the data received from socket associated with player
-		 */
-		void parseData();
+    signals:
+        /**
+         * Emitted if an error apperead during network connection.
+         *
+         * @param error The error message.
+         */
+        void connectionError(QString error);
+
+    private slots:
+        /**
+         * Parses the data received from socket associated with player.
+         */
+        void parseData();
+
+        /**
+         * Event handler if the opponent disconnected.
+         */
+        void opponentDisconnected();
 };
 
 #endif /* NETWORKPLAYER_H_ */

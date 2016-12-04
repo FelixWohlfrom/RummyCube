@@ -8,47 +8,30 @@
 #include "NetworkPlayerClient.h"
 
 #include "../../network/Network.h"
-#include "../../network/NetworkGameClosedEvent.h"
 
-NetworkPlayerClient::NetworkPlayerClient(wxString name, StoneManager& stoneManager, wxSocketBase& sock, NetworkEventHandlerClient& eventHandler, bool skipAfterCreation) :
-	NetworkPlayer(name, stoneManager, sock), skipAfterCreation(skipAfterCreation)
-{
-	eventHandler.addEventReceiver(this);
-	handler = &eventHandler;
-}
+#include <QThread>
+#include <QCoreApplication>
 
-NetworkPlayerClient::~NetworkPlayerClient() {};
+NetworkPlayerClient::NetworkPlayerClient(QString name, StoneManager& stoneManager, QTcpSocket& sock,
+        int stonesAtBeginning, int sumAtBeginning, bool stonesInOneRow, bool skipAfterCreation) :
+    NetworkPlayer(name, stoneManager, sock, stonesAtBeginning, sumAtBeginning, stonesInOneRow),
+    skipAfterCreation(skipAfterCreation)
+{}
 
 void NetworkPlayerClient::play()
 {
-	// Skip if variable is set
-	if (skipAfterCreation)
-	{
-		skipAfterCreation = false;
-		return;
-	}
+    // Skip if variable is set
+    if (skipAfterCreation)
+    {
+        skipAfterCreation = false;
+        return;
+    }
 
-	roundFinished = false;
+    roundFinished = false;
 
-	while (!roundFinished && !stopPlayerPlaying)
-	{
-		parseData();
-		wxYield();
-	}
-}
-
-// Socket handler
-void NetworkPlayerClient::OnSocketEvent(wxSocketEvent& e)
-{
-	if (e.GetSocketEvent() == wxSOCKET_LOST)
-	{
-		stopPlayerPlaying = true;
-		if (playerHasWon) return;
-
-		if (handler != NULL)
-		{
-			NetworkGameClosedEvent e(wxNETWORK_GAME_CLOSED, this->getPlayerName());
-			handler->AddPendingEvent(e);
-		}
-	}
+    while (!roundFinished && !stopPlayerPlaying)
+    {
+        QThread::msleep(100);
+        QCoreApplication::processEvents();
+    }
 }

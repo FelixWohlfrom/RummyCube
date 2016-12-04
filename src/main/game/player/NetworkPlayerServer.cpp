@@ -6,89 +6,83 @@
  */
 
 #include "NetworkPlayerServer.h"
-#include "../../network/NetworkGameClosedEvent.h"
 
-BEGIN_EVENT_TABLE(NetworkPlayerServer, wxEvtHandler)
-	EVT_SOCKET(Network::SOCKET_EVENT, NetworkPlayerServer::OnSocketEvent)
-END_EVENT_TABLE()
+#include <QThread>
+#include <QCoreApplication>
 
-NetworkPlayerServer::NetworkPlayerServer(wxString name, StoneManager& stoneManager, wxSocketBase& sock, std::list<wxSocketBase*> allPlayerSocks) :
-	NetworkPlayer(name, stoneManager, sock), otherPlayerSocks(allPlayerSocks)
+NetworkPlayerServer::NetworkPlayerServer(QString name, StoneManager& stoneManager, QTcpSocket& sock,
+        std::list<QTcpSocket*> allPlayerSocks) :
+    NetworkPlayer(name, stoneManager, sock, 0, 0, false), otherPlayerSocks(allPlayerSocks)
 {
-	// Delete current socket from list of all players
-	std::list<wxSocketBase*>::iterator toDelete;
-	for (std::list<wxSocketBase*>::iterator it(otherPlayerSocks.begin()); it != otherPlayerSocks.end(); ++it)
-	{
-		if ((*it) == &sock)
-		{
-			toDelete = it;
-		}
-	}
+    // Delete current socket from list of all players
+    std::list<QTcpSocket*>::iterator toDelete;
+    for (std::list<QTcpSocket*>::iterator
+            socket(otherPlayerSocks.begin());
+            socket != otherPlayerSocks.end();
+            ++socket)
+    {
+        if ((*socket) == &sock)
+        {
+            toDelete = socket;
+            break;
+        }
+    }
 
-	otherPlayerSocks.erase(toDelete);
+    otherPlayerSocks.erase(toDelete);
 
-	// Start listening to events
-	sock.SetEventHandler(*this, Network::SOCKET_EVENT);
-	sock.SetNotify(wxSOCKET_LOST_FLAG);
-	sock.Notify(true);
-}
-
-NetworkPlayerServer::~NetworkPlayerServer()
-{
-	sock.Destroy();
+    connect(&sock, SIGNAL(disconnected()),
+             this, SLOT(opponentDisconnected()));
 }
 
 void NetworkPlayerServer::play()
 {
-	roundFinished = false;
+    roundFinished = false;
 
-	while (!roundFinished && !stopPlayerPlaying)
-	{
-		parseData();
-		wxYield();
-	}
+    while (!roundFinished && !stopPlayerPlaying)
+    {
+        QThread::msleep(100);
+        QCoreApplication::processEvents();
+    }
 
-	if (stopPlayerPlaying) return;
+    if (stopPlayerPlaying)
+    {
+        return;
+    }
 
-	// Broadcast current game board status. Don't send all stones so no one knows the stones of the other players
-	for (std::list<wxSocketBase*>::iterator it(otherPlayerSocks.begin()); it != otherPlayerSocks.end(); ++it)
-	{
-		Network::writeBoardStatus(*(*it), stoneManager);
+    // Broadcast current game board status. Don't send all stones so no one
+    // knows the stones of the other players
+    for (std::list<QTcpSocket*>::iterator
+            socket(otherPlayerSocks.begin());
+            socket != otherPlayerSocks.end();
+            ++socket)
+    {
+        Network::writeBoardStatus(*(*socket), stoneManager);
 
-		if (playerHasWon)
-		{
-			Network::write(*(*it), _T("playerWon"));
-		}
+        if (playerHasWon)
+        {
+            Network::write(*(*socket), "playerWon");
+        }
 
-		Network::write(*(*it), _T("roundFinished"));
-	}
+        Network::write(*(*socket), "roundFinished");
+    }
 }
 
-// Socket handler
-void NetworkPlayerServer::OnSocketEvent(wxSocketEvent& e)
+void NetworkPlayerServer::opponentDisconnected()
 {
-	wxSocketBase* evt_sock = e.GetSocket();
-	wxASSERT(evt_sock == &sock);
+    // Broadcast to other players that the player disconnected
+    for (std::list<QTcpSocket*>::iterator
+            socket(otherPlayerSocks.begin());
+            socket != otherPlayerSocks.end();
+            ++socket)
+    {
+        if ((*socket) != &sock
+                && (*socket)->state() != QTcpSocket::ConnectedState)
+        {
+            Network::write(*(*socket), "disconnected");
+            Network::write(*(*socket), this->getPlayerName());
+        }
+    }
 
-	if (e.GetSocketEvent() == wxSOCKET_LOST)
-	{
-		stopPlayerPlaying = true;
-		if (playerHasWon) return;
-
-		// Broadcast to other players that the player disconnected
-		for (std::list<wxSocketBase*>::iterator it(otherPlayerSocks.begin()); it != otherPlayerSocks.end(); ++it)
-		{
-			if ((*it) != evt_sock && (*it)->IsConnected())
-			{
-				Network::write(*(*it), _T("disconnected"));
-				Network::write(*(*it), this->getPlayerName());
-			}
-		}
-
-		if (handler != NULL)
-		{
-			NetworkGameClosedEvent e(wxNETWORK_GAME_CLOSED, this->getPlayerName());
-			handler->AddPendingEvent(e);
-		}
-	}
+    // Parent method will be called by event handler
+    // NetworkPlayer::opponentDisconnected();
 }

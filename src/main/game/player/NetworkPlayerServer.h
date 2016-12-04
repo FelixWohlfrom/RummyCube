@@ -12,44 +12,40 @@
 
 #include <list>
 
-class NetworkPlayerServer: private wxEvtHandler, public NetworkPlayer
+/**
+ * Represents an opponent player for network game on the server.
+ */
+class NetworkPlayerServer: public NetworkPlayer
 {
-	public:
-		/**
-		 * Creates a new opponent player for network game on server
-		 *
-		 * @param name The name of the player
-		 * @param stoneManager The stone manager on which the player can play
-		 * @param sock The socket which is connected to the player
-		 * @param allPlayerSocks The sockets which are connected to the other players (for broadcasting)
-		 */
-		NetworkPlayerServer(wxString name, StoneManager& stoneManager, wxSocketBase& sock, std::list<wxSocketBase*> allPlayerSocks);
+    public:
+        /**
+         * Creates a new opponent player for network game on server.
+         *
+         * @param name The name of the player
+         * @param stoneManager The stone manager on which the player can play
+         * @param sock The socket which is connected to the player
+         * @param allPlayerSocks The sockets which are connected to the other
+         *                       players (for broadcasting)
+         */
+        NetworkPlayerServer(QString name, StoneManager& stoneManager,
+                QTcpSocket& sock, std::list<QTcpSocket*> allPlayerSocks);
 
-		/**
-		 * Destructor. Cleans up socket of player
-		 */
-		~NetworkPlayerServer();
+        /**
+         * Lets the player play.
+         */
+        void play();
 
-		/**
-		 * Lets the player play
-		 */
-		void play();
+    private:
+        /**
+         * The sockets which are connected with other players (for broadcasting).
+         */
+        std::list<QTcpSocket*> otherPlayerSocks;
 
-	private:
-		/**
-		 * The sockets which are connected with other players (for broadcasting)
-		 */
-		std::list<wxSocketBase*> otherPlayerSocks;
-
-		/**
-		 * Event handler for socket events.
-		 *
-		 * @param e The event
-		 */
-		void OnSocketEvent(wxSocketEvent& e);
-
-		// Needed for wxwidgets
-	    DECLARE_EVENT_TABLE()
+    public slots:
+        /**
+         * Event handler if the opponent (the server) disconnected.
+         */
+        void opponentDisconnected();
 };
 
 #endif /* NETWORKPLAYERSERVER_H_ */

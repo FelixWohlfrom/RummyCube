@@ -12,11 +12,24 @@
 #include <QMimeData>
 #include <QDragEnterEvent>
 
+#include "../../../main/game/Settings.h"
+
+void JokerDragNDropTest::initTestCase()
+{
+    manager = new StoneManager();
+}
+
+void JokerDragNDropTest::cleanupTestCase()
+{
+    delete manager;
+    Settings::cleanup();
+}
+
 void JokerDragNDropTest::singleJoker_SingleStone()
 {
     // Initialize the two stones to verify drag'n'drop
-    Joker dragSource(NULL, &manager, true);
-    Gamestone dragTarget(NULL, &manager, true, Gamestone::BLUE, 1);
+    Joker dragSource(NULL, manager, true);
+    Gamestone dragTarget(NULL, manager, true, Gamestone::BLUE, 1);
 
     // Dragging joker over normal stone
     testDragAndDrop(dragSource, dragTarget, true);
@@ -27,8 +40,8 @@ void JokerDragNDropTest::singleJoker_SingleStone()
 void JokerDragNDropTest::singleJoker_SingleJoker()
 {
     // Initialize the two stones to verify drag'n'drop
-    Joker dragSource(NULL, &manager, true);
-    Joker dragTarget(NULL, &manager, false);
+    Joker dragSource(NULL, manager, true);
+    Joker dragTarget(NULL, manager, false);
 
     // Dragging joker over another one
     testDragAndDrop(dragSource, dragTarget, true);
@@ -38,11 +51,11 @@ void JokerDragNDropTest::singleJoker_SingleJoker()
 void JokerDragNDropTest::singleJoker_multipleStones()
 {
     // Initialize the two stones to verify drag'n'drop
-    Joker dragSource(NULL, &manager, true);
-    Gamestone dragTarget(NULL, &manager, true, Gamestone::BLUE, 1);
+    Joker dragSource(NULL, manager, true);
+    Gamestone dragTarget(NULL, manager, true, Gamestone::BLUE, 1);
 
     // We have a third stone appended to the target
-    Gamestone thirdStone(NULL, &manager, true, Gamestone::YELLOW, 1);
+    Gamestone thirdStone(NULL, manager, true, Gamestone::YELLOW, 1);
     dragTarget.setNext(&thirdStone);
 
     // Dragging source over target
@@ -57,11 +70,11 @@ void JokerDragNDropTest::singleJoker_multipleStones()
 void JokerDragNDropTest::singleJoker_rowWithJokerSingleStone()
 {
     // Initialize the two stones to verify drag'n'drop
-    Joker dragSource(NULL, &manager, true);
-    Joker dragTarget(NULL, &manager, false);
+    Joker dragSource(NULL, manager, true);
+    Joker dragTarget(NULL, manager, false);
 
     // We have a third stone appended to the target
-    Gamestone thirdStone(NULL, &manager, false, Gamestone::BLACK, 1);
+    Gamestone thirdStone(NULL, manager, false, Gamestone::BLACK, 1);
     dragTarget.setNext(&thirdStone);
 
     // Dragging source over target
@@ -76,12 +89,12 @@ void JokerDragNDropTest::singleJoker_rowWithJokerSingleStone()
 void JokerDragNDropTest::singleJoker_rowWithJoker_sameNumberDifferentColor()
 {
     // Initialize the two stones to verify drag'n'drop
-    Joker dragSource(NULL, &manager, true);
-    Joker dragTarget(NULL, &manager, false);
+    Joker dragSource(NULL, manager, true);
+    Joker dragTarget(NULL, manager, false);
 
     // We have two stones appended to the target
-    Gamestone thirdStone(NULL, &manager, false, Gamestone::BLACK, 1);
-    Gamestone fourthStone(NULL, &manager, false, Gamestone::BLUE, 1);
+    Gamestone thirdStone(NULL, manager, false, Gamestone::BLACK, 1);
+    Gamestone fourthStone(NULL, manager, false, Gamestone::BLUE, 1);
     dragTarget.setNext(&thirdStone);
     thirdStone.setNext(&fourthStone);
 
@@ -96,7 +109,7 @@ void JokerDragNDropTest::singleJoker_rowWithJoker_sameNumberDifferentColor()
     testDragAndDrop(fourthStone, dragSource, true);
 
     // Now we add another stone, so no more joker can be added
-    Gamestone anotherOne(NULL, &manager, false, Gamestone::YELLOW, 1);
+    Gamestone anotherOne(NULL, manager, false, Gamestone::YELLOW, 1);
     fourthStone.setNext(&anotherOne);
 
     // Dragging target stones over source.
@@ -114,13 +127,13 @@ void JokerDragNDropTest::singleJoker_rowWithJoker_sameNumberDifferentColor()
 void JokerDragNDropTest::singleJoker_rowWithJoker_sameColorDifferentNumbers()
 {
     // Initialize the two stones to verify drag'n'drop
-    Joker dragSource(NULL, &manager, true);
-    Joker dragTarget(NULL, &manager, false);
+    Joker dragSource(NULL, manager, true);
+    Joker dragTarget(NULL, manager, false);
 
     // Verify, that appending to the first stone doesn't work if the first
     // stone is a 1
-    Gamestone thirdStone(NULL, &manager, false, Gamestone::BLACK, 2);
-    Gamestone fourthStone(NULL, &manager, false, Gamestone::BLACK, 3);
+    Gamestone thirdStone(NULL, manager, false, Gamestone::BLACK, 2);
+    Gamestone fourthStone(NULL, manager, false, Gamestone::BLACK, 3);
     dragTarget.setNext(&thirdStone);
     thirdStone.setNext(&fourthStone);
 
@@ -136,7 +149,7 @@ void JokerDragNDropTest::singleJoker_rowWithJoker_sameColorDifferentNumbers()
 
     // Verify, that appending to the first stone does work if it is not a
     // 1 and appending to the end works if it is no 13
-    Gamestone fifthStone(NULL, &manager, false, Gamestone::BLACK, 4);
+    Gamestone fifthStone(NULL, manager, false, Gamestone::BLACK, 4);
     dragTarget.setNext(&fourthStone);
     fourthStone.setNext(&fifthStone);
 
@@ -147,13 +160,13 @@ void JokerDragNDropTest::singleJoker_rowWithJoker_sameColorDifferentNumbers()
 
     // Dragging target stones over source. The middle stone can not be
     // dragged independently
-    testDragAndDrop(dragTarget, dragSource, false); // TODO This should be true
+    testDragAndDrop(dragTarget, dragSource, false); // FIXME This should be true
     testDragAndDrop(fifthStone, dragSource, true);
 
     // Verify that appending does work if it is not a 1 and appending to the
     // end does not work if it is a 13
-    Gamestone sixthStone(NULL, &manager, false, Gamestone::BLACK, 12);
-    Gamestone seventhStone(NULL, &manager, false, Gamestone::BLACK, 13);
+    Gamestone sixthStone(NULL, manager, false, Gamestone::BLACK, 12);
+    Gamestone seventhStone(NULL, manager, false, Gamestone::BLACK, 13);
     dragTarget.setNext(&sixthStone);
     sixthStone.setNext(&seventhStone);
 
@@ -164,20 +177,20 @@ void JokerDragNDropTest::singleJoker_rowWithJoker_sameColorDifferentNumbers()
 
     // Dragging target stones over source. The middle stone can not be
     // dragged independently
-    testDragAndDrop(dragTarget, dragSource, false); // TODO This should be true
+    testDragAndDrop(dragTarget, dragSource, false); // FIXME This should be true
     testDragAndDrop(seventhStone, dragSource, false);
 }
 
 void JokerDragNDropTest::rowWithJoker_rowWithJoker_sameNumberDifferentColor()
 {
     // Initialize the two stones to verify drag'n'drop
-    Joker dragSource(NULL, &manager, true);
-    Joker dragTarget(NULL, &manager, false);
+    Joker dragSource(NULL, manager, true);
+    Joker dragTarget(NULL, manager, false);
 
     // Verify, that appending to the first stone doesn't work if the first
     // stone is a 1
-    Gamestone thirdStone(NULL, &manager, false, Gamestone::BLACK, 1);
-    Gamestone fourthStone(NULL, &manager, false, Gamestone::BLUE, 1);
+    Gamestone thirdStone(NULL, manager, false, Gamestone::BLACK, 1);
+    Gamestone fourthStone(NULL, manager, false, Gamestone::BLUE, 1);
     dragSource.setNext(&thirdStone);
     dragTarget.setNext(&fourthStone);
 
@@ -194,7 +207,7 @@ void JokerDragNDropTest::rowWithJoker_rowWithJoker_sameNumberDifferentColor()
     testDragAndDrop(fourthStone, thirdStone, false);
 
     // Now we add another stone, so dragging should not be accepted anymore
-    Gamestone anotherOne(NULL, &manager, false, Gamestone::YELLOW, 1);
+    Gamestone anotherOne(NULL, manager, false, Gamestone::YELLOW, 1);
     fourthStone.setNext(&anotherOne);
 
     // Drag all stones from source over target
@@ -214,7 +227,44 @@ void JokerDragNDropTest::rowWithJoker_rowWithJoker_sameNumberDifferentColor()
 
 void JokerDragNDropTest::rowWithJoker_rowWithJoker_sameColorDifferentNumbers()
 {
-    // TODO Implement
+    // Initialize the two stones to verify drag'n'drop
+    Joker dragSource(NULL, manager, true);
+    Joker dragTarget(NULL, manager, false);
+
+    // Some stones to append to the joker. Joker are now black 1 and black 3
+    Gamestone thirdStone(NULL, manager, false, Gamestone::BLACK, 2);
+    Gamestone fourthStone(NULL, manager, false, Gamestone::BLACK, 4);
+    dragSource.setNext(&thirdStone);
+    dragTarget.setNext(&fourthStone);
+
+    // Dragging source over target
+    testDragAndDrop(dragSource, dragTarget, false);
+    testDragAndDrop(dragSource, fourthStone, false);
+    testDragAndDrop(thirdStone, dragTarget, true);
+    testDragAndDrop(thirdStone, fourthStone, false);
+
+    // Dragging target stones over source
+    testDragAndDrop(dragTarget, dragSource, false);
+    testDragAndDrop(fourthStone, dragSource, false);
+    testDragAndDrop(dragTarget, thirdStone, true);
+    testDragAndDrop(fourthStone, thirdStone, false);
+}
+
+void JokerDragNDropTest::singleStone_rowWithJoker_sameNumberDifferentColor()
+{
+    // Initialize the two stones to verify drag'n'drop
+    Gamestone dragSource(NULL, manager, true, Gamestone::BLUE, 1);
+    Joker dragTarget(NULL, manager, true);
+
+    // Some other stones in the same row with joker
+    Gamestone thirdStone(NULL, manager, true, Gamestone::BLUE, 2);
+    Gamestone fourthStone(NULL, manager, true, Gamestone::BLACK, 2);
+
+    dragTarget.setNext(&thirdStone);
+    thirdStone.setNext(&fourthStone);
+
+    // Verify that dragging the source over the joker fails
+    testDragAndDrop(dragSource, dragTarget, false);
 }
 
 void JokerDragNDropTest::testDragAndDrop(Gamestone& source, Gamestone& target,
@@ -231,7 +281,7 @@ void JokerDragNDropTest::testDragAndDrop(Gamestone& source, Gamestone& target,
             Qt::MoveAction | Qt::CopyAction, mimeData, Qt::LeftButton,
             Qt::NoModifier);
 
-    manager.draggedStone = &source;
+    manager->draggedStone = &source;
     target.dragEnterEvent(event);
 
     // Verify testcase
@@ -242,6 +292,7 @@ void JokerDragNDropTest::testDragAndDrop(Gamestone& source, Gamestone& target,
     QVERIFY2(event->isAccepted() == shouldAccept, failureMessage.str().c_str());
 
     delete event;
+    delete mimeData;
 }
 
 QTEST_MAIN(JokerDragNDropTest)

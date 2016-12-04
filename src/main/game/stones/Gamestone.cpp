@@ -7,10 +7,7 @@
 
 #include "Gamestone.h"
 #include "StoneManager.h"
-
-#if 0
 #include "ParentChangedEvent.h"
-#endif
 
 #include <QPen>
 #include <QDrag>
@@ -20,9 +17,11 @@
 #include <QMouseEvent>
 #include <QDesktopWidget>
 
-#ifdef _WIN32
-    // Makes the debug output more colorful
-    #include <windows.h>
+#ifdef _DEBUG
+    #ifdef _WIN32
+        // Makes the debug output more colorful
+        #include <windows.h>
+    #endif
 #endif
 
 /****************************************/
@@ -35,27 +34,20 @@ bool Gamestone::canMoveStones(true);
 
 // Constructors //
 Gamestone::Gamestone() :
-        QWidget(), stoneManager(NULL), first(false), color(BLACK), number(0), invalid(
-                false), player(NULL), stoneParent(HEAP), prev(NULL), next(NULL), oldPos(
-                0, 0), oldParent(HEAP), oldPrev(NULL), oldNext(NULL)
-{
-}
+        QWidget(), stoneManager(NULL), first(false), color(BLACK), number(0), invalid(false),
+        player(NULL), stoneParent(HEAP), prev(NULL), next(NULL), oldPos(0, 0), oldParent(HEAP),
+        oldPrev(NULL), oldNext(NULL), firstTimePlayedOut(true)
+{}
 
-Gamestone::Gamestone(QWidget* parent, StoneManager* stoneManager, bool isFirst,
-        StoneColor color, int number) :
-        QWidget(parent), stoneManager(stoneManager), first(isFirst), color(
-                color), number(number), invalid(false), player(NULL), stoneParent(
-                HEAP), prev(NULL), next(NULL), oldPos(0, 0), oldParent(HEAP), oldPrev(
-                NULL), oldNext(NULL)
+Gamestone::Gamestone(QWidget* parent, StoneManager* stoneManager, bool isFirst, StoneColor color,
+        int number) :
+        QWidget(parent), stoneManager(stoneManager), first(isFirst), color(color), number(number),
+        invalid(false), player(NULL), stoneParent(HEAP), prev(NULL), next(NULL), oldPos(0, 0),
+        oldParent(HEAP), oldPrev(NULL), oldNext(NULL), firstTimePlayedOut(true)
 {
     Q_ASSERT(stoneManager != NULL);
 
-    // TODO Just set if not on holder
-    setAcceptDrops(true);
-
-    // TODO Rework to use signals?
     this->hide();
-    //wxYield();
 
     QRect screen = QApplication::desktop()->screenGeometry();
     if (screen.width() <= 1023)
@@ -82,9 +74,7 @@ Gamestone::Gamestone(QWidget* parent, StoneManager* stoneManager, bool isFirst,
     this->resize(width, height);
 }
 
-Gamestone::~Gamestone()
-{
-}
+Gamestone::~Gamestone() {}
 
 // Getters and setters //
 int Gamestone::getHeight() const
@@ -100,6 +90,16 @@ int Gamestone::getWidth() const
 bool Gamestone::isJoker() const
 {
     return false;
+}
+
+bool Gamestone::isFirstTimePlayedOut() const
+{
+    return firstTimePlayedOut;
+}
+
+void Gamestone::finishedFirstTimePlayedOut()
+{
+    firstTimePlayedOut = false;
 }
 
 void Gamestone::setInvalid(bool isInvalid)
@@ -132,25 +132,42 @@ Gamestone::StoneParent Gamestone::getParent() const
     return stoneParent;
 }
 
-void Gamestone::setParent(StoneParent newParent, bool stoneMoved)
+void Gamestone::setParent(QWidget* parent)
 {
-    // TODO Rework
-    /*ParentChangedEvent e(wxPARENT_CHANGED, newParent, this, stoneMoved);
-     this->GetEventHandler()->ProcessEvent(e);
+    QWidget::setParent(parent);
+}
+
+void Gamestone::setParent(Gamestone::StoneParent newParent, bool stoneMoved)
+{
+    ParentChangedEvent event(newParent, this, stoneMoved);
+    emit parentChanged(event);
 
      // Just change parent if has not been vetoed
-     if (!e.GetVeto())
-     {*/
-    this->stoneParent = newParent;
-    /*}
+     if (!event.getVeto())
+     {
+         this->stoneParent = newParent;
+     }
 
      // Reset invalidation if moved back to holder
      if (this->stoneParent == Gamestone::HOLDER)
      {
-     this->setInvalid(false);
+         this->setInvalid(false);
      }
 
-     this->Refresh();*/
+     // Accept as drag'n'drop target if is not on heap anymore
+     if (this->stoneParent != Gamestone::HEAP)
+     {
+         setAcceptDrops(true);
+     }
+
+     // Show stone if not on heap and ai holder
+     if (newParent != Gamestone::HEAP &&
+             newParent != Gamestone::AIHOLDER)
+     {
+         this->showRow(true);
+     }
+
+     qApp->processEvents();
 }
 
 Player* Gamestone::getPlayer() const
@@ -186,8 +203,8 @@ void Gamestone::setPrev(Gamestone* prevStone)
     }
 
     /*#ifdef _DEBUG
-     std::cout << "Combining (prev) " << this << " and " << prevStone << std::endl;
-     #endif*/
+        std::cout << "Combining (prev) " << this << " and " << prevStone << std::endl;
+    #endif*/
 }
 
 Gamestone* Gamestone::getNext() const
@@ -213,29 +230,29 @@ void Gamestone::setNext(Gamestone* nextStone)
     }
 
     /*#ifdef _DEBUG
-     std::cout << "Combining (next) " << this << " and " << nextStone << std::endl;
-     #endif*/
+        std::cout << "Combining (next) " << this << " and " << nextStone << std::endl;
+    #endif*/
 }
 
 bool Gamestone::appendStone(Gamestone& otherStone)
 {
     // Drop on right if other stone is predecessor ...
-    if ((otherStone.getNumber() != -1 && otherStone.isPred(this)) ||
-    // ... if is same number and current stone is last in row ...
-            (this->isFirstInRow() && !this->isLastInRow()) ||
+    if ((otherStone.getNumber() != -1 && otherStone.isPred(this))
+            // ... if is same number and current stone is last in row ...
+            || (this->isFirstInRow() && !this->isLastInRow())
             // ... if is same number and other is last in row
-            (otherStone.isLastInRow() && !otherStone.isFirstInRow()))
+            || (otherStone.isLastInRow() && !otherStone.isFirstInRow()))
     {
         otherStone.setNext(this);
         return true;
     }
 
     // Dropping on left if other stone is successor ...
-    else if ((otherStone.getNumber() != -1 && otherStone.isSucc(this)) ||
-    // ... if is same color and current stone is first in row ..
-            (this->isLastInRow() && !this->isFirstInRow()) ||
+    else if ((otherStone.getNumber() != -1 && otherStone.isSucc(this))
+            // ... if is same color and current stone is first in row ...
+            || (this->isLastInRow() && !this->isFirstInRow())
             // ... if is same color and dragging over stone is first in row
-            (otherStone.isFirstInRow() && !otherStone.isLastInRow()))
+            || (otherStone.isFirstInRow() && !otherStone.isLastInRow()))
     {
         otherStone.setPrev(this);
         return true;
@@ -247,10 +264,10 @@ bool Gamestone::appendStone(Gamestone& otherStone)
 void Gamestone::storeStone()
 {
     /*#ifdef _DEBUG
-     std::cout << "Storing stone " << this << ": " << this->stoneParent << ", ";
-     std::cout << this->GetPosition().x  << ", " << this->GetPosition().y << ", ";
-     std::cout << this->prev << ", " << this->next << std::endl;
-     #endif*/
+        std::cout << "Storing stone " << this << ": " << this->stoneParent << ", ";
+        std::cout << this->pos().x()  << ", " << this->pos().y() << ", ";
+        std::cout << this->prev << ", " << this->next << std::endl;
+    #endif*/
 
     this->oldParent = this->stoneParent;
     this->oldPos = this->pos();
@@ -260,8 +277,8 @@ void Gamestone::storeStone()
 
 void Gamestone::storeStone(StoneParent parent)
 {
-    this->storeStone();
-    this->oldParent = parent; // Overwrites oldParent
+    this->storeStone(); // Overwrites oldParent
+    this->oldParent = parent;
 }
 
 void Gamestone::restoreStone()
@@ -273,10 +290,10 @@ void Gamestone::restoreStone()
     this->setNext(oldNext);
 
     /*#ifdef _DEBUG
-     std::cout << "Restored stone " << this << ": " << this->stoneParent << ", ";
-     std::cout << this->GetPosition().x  << ", " << this->GetPosition().y << ", ";
-     std::cout << this->prev << ", " << this->next << std::endl;
-     #endif*/
+        std::cout << "Restored stone " << this << ": " << this->stoneParent << ", ";
+        std::cout << this->pos().x()  << ", " << this->pos().y() << ", ";
+        std::cout << this->prev << ", " << this->next << std::endl;
+    #endif*/
 }
 
 // Private methods //
@@ -318,7 +335,8 @@ bool Gamestone::acceptDropping(Gamestone& otherStone)
     // Also accept if is same number and various color and row with same number
     if (otherStone.isSameNumber(this) && this->isRowWithSameNumber()
             && otherStone.isRowWithSameNumber()
-            // Needed, because next test doesn't fail if a joker is in the middle of a row with already 4 stones
+            // Needed, because next test doesn't fail if a joker is in the middle of a row
+            // with already 4 stones
             && this->countStonesInRow() + otherStone.countStonesInRow() <= 4
             && !otherStone.colorIsAlreadyInRow(this))
     {
@@ -396,14 +414,14 @@ bool Gamestone::colorIsAlreadyInRow(Gamestone* otherStone)
 bool Gamestone::colorIsAlreadyInRow(Gamestone* firstStone,
         Gamestone* otherStone)
 {
-    // The checks for unknown colors avoid that joker colors are threaten as already available colors
+    // The checks for unknown colors avoid that joker colors are threaten as already
+    // available colors
     if (otherStone == NULL || firstStone->getColor() == UNKNOWN)
     {
         return false;
     }
 
-    if (firstStone->isSameColor(otherStone)
-            && otherStone->getColor() != UNKNOWN)
+    if (firstStone->isSameColor(otherStone) && otherStone->getColor() != UNKNOWN)
     {
         return true;
     }
@@ -498,8 +516,6 @@ void Gamestone::moveAddedStones()
     {
         next->setParent(curr->getParent(), true);
         next->move(curr->pos() + QPoint(curr->getWidth(), 0));
-        // TODO Reimplement?
-        //next->Refresh();
         curr = next;
         next = next->getNext();
     }
@@ -511,8 +527,6 @@ void Gamestone::moveAddedStones()
     {
         prev->setParent(curr->getParent(), true);
         prev->move(curr->pos() - QPoint(prev->getWidth(), 0));
-        // TODO Reimplement
-        //prev->Refresh();
         curr = prev;
         prev = prev->getPrev();
     }
@@ -553,7 +567,8 @@ bool Gamestone::canMoveRowToBoard() const
 int Gamestone::asInt()
 {
     int stoneData(0);
-    // The +1 is needed because on jokers if the number is unknown it's represented as -1 which breaks the shift
+    // The +1 is needed because on jokers if the number is unknown it's represented as -1
+    // which breaks the shift
     stoneData = (stoneData | (this->getNumber() + 1)) << 5;
     // The same here, unknown colors are represented as -1
     stoneData = (stoneData | (this->getColor() + 1)) << 1;
@@ -587,116 +602,136 @@ int Gamestone::asInt()
 /*************/
 /* Operators */
 /*************/
-#if 0
-wxDataInputStream &operator>>(wxDataInputStream &input, Gamestone* stone)
+QXmlStreamReader &operator>>(QXmlStreamReader &input, Gamestone* stone)
 {
     // Restore position and parent
-    int x, y, parent;
-    input >> x >> y >> parent;
-    stone->setParent((Gamestone::StoneParent)parent, true);
-    stone->SetPosition(wxPoint(x, y));// First set parent, there the position will be automatically
-                                      // set if stone is from heap and overwritten here
+    if (!input.readNextStartElement() || input.name() != "settings") {
+        if (!input.hasError())
+        {
+            input.raiseError(QObject::tr("Expected 'settings' Tag,"
+                    " instead found '%1'.").arg(input.name().toString()));
+        }
+        return input; 
+    }
 
-                                      // Restore next and previous stones
-    int buf;
-    input >> buf;
-    if (buf != 0)
+    int x = input.attributes().value("x").toInt();
+    int y = input.attributes().value("y").toInt();
+    int parent = input.attributes().value("parent").toInt();
+    stone->setParent((Gamestone::StoneParent)parent, true);
+    stone->move(x, y);  // First set parent, there the position will be automatically
+                        // set if stone is from heap and overwritten here
+
+    // Restore next and previous stones
+    if (input.attributes().hasAttribute("next"))
     {
-        input >> buf;
-        stone->setNext(stone->stoneManager->getStoneFromInt(buf));
+        stone->setNext(stone->stoneManager->getStoneFromInt(
+                input.attributes().value("next").toInt()));
     }
     else
     {
         stone->setNext(NULL);
     }
 
-    input >> buf;
-    if (buf != 0)
+    if (input.attributes().hasAttribute("prev"))
     {
-        input >> buf;
-        stone->setPrev(stone->stoneManager->getStoneFromInt(buf));
+        stone->setPrev(stone->stoneManager->getStoneFromInt(
+                input.attributes().value("prev").toInt()));
     }
     else
     {
         stone->setPrev(NULL);
     }
+    input.skipCurrentElement(); // Finish handling of "settings" element
 
     // Restore saved settings of stone
-    input >> x >> y >> parent;
-    stone->oldPos = wxPoint(x, y);
+    if (!input.readNextStartElement() || input.name() != "oldSettings") {
+        if (!input.hasError())
+        {
+            input.raiseError(QObject::tr("Expected 'oldSettings' Tag,"
+                    " instead found '%1'.").arg(input.name().toString()));
+        }
+        return input;
+    }
+
+    x = input.attributes().value("x").toInt();
+    y = input.attributes().value("y").toInt();
+    parent = input.attributes().value("parent").toInt();
+    stone->oldPos = QPoint(x, y);
     stone->oldParent = (Gamestone::StoneParent)parent;
 
-    input >> buf;
-    if (buf != 0)
+    if (input.attributes().hasAttribute("next"))
     {
-        input >> buf;
-        stone->oldNext = stone->stoneManager->getStoneFromInt(buf);
+        stone->oldNext = stone->stoneManager->getStoneFromInt(
+                input.attributes().value("next").toInt());
     }
-    input >> buf;
-    if (buf != 0)
+    else
     {
-        input >> buf;
-        stone->oldPrev = stone->stoneManager->getStoneFromInt(buf);
+        stone->oldNext = NULL;
     }
+
+    if (input.attributes().hasAttribute("prev"))
+    {
+        stone->oldPrev = stone->stoneManager->getStoneFromInt(
+                input.attributes().value("prev").toInt());
+    }
+    else
+    {
+        stone->oldPrev = NULL;
+    }
+    input.skipCurrentElement(); // Finish handling of "oldSettings" element
+
+    input.skipCurrentElement(); // Finish handling of "stone" element
 
     return input;
 }
 
-wxDataOutputStream &operator<<(wxDataOutputStream &output, Gamestone* stone)
+QXmlStreamWriter &operator<<(QXmlStreamWriter &output, Gamestone* stone)
 {
     // First store the stone parameters
-    output << stone->asInt();
-    output << stone->GetPosition().x << stone->GetPosition().y;
-    output << stone->stoneParent;
+    output.writeStartElement("stone");
+    output.writeAttribute("val", QString::number(stone->asInt()));
+  
+    output.writeStartElement("settings");
+    output.writeAttribute("x", QString::number(stone->pos().x()));
+    output.writeAttribute("y", QString::number(stone->pos().y()));
+    output.writeAttribute("parent", QString::number(stone->stoneParent));
 
     // Next and previous stones
-    if (stone->getNext() != NULL)
+    if (stone->next != NULL)
     {
-        output << true;
-        output << stone->next->asInt();
-    }
-    else
-    {
-        output << false;
+        output.writeAttribute("next", QString::number(stone->next->asInt()));
     }
 
-    if (stone->getPrev() != NULL)
+    if (stone->prev != NULL)
     {
-        output << true;
-        output << stone->prev->asInt();
+        output.writeAttribute("prev", QString::number(stone->prev->asInt()));
     }
-    else
-    {
-        output << false;
-    }
+    output.writeEndElement();
 
     // Store saved settings of stone
-    output << stone->oldPos.x << stone->oldPos.y;
-    output << stone->oldParent;
+    output.writeStartElement("oldSettings");
+    output.writeAttribute("x", QString::number(stone->oldPos.x()));
+    output.writeAttribute("y", QString::number(stone->oldPos.y()));
+    output.writeAttribute("parent", QString::number(stone->oldParent));
 
+    // Next and previous stones
     if (stone->oldNext != NULL)
     {
-        output << true;
-        output << stone->oldNext->asInt();
+        output.writeAttribute("next", QString::number(stone->oldNext->asInt()));
     }
-    else
-    {
-        output << false;
-    }
+
     if (stone->oldPrev != NULL)
     {
-        output << true;
-        output << stone->oldPrev->asInt();
+        output.writeAttribute("prev", QString::number(stone->oldPrev->asInt()));
     }
-    else
-    {
-        output << false;
-    }
+    output.writeEndElement();
+
+    output.writeEndElement();
 
     return output;
 }
-#endif
 
+#ifdef _DEBUG
 std::ostream &operator<<(std::ostream &stream, Gamestone* stone)
 {
     const std::string colorNames[] = { "Unknown", "Black", "Blue", "Yellow", "Red" };
@@ -719,10 +754,10 @@ std::ostream &operator<<(std::ostream &stream, Gamestone* stone)
                     colors[stone->color + 1] | BACKGROUND_WHITE);
         #endif
 
-            // The color name resolving is a little hack, currently works with gcc, maybe there should be used something better?
-            // But for debugging, its doing its job ;).
-            stream << stone->number << " (" << colorNames[stone->color + 1] << ") "
-                    << stone->first;
+        // The color name resolving is a little hack, currently works with gcc and visual studio,
+        // maybe there should be used something better? But for debugging its doing its job ;)
+        stream << stone->number << " (" << colorNames[stone->color + 1] << ") "
+                << stone->first;
 
         #ifdef _WIN32
             SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), savedColor);
@@ -735,6 +770,7 @@ std::ostream &operator<<(std::ostream &stream, Gamestone* stone)
 
     return stream;
 }
+#endif
 
 /******************************************/
 /*     HELPER CLASSES FOR DRAG'N'DROP     */
@@ -753,13 +789,12 @@ QPixmap* Gamestone::renderPixmap(Gamestone* firstInRow)
         stoneCount++;
     }
 
-
     return widgetPixmap;
 }
 
-void Gamestone::showRow(Gamestone* firstInRow, bool show)
+void Gamestone::showRow(bool show)
 {
-    Gamestone* stone(firstInRow);
+    Gamestone* stone(this);
     while (stone != NULL)
     {
         if (show)
@@ -772,6 +807,20 @@ void Gamestone::showRow(Gamestone* firstInRow, bool show)
         }
         stone = stone->getNext();
     }
+
+    stone = this;
+    while (stone != NULL)
+    {
+        if (show)
+        {
+            stone->show();
+        }
+        else
+        {
+            stone->hide();
+        }
+        stone = stone->getPrev();
+    }
 }
 
 /******************************************/
@@ -779,8 +828,6 @@ void Gamestone::showRow(Gamestone* firstInRow, bool show)
 /******************************************/
 void Gamestone::paintEvent(QPaintEvent *)
 {
-    // TODO Buffer in QPixmap
-
     // Just invisible, if it's on the holder of ai
     if (stoneParent == AIHOLDER)
     {
@@ -838,7 +885,7 @@ void Gamestone::paintEvent(QPaintEvent *)
         showColor = 0xFF0000;
         break;
     case YELLOW:
-        showColor = 0xCACA00;
+        showColor = 0x999900;
         break;
     default:
         break; // Avoid warning
@@ -850,9 +897,7 @@ void Gamestone::paintEvent(QPaintEvent *)
     }
 
     // Draw the colored number to the middle of the stone
-    painter.setPen(
-            QColor(showColor >> 16, (showColor >> 8) % 0x100,
-                    showColor % 0x100));
+    painter.setPen(QColor(showColor >> 16, (showColor >> 8) % 0x100, showColor % 0x100));
     #ifdef _WIN32
         QFont font("SansSerif", 14, QFont::Normal);
     #else
@@ -892,7 +937,7 @@ void Gamestone::dragEnterEvent(QDragEnterEvent *event)
     }
 }
 
-void Gamestone::dragMoveEvent(QDragMoveEvent *event)
+void Gamestone::dragMoveEvent(QDragMoveEvent *)
 {
     this->moveAddedStones();
 }
@@ -911,8 +956,7 @@ void Gamestone::dropEvent(QDropEvent *event)
         if (!dragSource->appendStone(*this))
         {
             // No "hard" condition matched, so drop depending on mouse position
-            if (this->pos().x() + event->pos().x()
-                    > this->pos().x() + this->getWidth() / 2)
+            if (this->pos().x() + event->pos().x() > this->pos().x() + this->getWidth() / 2)
             {
                 this->setNext(dragSource);
             }
@@ -949,19 +993,16 @@ void Gamestone::mousePressEvent(QMouseEvent* event)
     this->setCursor(Qt::ClosedHandCursor);
 }
 
-void Gamestone::mouseReleaseEvent(QMouseEvent* event)
+void Gamestone::mouseReleaseEvent(QMouseEvent *)
 {
     // If clicked, move stone from heap to holder
-    if (this->stoneParent == HEAP)
+    // If the stones can not be moved, the parent can not be changed
+    if (this->stoneParent == HEAP && Gamestone::canMoveStones)
     {
-        // If the stones can not be moved, the parent can not be changed
-        if (!Gamestone::canMoveStones)
-        {
-            return;
-        }
-
         this->setParent(HOLDER);
     }
+
+    this->setCursor(Qt::OpenHandCursor);
 }
 
 void Gamestone::mouseMoveEvent(QMouseEvent* event)
@@ -974,14 +1015,13 @@ void Gamestone::mouseMoveEvent(QMouseEvent* event)
     {
         return;
     }
-    if ((event->pos() - dragStartPosition).manhattanLength()
-            < QApplication::startDragDistance())
+    if ((event->pos() - dragStartPosition).manhattanLength() < QApplication::startDragDistance())
     {
         return;
     }
 
     // Just do anything if we can move the stones. We must be dragging, since qt just sends
-    // the events if left curser is pressed
+    // the events if left cursor is pressed
     if (this->stoneParent != HEAP && Gamestone::canMoveStones)
     {
         // If not all stones should be moved, remove previous and next stone
@@ -991,20 +1031,22 @@ void Gamestone::mouseMoveEvent(QMouseEvent* event)
             this->setNext(NULL);
         }
 
-        // Find first stone in row, since all following actions are relative
-        // to the first stone in the row
+        // Find first stone in row, since all following actions are relative to the first stone
+        // in the row
         Gamestone* firstInRow(this);
         while (firstInRow->getPrev() != NULL)
         {
             firstInRow = firstInRow->getPrev();
         }
 
-        // Create drag object and store the tragged stone
+        // Create drag object and store the dragged stone
         QByteArray itemData;
         QDataStream dataStream(&itemData, QIODevice::WriteOnly);
         dataStream << QPoint(dragStartPosition);
-        QDrag *drag = new QDrag(this);
-        QMimeData *mimeData = new QMimeData;
+
+        // Drag object, does not need to be deleted, this will be done by gamestone.
+        QDrag* drag = new QDrag(this);
+        QMimeData* mimeData = new QMimeData;
         mimeData->setData(GAMESTONE_MIMETYPE, itemData);
 
         // render the pixmap
@@ -1014,19 +1056,19 @@ void Gamestone::mouseMoveEvent(QMouseEvent* event)
         drag->setPixmap(*widgetPixmap);
         drag->setHotSpot(dragStartPosition + QPoint(this->pos().x() - firstInRow->pos().x(), 0));
 
-        this->showRow(firstInRow, false);
+        // ... and hide the original row afterwards
+        this->showRow(false);
         stoneManager->draggedStone = this;
 
         // Execute drag'n'drop
-        Qt::DropAction dropResult = drag->exec(Qt::MoveAction);
+        drag->exec(Qt::MoveAction);
 
         // Drag'n'drop finished, so we clean up everything now
         stoneManager->draggedStone = NULL;
-        this->showRow(firstInRow, true);
+        this->showRow(true);
         this->moveAddedStones();
         this->setCursor(Qt::OpenHandCursor);
 
-        delete drag;
         delete widgetPixmap;
     }
 }

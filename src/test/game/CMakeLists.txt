@@ -1,25 +1,39 @@
 # The subdirectories to build
 set(SUBDIRS stones)
 
-# Build all files in this directory
-#SET(SOURCE
-#	CountdownTimer.cpp
-#	RummyCube.cpp
-#	RummyCubeNetwork.cpp
-#)
-
-#SET(HEADERS
-#	CountdownTimer.h
-#	RummyCube.h
-#	RummyCubeNetwork.h
-#)
-
-# Build subdirs and include for build
+# Build subdirs
 foreach(SUB ${SUBDIRS})
-	include_directories(${CMAKE_CURRENT_SOURCE_DIR}/${SUB})
-	link_directories(${CMAKE_CURRENT_BINARY_DIR}/${SUB})
-	add_subdirectory(${SUB})
+    add_subdirectory(${SUB})
 endforeach(SUB)
 
-#add_library(GameTests ${SOURCE} ${HEADERS})
-#target_link_libraries(GameTests StoneTests)
+# The directories that contain the classes under test
+set(CLASSESUNDERTESTDIR game)
+
+# Build all files in this directory
+SET(SOURCE
+    GameSavingTest.cpp
+)
+
+SET(HEADERS
+    GameSavingTest.h
+)
+
+foreach(SUB ${CLASSESUNDERTESTDIR})
+    include_directories(${CMAKE_SOURCE_DIR}/main/${SUB})
+    link_directories(${CMAKE_BINARY_DIR}/main/${SUB})
+endforeach(SUB)
+
+source_group("Header Files" FILES ${HEADERS})
+
+list(LENGTH SOURCE tmp)
+math(EXPR len "${tmp} - 1")
+
+foreach(index RANGE ${len})
+    list(GET SOURCE ${index} src)
+    list(GET HEADERS ${index} hdr)
+    get_filename_component(TEST_EXE ${src} NAME_WE)
+        
+    add_executable(${TEST_EXE} ${src})
+    add_test(NAME ${TEST_EXE} COMMAND ${TEST_EXE} -xunitxml -o ${TEST_EXE}-result.xml)
+    target_link_libraries(${TEST_EXE} Game Qt5::Test)
+endforeach()

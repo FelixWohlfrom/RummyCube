@@ -8,6 +8,8 @@
 #include "game/Settings.h"
 #include "gui/MainWindow.h"
 
+#include <time.h>
+
 #include <QApplication>
 
 #ifdef _DEBUG
@@ -27,6 +29,9 @@
 
 int main(int argc, char *argv[])
 {
+    // initialize random seed
+    srand(time(NULL));
+
     // Enable debug console on win32
     #ifdef _DEBUG
         #ifdef _WIN32
@@ -46,6 +51,7 @@ int main(int argc, char *argv[])
     #endif
 
     QApplication application(argc, argv);
+
     MainWindow* mainWindow = new MainWindow();
     mainWindow->show();
 

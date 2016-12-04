@@ -1,0 +1,481 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>CreateNetworkGameWindow</class>
+ <widget class="QDialog" name="CreateNetworkGameWindow">
+  <property name="windowModality">
+   <enum>Qt::ApplicationModal</enum>
+  </property>
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>404</width>
+    <height>280</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="windowTitle">
+   <string>Create Network Game</string>
+  </property>
+  <property name="modal">
+   <bool>true</bool>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QStackedWidget" name="statusDisplay">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="autoFillBackground">
+      <bool>false</bool>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::Box</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
+     </property>
+     <property name="currentIndex">
+      <number>0</number>
+     </property>
+     <widget class="QWidget" name="networkGameSettings">
+      <layout class="QGridLayout" name="gridLayout" rowstretch="0,0,0,0,0,0,0,0" columnstretch="0,1,0">
+       <item row="7" column="1" colspan="2">
+        <widget class="QLabel" name="connectedPlayer">
+         <property name="toolTip">
+          <string>The name of the player which are connected to your game</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="0">
+        <widget class="QLabel" name="ipAddressLabel">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="toolTip">
+          <string>Here you can see your IP-Address(es), pass them to the player who want to play with you</string>
+         </property>
+         <property name="text">
+          <string>Your IP Address(es):</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="2">
+        <widget class="QSpinBox" name="stonesAtBeginning">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="toolTip">
+          <string>Insert here the number of Stones that you can get in the first round</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+         </property>
+         <property name="minimum">
+          <number>5</number>
+         </property>
+         <property name="maximum">
+          <number>30</number>
+         </property>
+         <property name="value">
+          <number>14</number>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="2">
+        <widget class="QSpinBox" name="sumAtBeginning">
+         <property name="toolTip">
+          <string>Insert the sum that you need to play out first time</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+         </property>
+         <property name="minimum">
+          <number>3</number>
+         </property>
+         <property name="maximum">
+          <number>39</number>
+         </property>
+         <property name="value">
+          <number>27</number>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="0" colspan="3">
+        <widget class="QCheckBox" name="stonesInOneRow">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="toolTip">
+          <string>If this option is selected the sum that you need to play out first time has to be in one row</string>
+         </property>
+         <property name="text">
+          <string>Stones must be in one row</string>
+         </property>
+         <property name="checked">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="0">
+        <widget class="QCheckBox" name="timeLimitEnabled">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="toolTip">
+          <string>Click here to switch the time limit on and off</string>
+         </property>
+         <property name="text">
+          <string>Time limit on/off</string>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="0" colspan="3">
+        <widget class="QSlider" name="timeLimitValue">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimum">
+          <number>15</number>
+         </property>
+         <property name="maximum">
+          <number>300</number>
+         </property>
+         <property name="value">
+          <number>60</number>
+         </property>
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="tickPosition">
+          <enum>QSlider::TicksAbove</enum>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="1" colspan="2">
+        <widget class="QLabel" name="timeLimitLabel">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="text">
+          <string>1:00 minutes</string>
+         </property>
+         <property name="textFormat">
+          <enum>Qt::PlainText</enum>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="7" column="0">
+        <widget class="QLabel" name="connectedPlayerLabel">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="toolTip">
+          <string/>
+         </property>
+         <property name="text">
+          <string>Connected Player:</string>
+         </property>
+         <property name="textFormat">
+          <enum>Qt::PlainText</enum>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1" colspan="2">
+        <widget class="QLineEdit" name="ipAddress">
+         <property name="toolTip">
+          <string>Here you can see your IP-Address(es), pass them to the player who want to play with you</string>
+         </property>
+         <property name="readOnly">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0" colspan="2">
+        <widget class="QLabel" name="stonesAtBeginningLabel">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="toolTip">
+          <string>Insert here the number of Stones that you can get in the first round</string>
+         </property>
+         <property name="text">
+          <string>Number of stones that can be taken in first round:</string>
+         </property>
+         <property name="textFormat">
+          <enum>Qt::PlainText</enum>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="0" colspan="2">
+        <widget class="QLabel" name="sumAtBeginningLabel">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="toolTip">
+          <string>Insert the sum that you need to play out first time</string>
+         </property>
+         <property name="text">
+          <string>Sum of stone numbers that you need to play first time out:</string>
+         </property>
+         <property name="textFormat">
+          <enum>Qt::PlainText</enum>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="waitForOpponent">
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <item>
+        <spacer name="waitForOpponentTopSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QLabel" name="waitForOpponentLabel">
+         <property name="toolTip">
+          <string>Waiting for your opponent to start game...</string>
+         </property>
+         <property name="text">
+          <string>Waiting for your opponent to start game...</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="waitForOpponentBottomSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="buttonLayout" stretch="0,0,0">
+     <property name="sizeConstraint">
+      <enum>QLayout::SetDefaultConstraint</enum>
+     </property>
+     <item>
+      <spacer name="buttonSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="startGameButton">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="toolTip">
+        <string>Click here to start a network game</string>
+       </property>
+       <property name="text">
+        <string>&amp;Start game</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="cancelButton">
+       <property name="toolTip">
+        <string>Cancel network game creation</string>
+       </property>
+       <property name="text">
+        <string>&amp;Cancel</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>cancelButton</sender>
+   <signal>clicked()</signal>
+   <receiver>CreateNetworkGameWindow</receiver>
+   <slot>cancelClickEvent()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>346</x>
+     <y>261</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>196</x>
+     <y>141</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>startGameButton</sender>
+   <signal>clicked()</signal>
+   <receiver>CreateNetworkGameWindow</receiver>
+   <slot>startGameClickEvent()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>265</x>
+     <y>261</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>196</x>
+     <y>141</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>timeLimitEnabled</sender>
+   <signal>clicked()</signal>
+   <receiver>CreateNetworkGameWindow</receiver>
+   <slot>timeLimitEnabledClickEvent()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>69</x>
+     <y>129</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>201</x>
+     <y>139</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>timeLimitValue</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>CreateNetworkGameWindow</receiver>
+   <slot>timeLimitSlideEvent(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>201</x>
+     <y>157</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>201</x>
+     <y>139</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>stonesAtBeginning</sender>
+   <signal>valueChanged(QString)</signal>
+   <receiver>CreateNetworkGameWindow</receiver>
+   <slot>spinCtrlChangedEvent(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>365</x>
+     <y>55</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>201</x>
+     <y>139</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>sumAtBeginning</sender>
+   <signal>valueChanged(QString)</signal>
+   <receiver>CreateNetworkGameWindow</receiver>
+   <slot>spinCtrlChangedEvent(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>365</x>
+     <y>81</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>201</x>
+     <y>139</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>stonesInOneRow</sender>
+   <signal>clicked()</signal>
+   <receiver>CreateNetworkGameWindow</receiver>
+   <slot>stonesInOneRowClickEvent()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>201</x>
+     <y>106</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>201</x>
+     <y>139</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>

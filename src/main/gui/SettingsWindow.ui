@@ -1,0 +1,476 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>SettingsWindow</class>
+ <widget class="QDialog" name="SettingsWindow">
+  <property name="windowModality">
+   <enum>Qt::ApplicationModal</enum>
+  </property>
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>424</width>
+    <height>328</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="windowTitle">
+   <string>Settings</string>
+  </property>
+  <property name="modal">
+   <bool>true</bool>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QFrame" name="settingsFrame">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="autoFillBackground">
+      <bool>false</bool>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::Box</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_2">
+      <item>
+       <layout class="QGridLayout" name="topLayout" rowstretch="0,0,0,0,0">
+        <item row="1" column="1">
+         <widget class="QSpinBox" name="stonesAtBeginning">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="toolTip">
+           <string>Insert here the number of Stones that you can get in the first round</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+          </property>
+          <property name="minimum">
+           <number>5</number>
+          </property>
+          <property name="maximum">
+           <number>30</number>
+          </property>
+          <property name="value">
+           <number>14</number>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QLabel" name="stonesAtBeginningLabel">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="toolTip">
+           <string>Insert here the number of Stones that you can get in the first round</string>
+          </property>
+          <property name="text">
+           <string>Number of stones that can be taken in first round: *</string>
+          </property>
+          <property name="textFormat">
+           <enum>Qt::PlainText</enum>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="0">
+         <widget class="QLabel" name="sumAtBeginningLabel">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="toolTip">
+           <string>Insert the sum that you need to play out first time</string>
+          </property>
+          <property name="text">
+           <string>Sum of stone numbers that you need to play first time out: *</string>
+          </property>
+          <property name="textFormat">
+           <enum>Qt::PlainText</enum>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="0">
+         <widget class="QLabel" name="aiPlayerCountLabel">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="toolTip">
+           <string>Choose the number of computer players here</string>
+          </property>
+          <property name="text">
+           <string>Number of PC Players: *</string>
+          </property>
+          <property name="textFormat">
+           <enum>Qt::PlainText</enum>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="1">
+         <widget class="QSpinBox" name="sumAtBeginning">
+          <property name="toolTip">
+           <string>Insert the sum that you need to play out first time</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+          </property>
+          <property name="minimum">
+           <number>3</number>
+          </property>
+          <property name="maximum">
+           <number>39</number>
+          </property>
+          <property name="value">
+           <number>27</number>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="1">
+         <widget class="QComboBox" name="aiPlayerCount">
+          <property name="toolTip">
+           <string>Choose the number of computer players here</string>
+          </property>
+          <item>
+           <property name="text">
+            <string>1</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>2</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>3</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>4</string>
+           </property>
+          </item>
+         </widget>
+        </item>
+        <item row="3" column="0" colspan="2">
+         <widget class="QCheckBox" name="stonesInOneRow">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="toolTip">
+           <string>If this option is selected the sum that you need to play out first time has to be in one row</string>
+          </property>
+          <property name="text">
+           <string>Stones must be in one row *</string>
+          </property>
+          <property name="checked">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QGridLayout" name="timeLimitLayout">
+        <property name="sizeConstraint">
+         <enum>QLayout::SetDefaultConstraint</enum>
+        </property>
+        <item row="2" column="0" colspan="2">
+         <widget class="QSlider" name="timeLimitValue">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimum">
+           <number>15</number>
+          </property>
+          <property name="maximum">
+           <number>300</number>
+          </property>
+          <property name="value">
+           <number>60</number>
+          </property>
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="tickPosition">
+           <enum>QSlider::TicksAbove</enum>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <widget class="QLabel" name="timeLimitLabel">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="text">
+           <string>1:00 minutes</string>
+          </property>
+          <property name="textFormat">
+           <enum>Qt::PlainText</enum>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QCheckBox" name="timeLimitEnabled">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="toolTip">
+           <string>Click here to switch the time limit on and off</string>
+          </property>
+          <property name="text">
+           <string>Time limit on/off *</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="0" colspan="2">
+         <widget class="QLabel" name="infoText">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="text">
+           <string>* These Settings are used the next time you start a new game</string>
+          </property>
+          <property name="textFormat">
+           <enum>Qt::PlainText</enum>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QGridLayout" name="imageLayout">
+        <item row="1" column="1">
+         <widget class="QPushButton" name="defaultButton">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="toolTip">
+           <string>Click here to use the default pictures</string>
+          </property>
+          <property name="text">
+           <string>Default</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="2">
+         <widget class="QLabel" name="gameboardLabel">
+          <property name="text">
+           <string>Gameboard:</string>
+          </property>
+          <property name="textFormat">
+           <enum>Qt::PlainText</enum>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="0">
+         <widget class="QLabel" name="holderLabel">
+          <property name="text">
+           <string>Holder:</string>
+          </property>
+          <property name="textFormat">
+           <enum>Qt::PlainText</enum>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="buttonLayout" stretch="0,0,0,0">
+     <property name="sizeConstraint">
+      <enum>QLayout::SetDefaultConstraint</enum>
+     </property>
+     <item>
+      <spacer name="buttonSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="resetButton">
+       <property name="toolTip">
+        <string>Reset all settings</string>
+       </property>
+       <property name="text">
+        <string>&amp;Reset</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="okButton">
+       <property name="toolTip">
+        <string>Save settings and close this window</string>
+       </property>
+       <property name="text">
+        <string>&amp;Ok</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="cancelButton">
+       <property name="toolTip">
+        <string>Cancel changes and close this window</string>
+       </property>
+       <property name="text">
+        <string>&amp;Cancel</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>okButton</sender>
+   <signal>clicked()</signal>
+   <receiver>SettingsWindow</receiver>
+   <slot>okClickEvent()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>348</x>
+     <y>400</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>245</x>
+     <y>211</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>cancelButton</sender>
+   <signal>clicked()</signal>
+   <receiver>SettingsWindow</receiver>
+   <slot>reject()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>439</x>
+     <y>400</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>245</x>
+     <y>211</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>timeLimitEnabled</sender>
+   <signal>clicked()</signal>
+   <receiver>SettingsWindow</receiver>
+   <slot>timeLimitEnabledClickEvent()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>128</x>
+     <y>182</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>245</x>
+     <y>211</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>timeLimitValue</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>SettingsWindow</receiver>
+   <slot>timeLimitSlideEvent(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>245</x>
+     <y>216</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>245</x>
+     <y>211</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>resetButton</sender>
+   <signal>clicked()</signal>
+   <receiver>SettingsWindow</receiver>
+   <slot>resetClickEvent()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>247</x>
+     <y>316</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>240</x>
+     <y>169</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>defaultButton</sender>
+   <signal>clicked()</signal>
+   <receiver>SettingsWindow</receiver>
+   <slot>defaultClickEvent()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>197</x>
+     <y>263</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>211</x>
+     <y>162</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>

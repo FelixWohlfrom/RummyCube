@@ -9,111 +9,78 @@
 #define PARENTCHANGEDEVENT_H_
 
 #include "Gamestone.h"
-#include <wx/event.h>
-
-// Declaration for wxwidgets
-DECLARE_EVENT_TYPE(wxPARENT_CHANGED, wxNewEventType())
 
 /**
- * This class defines the event that is fired if the parent of a gamestone
- * has changed.
+ * This class defines the data that is emitted when a gamestone tries to change the parent.
+ * It provides a method to veto the event, so that the parent isn't changed.
  */
-class ParentChangedEvent: public wxCommandEvent
+class ParentChangedEvent
 {
-	public:
-		/**
-		 * Default constructor
-		 *
-		 * @param commandType The command type of the event
-		 * @param parent The new parent
-		 * @param sender The sender stone
-		 * @param stoneMoved If the stone has been moved during parent change or not
-		 * @param id The id of the event (default 0)
-		 */
-		ParentChangedEvent(wxEventType commandType, int parent, Gamestone* sender, bool stoneMoved, int id = 0);
+    public:
+        /**
+         * Default constructor.
+         *
+         * @param parent The new parent
+         * @param sender The sender stone
+         * @param stoneMoved If the stone has been moved during parent change or not
+         */
+        ParentChangedEvent(Gamestone::StoneParent parent, Gamestone* sender, bool stoneMoved);
 
-		/**
-		 * Copy constructor
-		 *
-		 * @param orig The original event
-		 */
-		ParentChangedEvent(const ParentChangedEvent &orig);
+        /**
+         * Returns the new parent of the stone.
+         *
+         * @return The parent
+         */
+        int getParent() const;
 
-		/**
-		 * Destructor, empty
-		 */
-		virtual ~ParentChangedEvent();
+        /**
+         * Returns the sender gamestone.
+         *
+         * @return The sender
+         */
+        Gamestone* getSender() const;
 
-		/**
-		 * Clones the event
-		 *
-		 * @return A clone of the event
-		 */
-		wxEvent* Clone() const;
+        /**
+         * Returns if the stone has been moved (true) or clicked (false) for parent change.
+         *
+         * @return Returns true if the stone has been moved
+         */
+        bool getStoneMoved() const;
 
-		/**
-		 * Returns the new parent of the stone
-		 *
-		 * @return The parent
-		 */
-		int GetParent() const;
+        /**
+         * Returns the status of the veto.
+         *
+         * @return If the event has been vetoed
+         */
+        bool getVeto() const;
 
-		/**
-		 * Returns the sender gamestone
-		 *
-		 * @return The sender
-		 */
-		Gamestone* GetSender() const;
+        /**
+         * Veto the event (so the parent won't be changed in sender).
+         *
+         * @param veto If the event should be vetoed or not
+         */
+        void veto(bool veto = true);
 
-		/**
-		 * Returns if the stone has been moved (true) or clicked (false) for parent change
-		 *
-		 * @return Returns true, if the stone has been moved
-		 */
-		bool GetStoneMoved() const;
+    private:
+        /**
+         * If the event has been vetoed.
+         */
+        bool vetoed;
 
-		/**
-		 * Returns the status of the veto.
-		 *
-		 * @return If the event has been vetoed
-		 */
-		bool GetVeto() const;
+        /**
+         * The new parent to which the stone has been set.
+         */
+        int parent;
 
-		/**
-		 * Veto the event (so the parent won't be changed in sender)
-		 *
-		 * @param veto If the event should be vetoed or not
-		 */
-		void Veto(bool veto = true);
+        /**
+         * The sender gamestone of the event.
+         */
+        Gamestone* sender;
 
-	private:
-		/**
-		 * If the event has been vetoed.
-		 */
-		bool vetoed;
-
-		/**
-		 * The new parent to which the stone has been set
-		 */
-		int parent;
-
-		/**
-		 * The sender gamestone of the event
-		 */
-		Gamestone* sender;
-
-		/**
-		 * If the stone has been moved during parent change or not
-		 */
-		bool moved;
+        /**
+         * If the stone has been moved during parent change or not.
+         */
+        bool moved;
 };
-
-// For wxwidgets
-typedef void (wxEvtHandler::*ParentChangedEventFunction)(ParentChangedEvent &);
-
-#define EVT_PARENT_CHANGED(fn)                                        	\
-	DECLARE_EVENT_TABLE_ENTRY( wxPARENT_CHANGED, wxID_ANY, wxID_ANY,  	\
-	(wxObjectEventFunction)(wxEventFunction)(wxCommandEventFunction) 	\
-			wxStaticCastEvent(ParentChangedEventFunction, &fn), (wxObject*) NULL ),
 
 #endif /* PARENTCHANGEDEVENT_H_ */

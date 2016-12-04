@@ -6,56 +6,76 @@
  */
 
 #include "NetworkPlayer.h"
-#include "../../network/NetworkGameClosedEvent.h"
 
-NetworkPlayer::NetworkPlayer(wxString name, StoneManager& stoneManager, wxSocketBase& sock) :
-	OpponentPlayer(name, stoneManager, 0, 0, false), playerHasWon(false), roundFinished(false),
-	sock(sock), handler(NULL)
-{};
+NetworkPlayer::NetworkPlayer(QString name, StoneManager& stoneManager, QTcpSocket& sock,
+        int stonesAtBeginning, int sumAtBeginning, bool stonesInOneRow) :
+    OpponentPlayer(name, stoneManager, stonesAtBeginning, sumAtBeginning, stonesInOneRow),
+    playerHasWon(false), roundFinished(false), sock(sock)
+{
+    connect(&sock, SIGNAL(readyRead()),
+             this, SLOT(parseData()));
 
-NetworkPlayer::~NetworkPlayer() {};
+    connect(&sock, SIGNAL(disconnected()),
+             this, SLOT(opponentDisconnected()));
+}
+
+NetworkPlayer::~NetworkPlayer() {}
 
 bool NetworkPlayer::hasWon()
 {
-	return playerHasWon;
+    return playerHasWon;
 }
 
-void NetworkPlayer::setCloseEventHandler(wxEvtHandler* newHandler)
+QTcpSocket& NetworkPlayer::getSocket()
 {
-	this->handler = newHandler;
+    return sock;
 }
 
 void NetworkPlayer::parseData()
 {
-	if (!sock.WaitForRead(0, 100))
-	{
-		wxMilliSleep(100);
-		return;
-	}
+    while (sock.bytesAvailable() > 0)
+    {
+        QString msg = Network::read(sock);
 
-	wxString msg = Network::read(sock);
+        if (msg == "boardStatus")
+        {
+            try
+            {
+                Network::readBoardStatus(sock, stoneManager);
+            }
+            catch (const QString& e) 
+            {
+                emit connectionError(e);
+            }
+        }
+        else if (msg == "disconnected")
+        {
+            QString playerName = Network::read(sock);
+            // TODO Notify other players and main window once more than two
+            // players are supported
 
-	if (msg == _T("boardStatus"))
-	{
-		Network::readBoardStatus(sock, stoneManager);
-	}
-	else if (msg == _T("disconnected"))
-	{
-		wxString playerName = Network::read(sock);
-		if (handler != NULL)
-		{
-			NetworkGameClosedEvent e(wxNETWORK_GAME_CLOSED, playerName);
-			handler->ProcessEvent(e);
-		}
+            stopPlayerPlaying = true;
+        }
+        else if (msg == "playerWon")
+        {
+            playerHasWon = true;
+        }
+        else if (msg == "roundFinished")
+        {
+            roundFinished = true;
+        }
+        else
+        {
+            emit connectionError(tr("Received invalid command: %1").arg(msg));
+        }
+    }
+}
 
-		stopPlayerPlaying = true;
-	}
-	else if (msg == _T("playerWon"))
-	{
-		playerHasWon = true;
-	}
-	else if (msg == _T("roundFinished"))
-	{
-		roundFinished = true;
-	}
+void NetworkPlayer::opponentDisconnected()
+{
+    stopPlayerPlaying = true;
+    if (playerHasWon)
+    {
+        return;
+    }
 }
