@@ -400,10 +400,13 @@ void MainWindow::restartGame()
 
 	// Reset game
 	wxDELETE(game);
-	if (nextGame != NULL) {
+	if (nextGame != NULL)
+	{
 		game = nextGame;
 		nextGame = NULL;
-	} else {
+	}
+	else
+	{
 		game = new RummyCube();
 	}
 
@@ -608,7 +611,7 @@ void MainWindow::moveToHolder(Gamestone& gamestone)
 									break;
 			case Gamestone::RED:	y = 3;
 									break;
-			default: 				break;	// Avoid warning
+			default:				break;	// Avoid warning
 		}
 		// Calculate top position
 		y = y * (gamestone.getHeight() + 2) + screenHeight / 200 + 10;
@@ -687,7 +690,7 @@ bool MainWindow::stoneUnderRow(int x, int y, int rowLength)
 			) && (
 				// Vertical top end is in the row
 				((*stone)->GetPosition().y >= y && (*stone)->GetPosition().y <= y + (*stone)->GetSize().y) ||
-				((*stone)->GetPosition().y + (*stone)->GetSize().y >= y && (*stone)->GetPosition().y + (*stone)->GetSize().y <= y  +(*stone)->GetSize().y)
+				((*stone)->GetPosition().y + (*stone)->GetSize().y >= y && (*stone)->GetPosition().y + (*stone)->GetSize().y <= y + (*stone)->GetSize().y)
 			))
 		{
 			#ifdef _DEBUG
@@ -713,8 +716,8 @@ void MainWindow::OnNewGame(wxCommandEvent& WXUNUSED(e))
 	{
 		if (gameState != GAME_IDLE)
 		{
-			game->stopGame();
 			gameState = GAME_RESTART_GAME;
+			game->stopGame();
 		}
 		else
 		{
@@ -982,8 +985,8 @@ void MainWindow::OnCreateNetworkGame(wxCommandEvent& WXUNUSED(e))
 
 		if (gameState != GAME_IDLE)
 		{
-			game->stopGame();
 			gameState = GAME_RESTART_GAME;
+			game->stopGame();
 		}
 		else
 		{
@@ -1017,9 +1020,11 @@ void MainWindow::OnJoinNetworkGame(wxCommandEvent& WXUNUSED(e))
 
 		if (gameState != GAME_IDLE)
 		{
-			game->stopGame();
 			gameState = GAME_JOIN_NETWORK_GAME;
-		} else {
+			game->stopGame();
+		}
+		else
+		{
 			gameState = GAME_JOIN_NETWORK_GAME;
 			this->restartGame();
 		}
@@ -1096,8 +1101,8 @@ void MainWindow::OnNetworkGameClosed(NetworkGameClosedEvent& e)
 
 	if (gameState == GAME_OPPONENT_PLAYING)
 	{
-		game->stopGame();
 		gameState = GAME_RESTART_GAME;
+		game->stopGame();
 	}
 	else
 	{
