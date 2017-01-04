@@ -1,3 +1,3 @@
 #ignored files/dirs
+build*
 doc
-i18n/*.mo
