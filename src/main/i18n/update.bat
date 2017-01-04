@@ -1,3 +1,8 @@
-lupdate ..\..\ -locations relative -ts RummyCube_de.ts
+@echo off
 
-REM lupdate ..\..\ -locations relative -no-obsolete -ts RummyCube_de.ts
+set remove_unused=
+if "%1" == "-r" (
+    set remove_unused=-no-obsolete
+)
+
+forfiles /s /m *.ts /c "cmd /c lupdate ..\.. -locations relative %remove_unused% -ts @file"
