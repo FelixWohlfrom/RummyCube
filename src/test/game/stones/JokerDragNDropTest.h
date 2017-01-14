@@ -114,9 +114,46 @@ class JokerDragNDropTest: public QObject
          * @test
          * Tests dragging a row containing multiple stones containing a joker
          * over a row containing a joker with multiple stones, with same colors
-         * and ascending numbers is accepted correctly.
+         * and ascending numbers is accepted correctly. The following combination is tested:
+         * Joker -> Black 2 combined with Joker -> Black 4
          */
-        void rowWithJoker_rowWithJoker_sameColorDifferentNumbers();
+        void rowWithJoker_rowWithJoker_sameColorDifferentNumbers_JokerOverStone1();
+
+        /**
+         * @test
+         * Tests dragging a row containing multiple stones containing a joker
+         * over a row containing a joker with multiple stones, with same colors
+         * and ascending numbers is accepted correctly. The following combination is tested:
+         * Black 1 -> Joker combined with Black 3 -> Joker
+         */
+        void rowWithJoker_rowWithJoker_sameColorDifferentNumbers_JokerOverStone2();
+
+        /**
+         * @test
+         * Tests dragging a row containing multiple stones containing a joker
+         * over a row containing a joker with multiple stones, with same colors
+         * and ascending numbers is accepted correctly. The following combination is tested:
+         * Black 1 -> Joker combined with Joker -> Black 4
+         */
+        void rowWithJoker_rowWithJoker_sameColorDifferentNumbers_JokerOverJoker1();
+
+        /**
+         * @test
+         * Tests dragging a row containing multiple stones containing a joker
+         * over a row containing a joker with multiple stones, with same colors
+         * and ascending numbers is accepted correctly. The following combination is tested:
+         * Black 1 -> Black 2 -> Joker combined with Joker -> Black 5 -> Black 6
+         */
+        void rowWithJoker_rowWithJoker_sameColorDifferentNumbers_JokerOverJoker2();
+
+        /**
+         * @test
+         * Tests dragging a row containing multiple stones containing a joker
+         * over a row containing a joker with multiple stones, with same colors
+         * and ascending numbers is accepted correctly. The following combination is tested:
+         * Joker -> Black 2 combined with Black 3 -> Joker
+         */
+        void rowWithJoker_rowWithJoker_sameColorDifferentNumbers_StoneOverStone();
 
         /**
          * @test

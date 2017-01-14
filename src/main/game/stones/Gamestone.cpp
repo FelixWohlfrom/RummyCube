@@ -922,11 +922,15 @@ void Gamestone::dragEnterEvent(QDragEnterEvent *event)
     }
 
     // Check if current stone is being dragged over another stone
-    // and if it can be dropped on the stone
+    // and if it can be dropped on the stone. Check both directions
+    // to avoid joker handling in gamestones. E.g. if a blue 1 is
+    // dragged over a single joker the stone would not be accepted
+    // by the joker due to the "UNKNOWN" number. But the joker can
+    // be dragged over the stone since it handles this state properly.
     Q_ASSERT(stoneManager->draggedStone != NULL);
     Gamestone* draggingOver = stoneManager->draggedStone;
-    if ((draggingOver->isJoker() || !this->acceptDropping(*draggingOver))
-            && (!draggingOver->isJoker() || !draggingOver->acceptDropping(*this)))
+    if (!this->acceptDropping(*draggingOver)
+        && !draggingOver->acceptDropping(*this))
     {
         event->setDropAction(Qt::IgnoreAction);
         event->ignore();

@@ -210,8 +210,7 @@ void Joker::restoreStone()
 bool Joker::acceptDropping(Gamestone& otherStone)
 {
     // Never accept if dragged stone or stone dragging over is in middle of row
-    // TODO This is not needed if jokers can replace all stones.
-    // TODO Then a menu is needed to select if a stone should be replaced or the joker should be appended
+    // TODO Accept if joker can be replaced by the gamestone
     if ((!this->isFirstInRow() && !this->isLastInRow()) ||
             (!otherStone.isFirstInRow() && !otherStone.isLastInRow()))
     {
@@ -266,18 +265,27 @@ bool Joker::isSucc(Gamestone* otherStone)
     // Otherwise check if we have a non-joker before current stone
     // No need to check for non-jokers after current stone, because then the stone can
     // not be dropped
-    Gamestone* toTest(this->next);
+    Gamestone* toTestEnd(this->next);
+    Gamestone* toTestStart(otherStone);
     int diff(2);
 
-    if (toTest != NULL && toTest->isJoker())
+    // If our stone is connected to a joker we need to adjust the difference
+    if (toTestEnd != NULL && toTestEnd->isJoker())
     {
-        toTest = toTest->next;
+        toTestEnd = toTestEnd->next;
+        diff = 3;
+    }
+    // Same if otherStone is a joker
+    else if (toTestStart->isJoker())
+    {
+        toTestStart = toTestStart->prev;
         diff = 3;
     }
 
     // We are no successor if we are dropped left of a 1 in a row with same color
     return ((otherStone->isFirstInRow() || otherStone->getNumber() < 13)
-            && ((toTest == NULL) || (toTest->getNumber() == otherStone->getNumber() + diff)));
+            && ((toTestStart == NULL) || (toTestEnd == NULL)
+                || (toTestEnd->getNumber() == toTestStart->getNumber() + diff)));
 }
 
 bool Joker::isPred(Gamestone* otherStone)
@@ -291,18 +299,27 @@ bool Joker::isPred(Gamestone* otherStone)
     // Otherwise check if we have a non-joker after current stone
     // No need to check for non-jokers before current stone, because then the stone can
     // not be dropped
-    Gamestone* toTest(this->prev);
+    Gamestone* toTestStart(this->prev);
+    Gamestone* toTestEnd(otherStone);
     int diff(2);
 
-    if (toTest != NULL && toTest->isJoker())
+    // If our stone is connected to a joker we need to adjust the difference
+    if (toTestStart != NULL && toTestStart->isJoker())
     {
-        toTest = toTest->prev;
+        toTestStart = toTestStart->prev;
+        diff = 3;
+    }
+    // Same if otherStone is a joker
+    else if (toTestEnd->isJoker())
+    {
+        toTestEnd = toTestEnd->next;
         diff = 3;
     }
 
     // We are no predessor if we are dropped left of a 1 in a row with same color
     return ((otherStone->isLastInRow() || otherStone->getNumber() > 1)
-            && ((toTest == NULL) || (toTest->getNumber() == otherStone->getNumber() - diff)));
+            && ((toTestStart == NULL) || (toTestEnd == NULL)
+                || (toTestStart->getNumber() == toTestEnd->getNumber() - diff)));
 }
 
 bool Joker::isSameNumber(Gamestone* otherStone)
