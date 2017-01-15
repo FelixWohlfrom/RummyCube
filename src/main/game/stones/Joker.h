@@ -71,7 +71,6 @@ class Joker : public Gamestone
          */
         void restoreStone();
 
-#if 0
         /**
          * Loads the joker values from given stream.
          *
@@ -87,7 +86,6 @@ class Joker : public Gamestone
          * @param joker The joker that should be stored
          */
         friend QXmlStreamWriter &operator<<(QXmlStreamWriter &output, Joker* stone);
-#endif
 
         #ifdef _DEBUG
             /**

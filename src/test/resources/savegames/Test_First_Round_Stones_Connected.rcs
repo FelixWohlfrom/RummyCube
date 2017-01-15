@@ -421,13 +421,17 @@
             <settings x="1024" y="5" parent="0"/>
             <oldSettings x="1024" y="5" parent="0"/>
         </stone>
-        <stone val="3">
-            <settings x="102" y="5" parent="0"/>
-            <oldSettings x="102" y="5" parent="0"/>
-        </stone>
-        <stone val="2">
-            <settings x="1141" y="5" parent="0"/>
-            <oldSettings x="1141" y="5" parent="0"/>
-        </stone>
+        <joker oldColor="-1" oldNumber="-1" val="3">
+            <stone val="3">
+                <settings x="102" y="5" parent="0"/>
+                <oldSettings x="102" y="5" parent="0"/>
+            </stone>
+        </joker>
+        <joker oldColor="-1" oldNumber="-1" val="2">
+            <stone val="2">
+                <settings x="1141" y="5" parent="0"/>
+                <oldSettings x="1141" y="5" parent="0"/>
+            </stone>
+        </joker>
     </otherStones>
 </RummyCube>

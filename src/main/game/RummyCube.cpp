@@ -7,6 +7,7 @@
 #include "RummyCube.h"
 
 #include "Settings.h"
+#include "stones/Joker.h"
 
 #include <QFile>
 
@@ -174,13 +175,30 @@ QXmlStreamReader &operator>>(QXmlStreamReader &input, RummyCube* game)
         }
         return input;
     }
-    while (input.readNextStartElement() && input.name() == "stone")
+
+    while (input.readNextStartElement())
     {
-        int stoneValue = input.attributes().value("val").toInt();
-        if (stoneValue != 0)
-        { 
-            Gamestone* stone = game->stoneManager.getStoneFromInt(stoneValue);
-            input >> stone;
+        if (input.name() == "stone")
+        {
+            int stoneValue = input.attributes().value("val").toInt();
+            if (stoneValue != 0)
+            {
+                Gamestone* stone = game->stoneManager.getStoneFromInt(stoneValue);
+                input >> stone;
+            }
+        }
+        else if (input.name() == "joker")
+        {
+            int stoneValue = input.attributes().value("val").toInt();
+            if (stoneValue != 0)
+            {
+                Gamestone* stone = game->stoneManager.getStoneFromInt(stoneValue);
+                input >> (Joker*)stone;
+            }
+        } else {
+            input.raiseError(QObject::tr("Expected 'stone' Tag or 'joker' Tag, "
+                                "instead found '%1'.").arg(input.name().toString()));
+            break;
         }
     }
 
@@ -225,7 +243,13 @@ QXmlStreamWriter &operator<<(QXmlStreamWriter &output, RummyCube* game)
     {
         if ((*stone)->getPlayer() == NULL)
         {
-            output << (*stone);
+            if ((*stone)->isJoker()) {
+                output << (Joker*)(*stone);
+            }
+            else
+            {
+                output << (*stone);
+            }
         }
     }
     output.writeEndElement();

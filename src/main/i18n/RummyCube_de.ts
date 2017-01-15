@@ -654,17 +654,23 @@ Möchten sie es noch einmal versuchen? Das Spiel wird sonst geschlossen.</transl
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../game/player/Player.cpp" line="+123"/>
+        <location filename="../game/player/Player.cpp" line="+125"/>
         <source>Expected &apos;player&apos; Tag, instead found &apos;%1&apos;.</source>
         <translation>&apos;player&apos; Tag erwartet, aber &apos;%1&apos; gefunden.</translation>
     </message>
     <message>
-        <location line="+31"/>
+        <location line="+28"/>
+        <location filename="../game/RummyCube.cpp" line="+199"/>
+        <source>Expected &apos;stone&apos; Tag or &apos;joker&apos; Tag, instead found &apos;%1&apos;.</source>
+        <translation>&apos;stone Tag oder &apos;joker&apos; Tag erwartet, aber &apos;%1&apos; gefunden.</translation>
+    </message>
+    <message>
+        <location filename="../game/stones/Joker.cpp" line="+430"/>
         <source>Expected &apos;stone&apos; Tag, instead found &apos;%1&apos;.</source>
         <translation>&apos;stone&apos; Tag erwartet, aber &apos;%1&apos; gefunden.</translation>
     </message>
     <message>
-        <location filename="../game/RummyCube.cpp" line="+136"/>
+        <location filename="../game/RummyCube.cpp" line="-62"/>
         <source>Not a valid RummyCube Savegame.</source>
         <translation>Kein gültiges gespeicheters Spiel von RummyCube.</translation>
     </message>

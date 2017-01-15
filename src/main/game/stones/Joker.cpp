@@ -415,8 +415,6 @@ bool Joker::isRowWithSameColor()
 /*************/
 /* Operators */
 /*************/
-#if 0
-// TODO Make sure that this is called instead of the stone write operator
 QXmlStreamReader &operator>>(QXmlStreamReader &input, Joker* stone)
 {
     // Restore joker specific settings
@@ -425,8 +423,20 @@ QXmlStreamReader &operator>>(QXmlStreamReader &input, Joker* stone)
     stone->oldColor = (Gamestone::StoneColor)oldColor;
     stone->oldNumber = oldNumber;
 
+    if (!input.readNextStartElement() || input.name() != "stone")
+    {
+        if (!input.hasError())
+        {
+            input.raiseError(QObject::tr("Expected 'stone' Tag, "
+                    "instead found '%1'.").arg(input.name().toString()));
+        }
+        return input;
+    }
+
     // Restore general gamestone settings
     input >> (Gamestone*)stone;
+
+    input.skipCurrentElement(); // Finish handling of "stone" element
 
     stone->update();
 
@@ -439,6 +449,7 @@ QXmlStreamWriter &operator<<(QXmlStreamWriter &output, Joker* stone)
     // Store joker specific settings
     output.writeAttribute("oldColor", QString::number(stone->oldColor));
     output.writeAttribute("oldNumber", QString::number(stone->oldNumber));
+    output.writeAttribute("val", QString::number(stone->asInt()));
 
     // Store general gamestone settings
     output << (Gamestone*)stone;
@@ -447,7 +458,6 @@ QXmlStreamWriter &operator<<(QXmlStreamWriter &output, Joker* stone)
 
     return output;
 }
-#endif
 
 #ifdef _DEBUG
 std::ostream &operator<<(std::ostream &stream, Joker* stone)

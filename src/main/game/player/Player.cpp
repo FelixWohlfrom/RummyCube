@@ -7,6 +7,8 @@
 
 #include "Player.h"
 
+#include "../stones/Joker.h"
+
 #ifdef _DEBUG
     #include <iostream>
 #endif
@@ -143,22 +145,28 @@ QXmlStreamReader &operator>>(QXmlStreamReader &input, Player* player)
 
         while (stoneCount > 0)
         {
-            if (!input.readNextStartElement() || input.name() != "stone")
+            if (!input.readNextStartElement()
+                || ((input.name() != "stone") && (input.name() != "joker")))
             {
                 if (!input.hasError())
                 {
-                    input.raiseError(QObject::tr("Expected 'stone' Tag,"
-                            " instead found '%1'.")
-                            .arg(input.name().toString()));
+                    input.raiseError(QObject::tr("Expected 'stone' Tag or 'joker' Tag,"
+                            " instead found '%1'.").arg(input.name().toString()));
                 }
                 return input;
             }
             int stoneValue = input.attributes().value("val").toInt();
             if (stoneValue != 0)
             {
-                Gamestone* stone =
-                        player->stoneManager.getStoneFromInt(stoneValue);
-                input >> stone;
+                Gamestone* stone = player->stoneManager.getStoneFromInt(stoneValue);
+                if (stone->isJoker())
+                {
+                    input >> (Joker*)stone;
+                }
+                else
+                {
+                    input >> stone;
+                }
                 player->addStone(*stone);
             }
 
@@ -181,13 +189,18 @@ QXmlStreamWriter &operator<<(QXmlStreamWriter &output, Player* player)
     output.writeAttribute("firstPlayOut", QString::number(player->firstPlayOut));
 
     // Store the stones
-    output.writeAttribute("stoneCount",
-            QString::number(player->ownStones.length()));
+    output.writeAttribute("stoneCount", QString::number(player->ownStones.length()));
     for (QVector<Gamestone*>::iterator stone(player->ownStones.begin());
             stone != player->ownStones.end();
             ++stone)
     {
-        output << (*stone);
+        if ((*stone)->isJoker()) {
+            output << (Joker*)(*stone);
+        }
+        else
+        {
+            output << (*stone);
+        }
     }
 
     output.writeEndElement();

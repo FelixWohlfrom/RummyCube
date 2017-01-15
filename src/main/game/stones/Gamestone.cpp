@@ -611,7 +611,7 @@ QXmlStreamReader &operator>>(QXmlStreamReader &input, Gamestone* stone)
             input.raiseError(QObject::tr("Expected 'settings' Tag,"
                     " instead found '%1'.").arg(input.name().toString()));
         }
-        return input; 
+        return input;
     }
 
     int x = input.attributes().value("x").toInt();
