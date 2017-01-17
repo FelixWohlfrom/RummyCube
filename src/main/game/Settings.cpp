@@ -20,11 +20,9 @@ Settings* Settings::getInstance()
 {
     if (INSTANCE == NULL)
     {
-        // TODO Verify that under windows, settings are stored in %appdata%/RummyCube/settings.conf
-        // TODO Verify under linux, its ~/.RummyCube/settings.conf
         QString settingsFile(
-                QStandardPaths::displayName(QStandardPaths::AppDataLocation)
-                + "/RummyCube/settings.conf");
+                QStandardPaths::writableLocation(QStandardPaths::AppDataLocation)
+				+ "/settings.conf");
 
         INSTANCE = new Settings(settingsFile);
     }
