@@ -42,17 +42,23 @@ RummyCubeNetwork* CreateNetworkGameWindow::getGame()
 
 void CreateNetworkGameWindow::sendSettings()
 {
-    for (std::map<QTcpSocket*, QString>::iterator elem(connectedPlayer.begin());
+    for (std::map<QTcpSocket*, QString>::iterator
+            elem(connectedPlayer.begin());
             elem != connectedPlayer.end();
             ++elem)
     {
-        Network::write(*elem->first, "settings");
-        Network::write(*elem->first, ui->stonesAtBeginning->text());
-        Network::write(*elem->first, ui->sumAtBeginning->text());
-        Network::write(*elem->first, QString::number(ui->stonesInOneRow->isChecked()));
+        Network::write(*elem->first,
+                "settings");
+        Network::write(*elem->first,
+                ui->stonesAtBeginning->text());
+        Network::write(*elem->first,
+                ui->sumAtBeginning->text());
+        Network::write(*elem->first,
+                QString::number(ui->stonesInOneRow->isChecked()));
         if (ui->timeLimitEnabled->isChecked())
         {
-            Network::write(*elem->first, QString::number(ui->timeLimitValue->value()));
+            Network::write(*elem->first,
+                    QString::number(ui->timeLimitValue->value()));
         }
         else
         {
@@ -95,7 +101,8 @@ void CreateNetworkGameWindow::updateGui()
         }
 
         QString playerNames = "";
-        for (std::map<QTcpSocket*, QString>::iterator elem(connectedPlayer.begin());
+        for (std::map<QTcpSocket*, QString>::iterator
+                elem(connectedPlayer.begin());
                 elem != connectedPlayer.end();
                 ++elem)
         {
@@ -114,7 +121,8 @@ void CreateNetworkGameWindow::updateTimeLimitLabel()
 {
     int min = ui->timeLimitValue->value() / 60;
     int sec = ui->timeLimitValue->value() % 60;
-    ui->timeLimitLabel->setText(tr("%1:%2 minutes").arg(min).arg(sec, 2, 10, QLatin1Char('0')));
+    ui->timeLimitLabel->setText(
+            tr("%1:%2 minutes").arg(min).arg(sec, 2, 10, QLatin1Char('0')));
 }
 
 void CreateNetworkGameWindow::startGame()
@@ -138,9 +146,10 @@ void CreateNetworkGameWindow::startGame()
         // Create game
         game = new RummyCubeNetwork(settings, connectedPlayer);
 
-        for (std::map<QTcpSocket*, QString>::iterator elem(connectedPlayer.begin());
-            elem != connectedPlayer.end();
-            ++elem)
+        for (std::map<QTcpSocket*, QString>::iterator
+                elem(connectedPlayer.begin());
+                elem != connectedPlayer.end();
+                ++elem)
         {
             elem->first->disconnect(this);
         }
@@ -220,7 +229,8 @@ void CreateNetworkGameWindow::showEvent(QShowEvent* event)
     {
         QMessageBox serverCreationError(this);
         serverCreationError.setWindowTitle(QString("RummyCube"));
-        serverCreationError.setText(tr("Could not start server. %1.").arg(server->errorString()));
+        serverCreationError.setText(
+                tr("Could not start server. %1.").arg(server->errorString()));
         serverCreationError.setStandardButtons(QMessageBox::Ok);
         serverCreationError.setIcon(QMessageBox::Critical);
         serverCreationError.exec();
@@ -273,7 +283,7 @@ void CreateNetworkGameWindow::displayError(
 
     QTcpSocket* sock = qobject_cast<QTcpSocket*>(sender());
     QMessageBox::information(this, tr("Network error"),
-                             tr("The following error occurred: %1.").arg(sock->errorString()));
+            tr("The following error occurred: %1.").arg(sock->errorString()));
 }
 
 void CreateNetworkGameWindow::spinCtrlChangedEvent(QString)
@@ -301,7 +311,8 @@ void CreateNetworkGameWindow::timeLimitSlideEvent(int)
 
 void CreateNetworkGameWindow::startGameClickEvent()
 {
-    for (std::map<QTcpSocket*, QString>::iterator elem(connectedPlayer.begin());
+    for (std::map<QTcpSocket*, QString>::iterator
+            elem(connectedPlayer.begin());
             elem != connectedPlayer.end();
             ++elem)
     {
@@ -313,7 +324,8 @@ void CreateNetworkGameWindow::startGameClickEvent()
 
         // TODO Get game host name dynamically
         Network::write(*elem->first, tr("Game creator"));
-        for (std::map<QTcpSocket*, QString>::iterator names(connectedPlayer.begin());
+        for (std::map<QTcpSocket*, QString>::iterator
+                names(connectedPlayer.begin());
                 names != connectedPlayer.end();
                 ++names)
         {
@@ -339,7 +351,8 @@ void CreateNetworkGameWindow::cancelClickEvent()
         canStartGameLocal = false;
         server->resumeAccepting();
         ui->startGameButton->setEnabled(true);
-        for (std::map<QTcpSocket*, QString>::iterator elem(connectedPlayer.begin());
+        for (std::map<QTcpSocket*, QString>::iterator
+                elem(connectedPlayer.begin());
                 elem != connectedPlayer.end();
                 ++elem)
         {
@@ -358,7 +371,8 @@ void CreateNetworkGameWindow::reject()
     // Add the clients first to a list since visual studio doesn't like
     // sockets to be closed while they are keys of a map.
     std::list<QTcpSocket*> clients;
-    for (std::map<QTcpSocket*, QString>::iterator elem(connectedPlayer.begin());
+    for (std::map<QTcpSocket*, QString>::iterator
+            elem(connectedPlayer.begin());
             elem != connectedPlayer.end();
             ++elem)
     {

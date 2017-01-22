@@ -23,12 +23,13 @@ class ImagePanel : public QLabel
          * Constructor.
          *
          * @param imagePath The image file to load
-         * @param defaultImagePath The default image shown if the image file can not be loaded
+         * @param defaultImagePath The default image shown if the image file
+         * 						   can not be loaded
          * @param parent The parent window of the panel
          * @param flags The flags that describe the panel
          */
-        ImagePanel(QString imagePath, QString defaultImagePath, QWidget* parent = 0,
-                Qt::WindowFlags flags = 0);
+        ImagePanel(QString imagePath, QString defaultImagePath,
+                QWidget* parent = 0, Qt::WindowFlags flags = 0);
 
         /**
          * Sets the image to the specified image.

@@ -27,8 +27,8 @@
 #include <QDesktopWidget>
 
 MainWindow::MainWindow(QWidget *parent) :
-    QMainWindow(parent), ui(new Ui::MainWindow), forceClose(false), gameState(GAME_IDLE),
-    nextGame(NULL)
+    QMainWindow(parent), ui(new Ui::MainWindow), forceClose(false),
+	gameState(GAME_IDLE), nextGame(NULL)
 {
     setWindowIcon(QIcon(":images/icon"));
 
@@ -76,8 +76,10 @@ MainWindow::MainWindow(QWidget *parent) :
     QRect screenSize = QApplication::desktop()->screenGeometry();
     int screenWidth = screenSize.width();
     int screenHeight = screenSize.height();
-    int height = settings->value("Position/Height", screenHeight - (screenHeight / 5)).toInt();
-    int width = settings->value("Position/Width", screenWidth - (screenWidth / 3)).toInt();
+    int height = settings->value("Position/Height",
+            screenHeight - (screenHeight / 5)).toInt();
+    int width = settings->value("Position/Width",
+            screenWidth - (screenWidth / 3)).toInt();
     int top = settings->value("Position/Top", 100).toInt();
     int left = settings->value("Position/Left", 30).toInt();
     this->resize(width, height);
@@ -88,7 +90,8 @@ MainWindow::MainWindow(QWidget *parent) :
                 QString(":images/gameboard"),
                 this);
     gameboardPanel->setSizePolicy(ui->gameboard->sizePolicy());
-    // This is needed to make the game board fill all space of the parent scroll area
+    // This is needed to make the game board fill all space of the parent
+    // scroll area
     gameboardPanel->setMinimumSize(1, 1);
     ui->gameboardScroller->setWidget(gameboardPanel);
     ui->gameboard = gameboardPanel;
@@ -98,7 +101,8 @@ MainWindow::MainWindow(QWidget *parent) :
                 QString(":images/holder"),
                 this);
     holderPanel->setSizePolicy(ui->holder->sizePolicy());
-    // This is needed to make the holder fill all space of the parent scroll area
+    // This is needed to make the holder fill all space of the parent
+    // scroll area
     holderPanel->setMinimumSize(1, 1);
     ui->holderScroller->setWidget(holderPanel);
     ui->holder = holderPanel;
@@ -177,7 +181,8 @@ void MainWindow::contextMenuEvent(QContextMenuEvent* event)
 
     QAction* pass = new QAction(tr("&Pass (Next Round)"), this);
     pass->setShortcut(Qt::Key_N);
-    pass->setStatusTip(tr("Finish the current round and continue with next round"));
+    pass->setStatusTip(tr("Finish the current round and continue"
+            " with next round"));
     pass->setEnabled(ui->passAction->isEnabled());
     connect(pass, SIGNAL(triggered()),
             this, SLOT(startNextRound()));
@@ -256,7 +261,7 @@ void MainWindow::initStones()
 
         // Connect the parent change event with the main window
         connect(stones.at(i), SIGNAL(parentChanged(ParentChangedEvent&)),
-                        this, SLOT(gamestoneParentChanged(ParentChangedEvent&)));
+                this, SLOT(gamestoneParentChanged(ParentChangedEvent&)));
     }
 
     // Init information panel
@@ -273,8 +278,10 @@ void MainWindow::setInfoLabelText()
     if (game->getHumanPlayer()->getStonesLeftToTake() > 1
             && game->getStoneCountOnHeap() > 0)
     {
-        ui->infoLabel->setText(tr("Please get a stone (%1 more) or click here to get all at once")
-                .arg(game->getHumanPlayer()->getStonesLeftToTake()));
+        ui->infoLabel->setText(
+                tr("Please get a stone (%1 more) or click here to get all"
+                        " at once")
+                        .arg(game->getHumanPlayer()->getStonesLeftToTake()));
     }
     // If only one stone can be taken
     else if (game->getHumanPlayer()->getStonesLeftToTake() == 1
@@ -292,7 +299,9 @@ void MainWindow::setInfoLabelText()
 
 void MainWindow::setTimerLabelText()
 {
-    if (game != NULL && game->getTimer() != NULL && game->getTimer()->getTime() > -1)
+    if (game != NULL
+            && game->getTimer() != NULL
+            && game->getTimer()->getTime() > -1)
     {
         // Mark background red if < 10 seconds left
         if (game->getTimer()->timeLeft() <= 10
@@ -308,8 +317,10 @@ void MainWindow::setTimerLabelText()
 
         int min = game->getTimer()->timeLeft() / 60;
         int sec = game->getTimer()->timeLeft() % 60;
-        ui->timerLabel->setText(tr("%1:%2 minutes").arg(min).arg(sec, 2, 10, QLatin1Char('0')));
-        ui->timerLabel->setToolTip(tr("%1:%2 minutes").arg(min).arg(sec, 2, 10, QLatin1Char('0')));
+        ui->timerLabel->setText(
+                tr("%1:%2 minutes").arg(min).arg(sec, 2, 10, QLatin1Char('0')));
+        ui->timerLabel->setToolTip(
+                tr("%1:%2 minutes").arg(min).arg(sec, 2, 10, QLatin1Char('0')));
     }
     else
     {
@@ -324,7 +335,8 @@ void MainWindow::takeAllStones()
     if (!Gamestone::canMoveStones) return;
 
     QVector<Gamestone*> stones = game->getStones();
-    while (game->getHumanPlayer()->getStonesLeftToTake() > 0 && game->getStoneCountOnHeap() > 0)
+    while (game->getHumanPlayer()->getStonesLeftToTake() > 0
+            && game->getStoneCountOnHeap() > 0)
     {
         int index = rand() % stones.size();
         while (stones.at(index)->getParent() != Gamestone::HEAP)
@@ -514,7 +526,8 @@ bool MainWindow::stoneUnderRow(int x, int y, int rowLength)
             ))
         {
             #ifdef _DEBUG
-                std::cout << " Stone at pos (" << x << ", " << y << "): " << *stone << std::endl;
+                std::cout << " Stone at pos (" << x << ", " << y << "): "
+                          << *stone << std::endl;
             #endif
             return true;
         }
@@ -537,11 +550,13 @@ void MainWindow::updateScrollElementMinSize()
         {
             if ((*stone)->pos().x() + (*stone)->size().width() > holderMinX)
             {
-                holderMinX = (*stone)->pos().x() + (*stone)->size().width() + 10;
+                holderMinX = (*stone)->pos().x()
+                        + (*stone)->size().width() + 10;
             }
             if ((*stone)->pos().y() + (*stone)->size().height() > holderMinY)
             {
-                holderMinY = (*stone)->pos().y() + (*stone)->size().height() + 10;
+                holderMinY = (*stone)->pos().y()
+                        + (*stone)->size().height() + 10;
             }
         }
 
@@ -549,11 +564,13 @@ void MainWindow::updateScrollElementMinSize()
         {
             if ((*stone)->pos().x() + (*stone)->size().width() > gameboardMinX)
             {
-                gameboardMinX = (*stone)->pos().x() + (*stone)->size().width() + 10;
+                gameboardMinX = (*stone)->pos().x()
+                        + (*stone)->size().width() + 10;
             }
             if ((*stone)->pos().y() + (*stone)->size().height() > gameboardMinY)
             {
-                gameboardMinY = (*stone)->pos().y() + (*stone)->size().height() + 10;
+                gameboardMinY = (*stone)->pos().y()
+                        + (*stone)->size().height() + 10;
             }
         }
     }
@@ -634,8 +651,10 @@ void MainWindow::startNextRound()
             player != opponentPlayers.end();
             ++player)
     {
-        ui->infoLabel->setText(tr("Player %1: I'm playing").arg((*player)->getPlayerName()));
-        ui->infoLabel->setToolTip(tr("Player %1: I'm playing").arg((*player)->getPlayerName()));
+        ui->infoLabel->setText(tr("Player %1: I'm playing")
+                .arg((*player)->getPlayerName()));
+        ui->infoLabel->setToolTip(tr("Player %1: I'm playing")
+                .arg((*player)->getPlayerName()));
         QCoreApplication::processEvents();
 
         (*player)->play();
@@ -665,7 +684,8 @@ void MainWindow::startNextRound()
         }
     }
 
-    // Check gamestate, can be changed during message queue refresh calls in (*player)->play()
+    // Check gamestate, can be changed during message queue refresh
+    // calls in (*player)->play()
     GameState state = gameState;
     gameState = GAME_IDLE;
     switch (state)
@@ -739,7 +759,7 @@ void MainWindow::dragEnterEvent(QObject* target, QDragEnterEvent* event)
             && !event->dropAction() == Qt::IgnoreAction)
     {
         // Verify if can really be dropped back on holder.
-        // Need to Verify complete row, not just single stone to make sure
+        // Need to verify complete row, not just single stone to make sure
         // we can drop the complete row on holder.
         if (target == ui->holder)
         {
@@ -838,7 +858,8 @@ void MainWindow::newGameEvent()
     // Show dialog
     QMessageBox newGame(this);
     newGame.setWindowTitle("RummyCube");
-    newGame.setText(tr("Do you really want to close the current game and start a new one?"));
+    newGame.setText(tr("Do you really want to close the current game and"
+            " start a new one?"));
     newGame.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
     newGame.setIcon(QMessageBox::Question);
     if (newGame.exec() == QMessageBox::Yes)
@@ -868,7 +889,8 @@ void MainWindow::loadGameEvent()
     game->getTimer()->pause();
 
     // Show dialog
-    QFileDialog dialog(this, tr("Load RummyCube savegame"), "", tr("RummyCube Savegame (*.rcs)"));
+    QFileDialog dialog(this, tr("Load RummyCube savegame"), "",
+            tr("RummyCube Savegame (*.rcs)"));
     dialog.setFileMode(QFileDialog::ExistingFile);
     dialog.setAcceptMode(QFileDialog::AcceptOpen);
 
@@ -878,7 +900,8 @@ void MainWindow::loadGameEvent()
 
         if (!loadFile.open(QIODevice::ReadOnly))
         {
-            showError(tr("Could not open file for loading. %1").arg(loadFile.errorString()));
+            showError(tr("Could not open file for loading. %1")
+                    .arg(loadFile.errorString()));
         }
         else
         {
@@ -896,7 +919,8 @@ void MainWindow::loadGameEvent()
             // Loading failure, show error message and return
             if (gameReader.hasError())
             {
-                showError(tr("Error during file loading. %1").arg(gameReader.errorString()));
+                showError(tr("Error during file loading. %1")
+                        .arg(gameReader.errorString()));
 
                 game = oldGame;
 
@@ -928,7 +952,7 @@ void MainWindow::loadGameEvent()
             this->setInfoLabelText();
             this->setTimerLabelText();
             this->updateScrollElementMinSize();
-    
+
             return;
         }
     }
@@ -947,7 +971,8 @@ void MainWindow::saveGameEvent()
     game->getTimer()->pause();
 
     // Show dialog
-    QFileDialog dialog(this, tr("Save current game"), "", tr("RummyCube Savegame (*.rcs)"));
+    QFileDialog dialog(this, tr("Save current game"), "",
+            tr("RummyCube Savegame (*.rcs)"));
     dialog.setAcceptMode(QFileDialog::AcceptSave);
     dialog.setDefaultSuffix("rcs");
 
@@ -958,7 +983,8 @@ void MainWindow::saveGameEvent()
         QSaveFile saveFile(filename.absoluteFilePath());
         if (!saveFile.open(QIODevice::WriteOnly))
         {
-            showError(tr("Could not open savegame file to write. %1").arg(saveFile.errorString()));
+            showError(tr("Could not open savegame file to write. %1")
+                    .arg(saveFile.errorString()));
         }
         else
         {
@@ -967,7 +993,8 @@ void MainWindow::saveGameEvent()
 
             if (!saveFile.commit())
             {
-                showError(tr("Could not write savegame. %1").arg(saveFile.errorString()));
+                showError(tr("Could not write savegame. %1")
+                        .arg(saveFile.errorString()));
             }
         }
     }
@@ -990,8 +1017,10 @@ void MainWindow::settingsEvent()
 
     // Change images to new values
     Settings* settings = Settings::getInstance();
-    ((ImagePanel*)ui->holder)->setImage(settings->value("General/HolderPath").toString());
-    ((ImagePanel*)ui->gameboard)->setImage(settings->value("General/GameboardPath").toString());
+    ((ImagePanel*)ui->holder)->setImage(
+            settings->value("General/HolderPath").toString());
+    ((ImagePanel*)ui->gameboard)->setImage(
+            settings->value("General/GameboardPath").toString());
 
     // Resume timer if was running
     if (timeLimitRunning)
@@ -1049,7 +1078,8 @@ void MainWindow::createNetworkGameEvent()
 
         std::deque<OpponentPlayer*> opponents =
                 this->nextGame->getOpponentPlayers();
-        for (std::deque<OpponentPlayer*>::iterator player(opponents.begin());
+        for (std::deque<OpponentPlayer*>::iterator
+                player(opponents.begin());
                 player != opponents.end();
                 ++player)
         {
@@ -1094,10 +1124,12 @@ void MainWindow::joinNetworkGameEvent()
     {
         this->nextGame = joinNetworkGame.getGame();
 
-        std::deque<OpponentPlayer*> opponents = this->nextGame->getOpponentPlayers();
-        for (std::deque<OpponentPlayer*>::iterator player(opponents.begin());
-            player != opponents.end();
-            ++player)
+        std::deque<OpponentPlayer*> opponents =
+                this->nextGame->getOpponentPlayers();
+        for (std::deque<OpponentPlayer*>::iterator
+                player(opponents.begin());
+                player != opponents.end();
+                ++player)
         {
             NetworkPlayer* networkPlayer = (NetworkPlayer*) *player;
             connect(&(networkPlayer->getSocket()), SIGNAL(disconnected()),
@@ -1153,7 +1185,9 @@ void MainWindow::timeLimitEvent()
     setTimerLabelText();
 
     // If no more time is left, force round finish
-    if (game != NULL && game->getTimer() != NULL && game->getTimer()->getTime() > -1
+    if (game != NULL
+            && game->getTimer() != NULL
+            && game->getTimer()->getTime() > -1
             && game->getTimer()->timeLeft() == 0)
     {
         // If the player still has some stones left to take,
@@ -1287,8 +1321,8 @@ void MainWindow::opponentDisconnected()
     // Show dialog
     QMessageBox opponentDisconnected(this);
     opponentDisconnected.setWindowTitle("RummyCube");
-    opponentDisconnected.setText(tr("Your opponent left the game. Do you want "
-            "to start a new one? Otherwise the game will be closed."));
+    opponentDisconnected.setText(tr("Your opponent left the game. Do you want"
+            " to start a new one? Otherwise the game will be closed."));
     opponentDisconnected.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
     opponentDisconnected.setIcon(QMessageBox::Question);
     if (opponentDisconnected.exec() == QMessageBox::Yes)

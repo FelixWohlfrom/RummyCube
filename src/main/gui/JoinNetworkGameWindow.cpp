@@ -59,8 +59,10 @@ void JoinNetworkGameWindow::updateGui()
 
         if (this->connected)
         {
-            ui->stonesAtBeginning->setText(QString("%1").arg(settings.stonesAtBeginning));
-            ui->sumAtBeginning->setText(QString("%1").arg(settings.sumAtBeginning));
+            ui->stonesAtBeginning->setText(
+                    QString("%1").arg(settings.stonesAtBeginning));
+            ui->sumAtBeginning->setText(
+                    QString("%1").arg(settings.sumAtBeginning));
             if (settings.stonesInOneRow)
             {
                 ui->stonesInOneRow->setText(tr("Yes"));
@@ -96,7 +98,8 @@ void JoinNetworkGameWindow::startGame()
     if (canStartGameLocal && canStartGameRemote)
     {
         // Create the game
-        game = new RummyCubeNetwork(settings, sock, ui->nickname->text(), connectedPlayer);
+        game = new RummyCubeNetwork(
+                settings, sock, ui->nickname->text(), connectedPlayer);
 
         sock->disconnect(this);
 
@@ -119,15 +122,16 @@ void JoinNetworkGameWindow::parseData()
         {
             disconnect();
             QMessageBox::information(this, "RummyCube",
-                tr("Currently there are to many players connected to the"
-                " server.\nPlease use another one."));
+                    tr("Currently there are to many players connected to the"
+                            " server.\nPlease use another one."));
         }
         else if (msg == "wrongVersion")
         {
             disconnect();
             QMessageBox::information(this, "RummyCube",
-                tr("You are using an older version for the game than the"
-                " server. Please upgrade your game to the latest version."));
+                    tr("You are using an older version for the game than the"
+                            " server. Please upgrade your game to the latest"
+                            " version."));
         }
         else if (msg == "connected")
         {
@@ -201,14 +205,15 @@ void JoinNetworkGameWindow::displayError(
 
     QTcpSocket* sock = qobject_cast<QTcpSocket*>(sender());
     QMessageBox::information(this, "RummyCube",
-                             tr("The following error occurred: %1.").arg(sock->errorString()));
+            tr("The following error occurred: %1.").arg(sock->errorString()));
 }
 
 void JoinNetworkGameWindow::connectClickEvent()
 {
     if (ui->nickname->text().length() > 0)
     {
-        sock = Network::createClientSocket(ui->ipAddress->text(), NETWORK_GAME_PORT);
+        sock = Network::createClientSocket(
+                ui->ipAddress->text(), NETWORK_GAME_PORT);
 
         sock->waitForConnected();
 

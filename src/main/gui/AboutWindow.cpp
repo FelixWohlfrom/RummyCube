@@ -12,14 +12,16 @@
 
 AboutWindow::AboutWindow(QWidget* parent) :
     QDialog(parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint
-		| Qt::WindowCloseButtonHint | Qt::MSWindowsFixedSizeDialogHint),
+        | Qt::WindowCloseButtonHint | Qt::MSWindowsFixedSizeDialogHint),
     ui(new Ui::AboutWindow)
 {
     // Initialize window
     ui->setupUi(this);
 
     QString version =
-            tr("Version %1.%2").arg(QString::number(VERSION_MAJOR), QString::number(VERSION_MINOR));
+            tr("Version %1.%2")
+                .arg(QString::number(VERSION_MAJOR),
+                     QString::number(VERSION_MINOR));
     #ifdef VERSION_BETA
         version += " " + tr("beta");
     #endif
@@ -45,9 +47,9 @@ QString AboutWindow::getCompiler()
 {
     #ifdef __GNUG__
         QString compiler = QString("GCC %1.%2.%3").arg(
-                QString::number(__GNUC__),
-                QString::number(__GNUC_MINOR__),
-                QString::number(__GNUC_PATCHLEVEL__));
+                            QString::number(__GNUC__),
+                            QString::number(__GNUC_MINOR__),
+                            QString::number(__GNUC_PATCHLEVEL__));
         #ifdef __x86_64
             compiler += " (x64)";
         #endif
@@ -62,7 +64,8 @@ QString AboutWindow::getCompiler()
         #elif _MSC_VER == 1600
             QString compiler = "Visual Studio 2010";
         #else
-            QString compiler = QString("Visual C++ (%1)").arg(QString::number(_MSC_VER));
+            QString compiler = QString("Visual C++ (%1)")
+                .arg(QString::number(_MSC_VER));
         #endif
         #ifdef _WIN64
             compiler += " (x64)";
