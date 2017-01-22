@@ -48,6 +48,7 @@ SettingsWindow::SettingsWindow(QWidget* parent) :
                 QString(":images/holder"),
                 this);
     holderPanel->setMinimumSize(QSize(140, 40));
+    holderPanel->setMaximumSize(holderPanel->minimumSize());
     holderPanel->setToolTip(tr("Click here to choose another background"
             " picture for the holder"));
     ui->imageLayout->addWidget(holderPanel, 1, 0, 1, 1);
@@ -57,6 +58,7 @@ SettingsWindow::SettingsWindow(QWidget* parent) :
             QString(":images/gameboard"),
             this);
     gameboardPanel->setMinimumSize(QSize(140, 40));
+    gameboardPanel->setMaximumSize(gameboardPanel->minimumSize());
     gameboardPanel->setToolTip(tr("Click here to choose another background"
             " picture for the gameboard"));
     ui->imageLayout->addWidget(gameboardPanel, 1, 2, 1, 1);

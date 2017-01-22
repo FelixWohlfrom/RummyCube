@@ -5,35 +5,15 @@
   <property name="windowModality">
    <enum>Qt::ApplicationModal</enum>
   </property>
-  <property name="geometry">
-   <rect>
-    <x>0</x>
-    <y>0</y>
-    <width>424</width>
-    <height>328</height>
-   </rect>
-  </property>
-  <property name="sizePolicy">
-   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-    <horstretch>0</horstretch>
-    <verstretch>0</verstretch>
-   </sizepolicy>
-  </property>
   <property name="windowTitle">
    <string>Settings</string>
   </property>
   <property name="modal">
    <bool>true</bool>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout">
+  <layout class="QVBoxLayout" name="settingsMainLayout">
    <item>
     <widget class="QFrame" name="settingsFrame">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
      <property name="autoFillBackground">
       <bool>false</bool>
      </property>
@@ -43,9 +23,9 @@
      <property name="frameShadow">
       <enum>QFrame::Raised</enum>
      </property>
-     <layout class="QVBoxLayout" name="verticalLayout_2">
+     <layout class="QVBoxLayout" name="settingsFrame_2">
       <item>
-       <layout class="QGridLayout" name="topLayout" rowstretch="0,0,0,0,0">
+       <layout class="QGridLayout" name="topLayout">
         <item row="1" column="1">
          <widget class="QSpinBox" name="stonesAtBeginning">
           <property name="sizePolicy">
@@ -197,9 +177,6 @@
       </item>
       <item>
        <layout class="QGridLayout" name="timeLimitLayout">
-        <property name="sizeConstraint">
-         <enum>QLayout::SetDefaultConstraint</enum>
-        </property>
         <item row="2" column="0" colspan="2">
          <widget class="QSlider" name="timeLimitValue">
           <property name="sizePolicy">
@@ -322,9 +299,9 @@
     </widget>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="buttonLayout" stretch="0,0,0,0">
+    <layout class="QHBoxLayout" name="buttonLayout">
      <property name="sizeConstraint">
-      <enum>QLayout::SetDefaultConstraint</enum>
+      <enum>QLayout::SetFixedSize</enum>
      </property>
      <item>
       <spacer name="buttonSpacer">
