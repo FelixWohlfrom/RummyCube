@@ -15,7 +15,8 @@
 #include <QMessageBox>
 
 SettingsWindow::SettingsWindow(QWidget* parent) :
-    QDialog(parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint | Qt::WindowCloseButtonHint),
+    QDialog(parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint
+             | Qt::WindowCloseButtonHint | Qt::MSWindowsFixedSizeDialogHint),
     ui(new Ui::SettingsWindow)
 {
     // Initialize settings

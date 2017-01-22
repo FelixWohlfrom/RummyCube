@@ -14,7 +14,7 @@
 
 JoinNetworkGameWindow::JoinNetworkGameWindow(QWidget* parent) :
     QDialog(parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint
-            | Qt::WindowCloseButtonHint),
+            | Qt::WindowCloseButtonHint | Qt::MSWindowsFixedSizeDialogHint),
     ui(new Ui::JoinNetworkGameWindow), game(NULL), sock(NULL), connected(false),
     canStartGameRemote(false), canStartGameLocal(false), connectedPlayer()
 {
@@ -25,7 +25,6 @@ JoinNetworkGameWindow::JoinNetworkGameWindow(QWidget* parent) :
         ui->ipAddress->setText("127.0.0.1");
         ui->nickname->setText("Client");
     #endif
-
 }
 
 JoinNetworkGameWindow::~JoinNetworkGameWindow()

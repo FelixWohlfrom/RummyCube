@@ -11,7 +11,8 @@
 #include "Version.h"
 
 AboutWindow::AboutWindow(QWidget* parent) :
-    QDialog(parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint | Qt::WindowCloseButtonHint),
+    QDialog(parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint
+		| Qt::WindowCloseButtonHint | Qt::MSWindowsFixedSizeDialogHint),
     ui(new Ui::AboutWindow)
 {
     // Initialize window

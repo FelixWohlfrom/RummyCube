@@ -16,7 +16,8 @@
 #include <QMessageBox>
 
 CreateNetworkGameWindow::CreateNetworkGameWindow(QWidget* parent) :
-    QDialog(parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint | Qt::WindowCloseButtonHint),
+    QDialog(parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint
+		| Qt::WindowCloseButtonHint | Qt::MSWindowsFixedSizeDialogHint),
     ui(new Ui::CreateNetworkGameWindow), game(NULL),
     connectedPlayer(), canStartGameRemote(false), canStartGameLocal(false)
 {
