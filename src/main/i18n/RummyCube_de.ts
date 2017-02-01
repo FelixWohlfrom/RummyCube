@@ -14,27 +14,27 @@
         <translation>&amp;Ok</translation>
     </message>
     <message>
-        <location line="+106"/>
+        <location line="+7"/>
+        <source>&lt;a href=&quot;https://github.com/FelixWohlfrom/RummyCube&quot;&gt;https://github.com/FelixWohlfrom/RummyCube&lt;/a&gt;</source>
+        <translation>&lt;a href=&quot;https://github.com/FelixWohlfrom/RummyCube&quot;&gt;https://github.com/FelixWohlfrom/RummyCube&lt;/a&gt;</translation>
+    </message>
+    <message>
+        <location line="+56"/>
+        <source>This program is licensed under &lt;a href=&quot;https://www.gnu.org/licenses/gpl-3.0.txt&quot;&gt;GNU GPLv3&lt;/a&gt;</source>
+        <translation>Dieses Programm ist lizenziert unter &lt;a href=&quot;https://www.gnu.org/licenses/gpl-3.0.txt&quot;&gt;GNU GPLv3&lt;/a&gt;</translation>
+    </message>
+    <message>
+        <location line="+46"/>
         <source>RummyCube</source>
         <translation>RummyCube</translation>
     </message>
     <message>
-        <location line="-75"/>
+        <location line="-72"/>
         <source>Copyright (C) Felix Wohlfrom</source>
         <translation>Copyright (C) Felix Wohlfrom</translation>
     </message>
     <message>
-        <location line="-24"/>
-        <source>&lt;a href=&quot;http://www.rummycube.ulm-united.de&quot;&gt;http://rummycube.ulm-united.de&lt;/a&gt;</source>
-        <translation>&lt;a href=&quot;http://www.rummycube.ulm-united.de&quot;&gt;http://rummycube.ulm-united.de&lt;/a&gt;</translation>
-    </message>
-    <message>
-        <location line="+50"/>
-        <source>This program is licensed under &lt;a href=&quot;http://creativecommons.org/licenses/by/3.0/&quot;&gt;CC BY&lt;/a&gt;</source>
-        <translation>Dieses Programm ist lizenziert unter &lt;a href=&quot;http://creativecommons.org/licenses/by/3.0/&quot;&gt;CC BY&lt;/a&gt;</translation>
-    </message>
-    <message>
-        <location line="+62"/>
+        <location line="+85"/>
         <source>Build Information</source>
         <translation>Build Information</translation>
     </message>
@@ -54,12 +54,12 @@
         <translation>QT Version:</translation>
     </message>
     <message>
-        <location filename="../gui/AboutWindow.cpp" line="+21"/>
+        <location filename="../gui/AboutWindow.cpp" line="+22"/>
         <source>Version %1.%2</source>
         <translation>Version %1.%2</translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+4"/>
         <source>beta</source>
         <translation>beta</translation>
     </message>
@@ -171,12 +171,12 @@
         <translation>A&amp;bbrechen</translation>
     </message>
     <message>
-        <location filename="../gui/CreateNetworkGameWindow.cpp" line="+116"/>
+        <location filename="../gui/CreateNetworkGameWindow.cpp" line="+125"/>
         <source>%1:%2 minutes</source>
         <translation>%1:%2 Minuten</translation>
     </message>
     <message>
-        <location line="+158"/>
+        <location line="+160"/>
         <source>Network error</source>
         <translation>Netzwerkfehler</translation>
     </message>
@@ -191,7 +191,7 @@
         <translation>Folgender Fehler ist aufgetreten: %1.</translation>
     </message>
     <message>
-        <location line="+39"/>
+        <location line="+40"/>
         <source>Game creator</source>
         <translation>Spielersteller</translation>
     </message>
@@ -302,7 +302,7 @@
         <translation>A&amp;bbrechen</translation>
     </message>
     <message>
-        <location filename="../gui/JoinNetworkGameWindow.cpp" line="+67"/>
+        <location filename="../gui/JoinNetworkGameWindow.cpp" line="+68"/>
         <source>Yes</source>
         <translation>Ja</translation>
     </message>
@@ -322,7 +322,7 @@
         <translation>%1:%2 Minuten</translation>
     </message>
     <message>
-        <location line="+42"/>
+        <location line="+43"/>
         <source>Currently there are to many players connected to the server.
 Please use another one.</source>
         <translation>Momentan sind zu viele Spieler mit dem Server verbunden.
@@ -334,12 +334,12 @@ Bitte nutzen sie einen anderen Server.</translation>
         <translation>Sie verwenden eine ältere Version des Spiels als der Server. Bitte aktualisieren sie auf die aktuellste Version.</translation>
     </message>
     <message>
-        <location line="+75"/>
+        <location line="+76"/>
         <source>The following error occurred: %1.</source>
         <translation>Folgender Fehler ist aufgetreten: %1.</translation>
     </message>
     <message>
-        <location line="+14"/>
+        <location line="+15"/>
         <source>Could not connect to other player.
 Please make sure that the server is running, you have the correct address and port %1 is open in the firewall.</source>
         <translation>Konnte nicht mit dem Server verbinden.
@@ -395,7 +395,7 @@ Stellen sie sicher, dass der Server gestartet wurde, sie die korrekte Adresse ei
     </message>
     <message>
         <location line="+8"/>
-        <location filename="../gui/MainWindow.cpp" line="+178"/>
+        <location filename="../gui/MainWindow.cpp" line="+182"/>
         <source>&amp;Pass (Next Round)</source>
         <translation>&amp;Weiter (Nächste Runde)</translation>
     </message>
@@ -503,17 +503,17 @@ Stellen sie sicher, dass der Server gestartet wurde, sie die korrekte Adresse ei
         <translation>&amp;Über RummyCube...</translation>
     </message>
     <message>
-        <location filename="../gui/MainWindow.cpp" line="+22"/>
+        <location filename="../gui/MainWindow.cpp" line="+23"/>
         <source>Error</source>
         <translation>Fehler</translation>
     </message>
     <message>
-        <location line="+84"/>
+        <location line="+85"/>
         <source>Please get a stone (%1 more) or click here to get all at once</source>
         <translation>Bitte ziehe einen Stein (noch %1) oder klicke hier um alle auf einmal zu ziehen</translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+8"/>
         <source>Please get a stone</source>
         <translation>Bitte ziehe einen Stein</translation>
     </message>
@@ -523,13 +523,13 @@ Stellen sie sicher, dass der Server gestartet wurde, sie die korrekte Adresse ei
         <translation>Du bist an der Reihe</translation>
     </message>
     <message>
-        <location line="+23"/>
-        <location line="+1"/>
+        <location line="+26"/>
+        <location line="+2"/>
         <source>%1:%2 minutes</source>
         <translation>%1:%2 Minuten</translation>
     </message>
     <message>
-        <location line="-149"/>
+        <location line="-156"/>
         <source>Move all stones in the moved row</source>
         <translation>Alle Steine in einer Reihe bewegen</translation>
     </message>
@@ -544,59 +544,59 @@ Stellen sie sicher, dass der Server gestartet wurde, sie die korrekte Adresse ei
         <translation>Beendet die aktuelle Runde und startet die nächste</translation>
     </message>
     <message>
-        <location line="+393"/>
+        <location line="+406"/>
         <source>At least one stone doesn&apos;t lie on the game board as told in the rules (shown in gray). Do you want to continue and move ALL stones to the position they had at the beginning of the round?</source>
         <translation>Mindestens ein Stein auf dem Spielbrett verletzt die Regeln (grau markiert). Sollen ALLE Steine wieder an die Position gelegt werden, die sie zu Beginn der Runde hatten?</translation>
     </message>
     <message>
         <location line="+64"/>
-        <location line="+1"/>
+        <location line="+2"/>
         <source>Player %1: I&apos;m playing</source>
         <translation>Spieler %1: Ich spiele</translation>
     </message>
     <message>
-        <location line="+203"/>
+        <location line="+205"/>
         <source>Do you really want to close the current game and start a new one?</source>
         <translation>Soll das aktuelle Spiel wirklich beendet werden und ein neues gestartet?</translation>
     </message>
     <message>
-        <location line="+30"/>
+        <location line="+31"/>
         <source>Load RummyCube savegame</source>
         <translation>Gespeichertes Spiel laden</translation>
     </message>
     <message>
-        <location line="+0"/>
-        <location line="+79"/>
+        <location line="+1"/>
+        <location line="+82"/>
         <source>RummyCube Savegame (*.rcs)</source>
         <translation>RummyCube Savegame (*.rcs)</translation>
     </message>
     <message>
-        <location line="-69"/>
+        <location line="-72"/>
         <source>Could not open file for loading. %1</source>
         <translation>Konnte Datei nicht zum laden öffnen. %1</translation>
     </message>
     <message>
-        <location line="+18"/>
+        <location line="+19"/>
         <source>Error during file loading. %1</source>
         <translation>Fehler beim Laden der Datei. %1</translation>
     </message>
     <message>
-        <location line="+51"/>
+        <location line="+52"/>
         <source>Save current game</source>
         <translation>Aktuelles Spiel speichern</translation>
     </message>
     <message>
-        <location line="+11"/>
+        <location line="+12"/>
         <source>Could not open savegame file to write. %1</source>
         <translation>Konnte die Datei zum speichern des Spiels nicht öffnen. %1</translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="+10"/>
         <source>Could not write savegame. %1</source>
         <translation>Konnte Spiel nicht speichern. %1</translation>
     </message>
     <message>
-        <location line="+44"/>
+        <location line="+47"/>
         <source>Move all stones in a row</source>
         <translation>Bewege alle Steine einer Reihe</translation>
     </message>
@@ -606,7 +606,7 @@ Stellen sie sicher, dass der Server gestartet wurde, sie die korrekte Adresse ei
         <translation>Bewege nur einzelne Steine</translation>
     </message>
     <message>
-        <location line="+149"/>
+        <location line="+154"/>
         <source>At least one stone doesn&apos;t lie on the game board as told in the rules (shown in gray). ALL stones will be moved to the position they had at the beginning of the round!</source>
         <translation>Mindestens ein Stein auf dem Spielbrett verletzt die Regeln (grau markiert). ALLE Steine werden auf die Position gelegt, die sie zu Beginn der Runde hatten!</translation>
     </message>
@@ -631,12 +631,12 @@ Stellen sie sicher, dass der Server gestartet wurde, sie die korrekte Adresse ei
         <translation>&amp;Standard</translation>
     </message>
     <message>
-        <location filename="../gui/MainWindow.cpp" line="-677"/>
+        <location filename="../gui/MainWindow.cpp" line="-694"/>
         <source>You won the game. Congratulations! Do you want to start a new singleplayer game? Otherwise the game will be closed.</source>
         <translation>Sie haben gewonnen. Gratulation! Soll ein neues Einzelspielerspiel gestartet werden? Das Spiel wird sonst geschlossen.</translation>
     </message>
     <message>
-        <location line="+36"/>
+        <location line="+38"/>
         <source>Player %1 won the game.
 Do you want to try it one more time? Otherwise the game will be closed.</source>
         <translation>Spieler %1 hat das Spiel gewonnen.
@@ -698,12 +698,12 @@ Möchten sie es noch einmal versuchen? Das Spiel wird sonst geschlossen.</transl
 <context>
     <name>SettingsWindow</name>
     <message>
-        <location filename="../gui/SettingsWindow.ui" line="+23"/>
+        <location filename="../gui/SettingsWindow.ui" line="+9"/>
         <source>Settings</source>
         <translation>Einstellungen</translation>
     </message>
     <message>
-        <location line="+35"/>
+        <location line="+29"/>
         <location line="+25"/>
         <source>Insert here the number of Stones that you can get in the first round</source>
         <translation>Hier die Anzahl der Steine eingeben, die in der ersten Runde gezogen werden</translation>
@@ -766,7 +766,7 @@ Möchten sie es noch einmal versuchen? Das Spiel wird sonst geschlossen.</transl
         <translation>Steine müssen sich in einer Reihe befinden *</translation>
     </message>
     <message>
-        <location line="+83"/>
+        <location line="+80"/>
         <source>* These Settings are used the next time you start a new game</source>
         <translation>* Diese Einstellungen werden erst beim starten eines neuen Spiels verwendet</translation>
     </message>
@@ -836,17 +836,17 @@ Möchten sie es noch einmal versuchen? Das Spiel wird sonst geschlossen.</transl
         <translation>A&amp;bbrechen</translation>
     </message>
     <message>
-        <location filename="../gui/SettingsWindow.cpp" line="+44"/>
+        <location filename="../gui/SettingsWindow.cpp" line="+52"/>
         <source>Click here to choose another background picture for the holder</source>
         <translation>Hier klicken um ein anderes Hintergrundbild für den Halter zu verwenden</translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="+10"/>
         <source>Click here to choose another background picture for the gameboard</source>
         <translation>Hier klicken um ein anderes Hintergrundbild für das Spielbrett zu verwenden</translation>
     </message>
     <message>
-        <location line="+18"/>
+        <location line="+19"/>
         <source>%1:%2 minutes</source>
         <translation>%1:%2 Minuten</translation>
     </message>
@@ -866,7 +866,7 @@ Möchten sie es noch einmal versuchen? Das Spiel wird sonst geschlossen.</transl
         <translation>Alle Bilder (*.bmp; *.gif; *.png; *.jpg; *.jpeg; *.pcx; *.pnm; *.tiff; *.tga; *.iff; *.xpm)</translation>
     </message>
     <message>
-        <location line="+31"/>
+        <location line="+39"/>
         <source>Do you really want to reset the settings?</source>
         <translation>Sollen wirklich alle Einstellungen zurückgesetzt werden?</translation>
     </message>

@@ -1,4 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ *  RummyCube. A small board game.                                       *
+ *  Copyright (C) 2016 Felix Wohlfrom                                    *
+ *                                                                       *
+ *  This program is free software: you can redistribute it and/or modify *
+ *  it under the terms of the GNU General Public License as published by *
+ *  the Free Software Foundation, either version 3 of the License, or    *
+ *  (at your option) any later version.                                  *
+ *                                                                       *
+ *  This program is distributed in the hope that it will be useful,      *
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of       *
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the        *
+ *  GNU General Public License for more details.                         *
+ *                                                                       *
+ *  You should have received a copy of the GNU General Public License    *
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.*
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ -->
 <ui version="4.0">
  <class>AboutWindow</class>
  <widget class="QDialog" name="AboutWindow">
@@ -9,7 +28,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>337</width>
+    <width>362</width>
     <height>323</height>
    </rect>
   </property>
@@ -30,10 +49,16 @@
    <item row="3" column="0" colspan="3">
     <widget class="QLabel" name="url">
      <property name="text">
-      <string>&lt;a href=&quot;http://www.rummycube.ulm-united.de&quot;&gt;http://rummycube.ulm-united.de&lt;/a&gt;</string>
+      <string>&lt;a href=&quot;https://github.com/FelixWohlfrom/RummyCube&quot;&gt;https://github.com/FelixWohlfrom/RummyCube&lt;/a&gt;</string>
+     </property>
+     <property name="textFormat">
+      <enum>Qt::AutoText</enum>
      </property>
      <property name="margin">
       <number>9</number>
+     </property>
+     <property name="openExternalLinks">
+      <bool>true</bool>
      </property>
     </widget>
    </item>
@@ -80,10 +105,7 @@
       <enum>Qt::LeftToRight</enum>
      </property>
      <property name="text">
-      <string>This program is licensed under &lt;a href=&quot;http://creativecommons.org/licenses/by/3.0/&quot;&gt;CC BY&lt;/a&gt;</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+      <string>This program is licensed under &lt;a href=&quot;https://www.gnu.org/licenses/gpl-3.0.txt&quot;&gt;GNU GPLv3&lt;/a&gt;</string>
      </property>
      <property name="margin">
       <number>9</number>
