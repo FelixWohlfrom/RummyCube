@@ -43,6 +43,9 @@
 #include <QMessageBox>
 #include <QDesktopWidget>
 
+// Margin around existing stones at playout time for ai player in pixel
+#define MARGIN 15
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent), ui(new Ui::MainWindow), forceClose(false),
 	gameState(GAME_IDLE), nextGame(NULL)
@@ -498,12 +501,12 @@ void MainWindow::moveToBoard(Gamestone& stone)
 
     while (this->stoneUnderRow(x, y, rowLength))
     {
-        y += stone.pos().y() + 10;
+        y += 10;
 
         if (y + stone.pos().y() > ui->gameboard->size().height())
         {
             y = 20;
-            x += stone.pos().x() + 20;
+            x += 20;
         }
     }
 
@@ -518,7 +521,6 @@ void MainWindow::moveToBoard(Gamestone& stone)
 bool MainWindow::stoneUnderRow(int x, int y, int rowLength)
 {
     // Check if any of the stones are under the new position of the row
-    // TODO Add a little margin around the stones
     QVector<Gamestone*> gamestones = game->getStones();
     for (QVector<Gamestone*>::iterator stone(gamestones.begin());
             stone != gamestones.end();
@@ -527,18 +529,21 @@ bool MainWindow::stoneUnderRow(int x, int y, int rowLength)
         if ((*stone)->getParent() == Gamestone::BOARD &&
             (
                 // Horizontal left end is in the row
-                ((*stone)->pos().x() >= x
-                    && (*stone)->pos().x() <= x + rowLength)
+                ((*stone)->pos().x() - MARGIN >= x
+                    && (*stone)->pos().x() + MARGIN <= x + rowLength)
                 // Horizontal right end is in the row
-                || ((*stone)->pos().x() + (*stone)->size().width() >= x
-                    && (*stone)->pos().x() + (*stone)->size().width()
+                || ((*stone)->pos().x() + (*stone)->size().width() + MARGIN >= x
+                    && (*stone)->pos().x() + (*stone)->size().width() - MARGIN
                         <= x + rowLength)
             ) && (
                 // Vertical top end is in the row
-                ((*stone)->pos().y() >= y
-                    && (*stone)->pos().y() <= y + (*stone)->size().height())
-                || ((*stone)->pos().y() + (*stone)->size().height() >= y
-                    && (*stone)->pos().y() + (*stone)->size().height()
+                ((*stone)->pos().y() - MARGIN >= y
+                    && (*stone)->pos().y() + MARGIN
+                        <= y + (*stone)->size().height())
+                // Vertical bottom end is in the row
+                || ((*stone)->pos().y() + (*stone)->size().height() + MARGIN
+                        >= y
+                    && (*stone)->pos().y() + (*stone)->size().height() - MARGIN
                         <= y + (*stone)->size().height())
             ))
         {
