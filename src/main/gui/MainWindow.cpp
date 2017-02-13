@@ -747,33 +747,34 @@ void MainWindow::changeEvent(QEvent* event)
 
 bool MainWindow::eventFilter(QObject *obj, QEvent *event)
 {
-   if (event->type() == QEvent::DragEnter)
-   {
-      QDragEnterEvent* dragEnterEvent = static_cast<QDragEnterEvent*>(event);
-      this->dragEnterEvent(obj, dragEnterEvent);
+    switch (event->type())
+    {
+        case QEvent::DragEnter:
+        {
+            QDragEnterEvent* dragEnterEvent = static_cast<QDragEnterEvent*>(event);
+            this->dragEnterEvent(obj, dragEnterEvent);
+            return true;
+        }
 
-      return true;
-   }
-   else if (event->type() == QEvent::Drop)
-   {
-      QDropEvent* dropEvent = static_cast<QDropEvent*>(event);
-      this->dropEvent(obj, dropEvent);
+        case QEvent::Drop:
+        {
+            QDropEvent* dropEvent = static_cast<QDropEvent*>(event);
+            this->dropEvent(obj, dropEvent);
+            return true;
+        }
 
-      return true;
-   }
-   else
-   {
-       // standard event processing
-       return QObject::eventFilter(obj, event);
-   }
+        default:
+            // standard event processing
+            return QObject::eventFilter(obj, event);
+    }
 }
 
 void MainWindow::dragEnterEvent(QObject* target, QDragEnterEvent* event)
 {
-    // We need to check here for ignore action since a gamestone
-    // might already have handled the event
+    // We need to check here for ignore action since a gamestone might already have
+    // handled the event
     if (event->mimeData()->hasFormat(GAMESTONE_MIMETYPE)
-            && !event->dropAction() == Qt::IgnoreAction)
+            && event->dropAction() != Qt::IgnoreAction)
     {
         // Verify if can really be dropped back on holder.
         // Need to verify complete row, not just single stone to make sure
@@ -781,6 +782,7 @@ void MainWindow::dragEnterEvent(QObject* target, QDragEnterEvent* event)
         if (target == ui->holder)
         {
             Gamestone* stone = (Gamestone*)(event->source());
+
             while (stone != NULL)
             {
                 if (!stone->isFirstTimePlayedOut())
@@ -813,6 +815,8 @@ void MainWindow::dragEnterEvent(QObject* target, QDragEnterEvent* event)
 
 void MainWindow::dropEvent(QObject* target, QDropEvent* event)
 {
+    // We need to check here for ignore action since a gamestone might already have
+    // handled the event
     if (event->mimeData()->hasFormat(GAMESTONE_MIMETYPE)
             && event->dropAction() != Qt::IgnoreAction)
     {
@@ -824,19 +828,62 @@ void MainWindow::dropEvent(QObject* target, QDropEvent* event)
         QPoint offset;
         dataStream >> offset;
 
-        Gamestone* source = (Gamestone*)event->source();
+        // Calculate center of stone, needed to check for overlapping stones
+        Gamestone* source = (Gamestone*)(event->source());
+        QPoint stoneCenter = event->pos() - offset
+            + QPoint(source->getWidth() / 2, source->getHeight() / 2);
 
         if (target == ui->gameboard)
         {
-            source->setParent(Gamestone::BOARD, true);
+            Gamestone* overlappedStone =
+                    qobject_cast<Gamestone*>(ui->gameboard->childAt(stoneCenter));
+
+            bool stoneAlreadyMoved = false;
+            if (overlappedStone != NULL)
+            {
+                QDragEnterEvent enterEvent(event->pos(), event->dropAction(), event->mimeData(),
+                    event->mouseButtons(), event->keyboardModifiers());
+                overlappedStone->dragEnterEvent(&enterEvent);
+                if (enterEvent.dropAction() != Qt::IgnoreAction)
+                {
+                    overlappedStone->dropEvent(event, true);
+                    stoneAlreadyMoved = true;
+                }
+            }
+
+            if (!stoneAlreadyMoved)
+            {
+                source->setParent(Gamestone::BOARD, true);
+
+                source->move(event->pos() - offset);
+                source->moveAddedStones();
+            }
         }
         else
         {
-            source->setParent(Gamestone::HOLDER, true);
-        }
+            Gamestone* overlappedStone = qobject_cast<Gamestone*>(ui->holder->childAt(stoneCenter));
 
-        source->move(event->pos() - offset);
-        source->moveAddedStones();
+            bool stoneAlreadyMoved = false;
+            if (overlappedStone != NULL)
+            {
+                QDragEnterEvent enterEvent(event->pos(), event->dropAction(), event->mimeData(),
+                    event->mouseButtons(), event->keyboardModifiers());
+                overlappedStone->dragEnterEvent(&enterEvent);
+                if (enterEvent.dropAction() != Qt::IgnoreAction)
+                {
+                    overlappedStone->dropEvent(event, true);
+                    stoneAlreadyMoved = true;
+                }
+            }
+
+            if (!stoneAlreadyMoved)
+            {
+                source->setParent(Gamestone::HOLDER, true);
+
+                source->move(event->pos() - offset);
+                source->moveAddedStones();
+            }
+        }
 
         // Calculate new minimum height of parent widget
         int minHeight = ((QWidget*)source->parent())->minimumSize().height();

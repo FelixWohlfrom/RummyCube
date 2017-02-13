@@ -707,7 +707,7 @@ QXmlStreamWriter &operator<<(QXmlStreamWriter &output, Gamestone* stone)
     // First store the stone parameters
     output.writeStartElement("stone");
     output.writeAttribute("val", QString::number(stone->asInt()));
-  
+
     output.writeStartElement("settings");
     output.writeAttribute("x", QString::number(stone->pos().x()));
     output.writeAttribute("y", QString::number(stone->pos().y()));
@@ -965,6 +965,11 @@ void Gamestone::dragMoveEvent(QDragMoveEvent *)
 
 void Gamestone::dropEvent(QDropEvent *event)
 {
+    dropEvent(event, false);
+}
+
+void Gamestone::dropEvent(QDropEvent *event, bool redirected)
+{
     if (event->mimeData()->hasFormat(GAMESTONE_MIMETYPE)
             && !event->dropAction() == Qt::IgnoreAction)
     {
@@ -976,8 +981,19 @@ void Gamestone::dropEvent(QDropEvent *event)
         // First try to drop depending on "hard" conditions (color, number etc.)
         if (!dragSource->appendStone(*this))
         {
-            // No "hard" condition matched, so drop depending on mouse position
-            if (this->pos().x() + event->pos().x() > this->pos().x() + this->getWidth() / 2)
+            // No "hard" condition matched, so drop depending on source stone position
+            QByteArray itemData = event->mimeData()->data(GAMESTONE_MIMETYPE);
+            QDataStream dataStream(&itemData, QIODevice::ReadOnly);
+            QPoint offset;
+            dataStream >> offset;
+
+            int eventPos = event->pos().x() - offset.x();
+            if (!redirected)
+            {
+                eventPos += this->pos().x();
+            }
+
+            if (this->pos().x() < eventPos)
             {
                 this->setNext(dragSource);
             }

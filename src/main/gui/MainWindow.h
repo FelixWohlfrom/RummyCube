@@ -23,7 +23,6 @@
 #include "../game/stones/ParentChangedEvent.h"
 
 #include <QMainWindow>
-#include <QDragEnterEvent>
 #include <QContextMenuEvent>
 
 namespace Ui {

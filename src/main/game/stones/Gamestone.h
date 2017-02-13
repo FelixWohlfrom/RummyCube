@@ -294,6 +294,29 @@ class Gamestone : public QWidget
         void moveAddedStones();
 
         /**
+         * Listener for event when stone is dragged over another.
+         *
+         * @param event The drag enter event
+         */
+        void dragEnterEvent(QDragEnterEvent *event) Q_DECL_OVERRIDE;
+
+        /**
+         * This event is called once the gamestone is dropped on another.
+         * Same as call to {@link #dropEvent(event, false)};
+         *
+         * @param event The drop event
+         */
+        void dropEvent(QDropEvent *event) Q_DECL_OVERRIDE;
+
+        /**
+         * This event is called once the gamestone is dropped on another.
+         *
+         * @param event The drop event
+         * @param redirected If the drop event is redirected, e.g. from a parent window
+         */
+        void dropEvent(QDropEvent *event, bool redirected);
+
+        /**
          * Loads the stone values from given stream.
          *
          * @param input The stream from which should be loaded
@@ -549,23 +572,9 @@ class Gamestone : public QWidget
         virtual void paintEvent(QPaintEvent *) Q_DECL_OVERRIDE;
 
         /**
-         * Listener for event when stone is dragged over another.
-         *
-         * @param event The drag enter event
-         */
-        void dragEnterEvent(QDragEnterEvent *event) Q_DECL_OVERRIDE;
-
-        /**
          * This event is called once the gamestone is moved during drag'n'drop.
          */
         void dragMoveEvent(QDragMoveEvent *) Q_DECL_OVERRIDE;
-
-        /**
-         * This event is called once the gamestone is dropped on another.
-         *
-         * @param event The drop event
-         */
-        void dropEvent(QDropEvent *event) Q_DECL_OVERRIDE;
 
         /**
          * Listener for mouse entering the current gamestone.
