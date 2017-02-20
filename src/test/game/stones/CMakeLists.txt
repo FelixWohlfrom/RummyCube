@@ -3,11 +3,13 @@ set(CLASSESUNDERTESTDIR game/stones)
 
 # Build all files in this directory
 SET(SOURCE
+    GamestoneTest.cpp
     GamestoneDragNDropTest.cpp
     JokerDragNDropTest.cpp
 )
 
 SET(HEADERS
+    GamestoneTest.h
     GamestoneDragNDropTest.h
     JokerDragNDropTest.h
 )
