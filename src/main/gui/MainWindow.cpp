@@ -138,7 +138,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->passButton, SIGNAL(clicked()),
                       this, SLOT(startNextRound()));
 
-    this->moveAllStonesEvent(game->moveAllStonesInRow());
+    this->moveAllStonesEvent(game->getStoneManager().moveAllStonesInRow);
 }
 
 MainWindow::~MainWindow()
@@ -162,7 +162,7 @@ void MainWindow::showEvent(QShowEvent* event)
     QWidget::showEvent(event);
 
     // Just init the stones if not already initialized
-    if (game->getStones().size() == 0)
+    if (game->getStoneManager().getStones().size() == 0)
     {
         this->initStones();
     }
@@ -265,8 +265,8 @@ void MainWindow::restartGame()
 void MainWindow::initStones()
 {
     // Create the stones
-    game->createStones(ui->heap);
-    QVector<Gamestone*>& stones = game->getStones();
+    game->getStoneManager().createStones(ui->heap);
+    QVector<Gamestone*>& stones = game->getStoneManager().getStones();
 
     int y(5);
     for (int i(0); i < stones.size(); ++i)
@@ -296,7 +296,7 @@ void MainWindow::setInfoLabelText()
 {
     // If more then one stone can be taken
     if (game->getHumanPlayer()->getStonesLeftToTake() > 1
-            && game->getStoneCountOnHeap() > 0)
+            && game->getStoneManager().getStoneCountOnHeap() > 0)
     {
         ui->infoLabel->setText(
                 tr("Please get a stone (%1 more) or click here to get all"
@@ -305,7 +305,7 @@ void MainWindow::setInfoLabelText()
     }
     // If only one stone can be taken
     else if (game->getHumanPlayer()->getStonesLeftToTake() == 1
-            && game->getStoneCountOnHeap() > 0)
+            && game->getStoneManager().getStoneCountOnHeap() > 0)
     {
         ui->infoLabel->setText(tr("Please get a stone"));
     }
@@ -354,9 +354,9 @@ void MainWindow::takeAllStones()
     // If the stones can not be moved, don't take the stones
     if (!Gamestone::canMoveStones) return;
 
-    QVector<Gamestone*> stones = game->getStones();
+    QVector<Gamestone*> stones = game->getStoneManager().getStones();
     while (game->getHumanPlayer()->getStonesLeftToTake() > 0
-            && game->getStoneCountOnHeap() > 0)
+            && game->getStoneManager().getStoneCountOnHeap() > 0)
     {
         int index = rand() % stones.size();
         while (stones.at(index)->getParent() != Gamestone::HEAP)
@@ -478,8 +478,9 @@ void MainWindow::moveToHolder(Gamestone& gamestone)
     gamestone.move(QPoint(x, y));
 
     // Bring stones to front
-    for (QVector<Gamestone*>::iterator stone(game->getStones().begin());
-            stone != game->getStones().end();
+    for (QVector<Gamestone*>::iterator
+            stone(game->getStoneManager().getStones().begin());
+            stone != game->getStoneManager().getStones().end();
             ++stone)
     {
         if ((*stone)->getParent() == Gamestone::HOLDER && !(*stone)->isFirst())
@@ -521,7 +522,7 @@ void MainWindow::moveToBoard(Gamestone& stone)
 bool MainWindow::stoneUnderRow(int x, int y, int rowLength)
 {
     // Check if any of the stones are under the new position of the row
-    QVector<Gamestone*> gamestones = game->getStones();
+    QVector<Gamestone*> gamestones = game->getStoneManager().getStones();
     for (QVector<Gamestone*>::iterator stone(gamestones.begin());
             stone != gamestones.end();
             ++stone)
@@ -564,9 +565,10 @@ void MainWindow::updateScrollElementMinSize()
     int holderMinY = 1;
     int gameboardMinX = 1;
     int gameboardMinY = 1;
-    for (QVector<Gamestone*>::iterator stone(game->getStones().begin());
-        stone != game->getStones().end();
-        ++stone)
+    for (QVector<Gamestone*>::iterator
+            stone(game->getStoneManager().getStones().begin());
+            stone != game->getStoneManager().getStones().end();
+            ++stone)
     {
         if ((*stone)->getParent() == Gamestone::HOLDER)
         {
@@ -621,7 +623,7 @@ void MainWindow::startNextRound()
         }
         else
         {
-            QVector<Gamestone*> gamestones(game->getStones());
+            QVector<Gamestone*> gamestones(game->getStoneManager().getStones());
             for (QVector<Gamestone*>::iterator stone(gamestones.begin());
                     stone != gamestones.end();
                     ++stone)
@@ -728,7 +730,7 @@ void MainWindow::startNextRound()
     game->getHumanPlayer()->newRound();
     this->setInfoLabelText();
 
-    if (game->getStoneCountOnHeap() == 0)
+    if (game->getStoneManager().getStoneCountOnHeap() == 0)
     {
         ui->passButton->setEnabled(true);
         ui->passAction->setEnabled(true);
@@ -1009,7 +1011,7 @@ void MainWindow::loadGameEvent()
 
             // Loading succeded, do some final updates on gui
             if (game->getHumanPlayer()->getStonesLeftToTake() == 0
-                    || game->getStoneCountOnHeap() == 0)
+                    || game->getStoneManager().getStoneCountOnHeap() == 0)
             {
                 ui->passButton->setEnabled(true);
             }
@@ -1100,7 +1102,7 @@ void MainWindow::settingsEvent()
 
 void MainWindow::moveAllStonesEvent(bool checked)
 {
-    game->moveAllStonesInRow(checked);
+    game->getStoneManager().moveAllStonesInRow = checked;
 
     // Update main menu item, context menu item is updated on creation
     // of context menu
@@ -1275,7 +1277,7 @@ void MainWindow::timeLimitEvent()
             ruleFailed.setIcon(QMessageBox::Warning);
             ruleFailed.exec();
 
-            QVector<Gamestone*> gamestones(game->getStones());
+            QVector<Gamestone*> gamestones(game->getStoneManager().getStones());
             for (QVector<Gamestone*>::iterator stone(gamestones.begin());
                     stone != gamestones.end();
                     ++stone)

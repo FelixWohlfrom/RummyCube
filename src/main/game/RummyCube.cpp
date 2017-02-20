@@ -90,29 +90,9 @@ CountdownTimer* RummyCube::getTimer() const
     return timer;
 }
 
-void RummyCube::createStones(QWidget* heap)
+StoneManager& RummyCube::getStoneManager()
 {
-    stoneManager.createStones(heap);
-}
-
-QVector<Gamestone*>& RummyCube::getStones()
-{
-    return stoneManager.getStones();
-}
-
-int RummyCube::getStoneCountOnHeap() const
-{
-    return stoneManager.getStoneCountOnHeap();
-}
-
-bool RummyCube::moveAllStonesInRow() const
-{
-    return stoneManager.moveAllStonesInRow;
-}
-
-void RummyCube::moveAllStonesInRow(bool moveAllStonesInRow)
-{
-    stoneManager.moveAllStonesInRow = moveAllStonesInRow;
+    return stoneManager;
 }
 
 bool RummyCube::testStonesOnGameboard()

@@ -75,39 +75,11 @@ class RummyCube: QObject
         CountdownTimer* getTimer() const;
 
         /**
-         * Creates the stones on given heap.
+         * Returns the stone manager that manages the stones of this game.
          *
-         * @param heap The heap on which the stones should be created
+         * @return a reference to the stone manager
          */
-        void createStones(QWidget* heap);
-
-        /**
-         * Returns the stones.
-         *
-         * @return A reference to the stone vector
-         */
-        QVector<Gamestone*>& getStones();
-
-        /**
-         * Returns the stone count on heap.
-         *
-         * @return The number of stones which are still on the heap
-         */
-        int getStoneCountOnHeap() const;
-
-        /**
-         * Returns if all stones in one row can be moved.
-         *
-         * @return If all stones in one row can be moved
-         */
-        bool moveAllStonesInRow() const;
-
-        /**
-         * Sets if all stones in one row can be moved.
-         *
-         * @param moveAllStonesInRow If all stones in one row can be moved
-         */
-        void moveAllStonesInRow(bool moveAllStonesInRow);
+        StoneManager& getStoneManager();
 
         /**
          * Test the stones on gameboard.

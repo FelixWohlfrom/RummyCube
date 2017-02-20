@@ -39,7 +39,7 @@ void GameSavingTest::testGameLoadingAndSaving(QString loadGame)
 
     // Then create the game that is first loaded and then saved again
     RummyCube* game = new RummyCube();
-    game->createStones(dummyWindow);
+    game->getStoneManager().createStones(dummyWindow);
 
     QFile loadFile(loadGame);
 
