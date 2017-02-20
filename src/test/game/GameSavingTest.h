@@ -27,7 +27,7 @@
 
 #include <QTest>
 
-#include <QString>
+#include "../../main/game/RummyCube.h"
 
 #ifdef _DEBUG
     #ifdef _WIN32
@@ -49,11 +49,14 @@ class GameSavingTest: public QObject
 
     private:
         /**
-         * Tests if loading loadGame and afterwards saving saveGame is successful.
-         *
-         * @param loadGame The path to the savegame file to load
+         * A dummy window.
          */
-        void testGameLoadingAndSaving(QString loadGame);
+        QWidget* dummyWindow;
+
+        /**
+         * The game instance to use for tests.
+         */
+        RummyCube* game;
 
         /**
          * Compares the two given files. Will fail if the two files are different.
@@ -65,25 +68,60 @@ class GameSavingTest: public QObject
 
     private slots:
         /**
-         * @test
-         * This testcase verifies that a game that was saved before any player has played out
-         * can be loaded and saved again successfully.
+         * Initializes the testcase. Will create a dummy window and creates a new game.
          */
-        void savegameBeforeFirstRound();
+        void init();
+
+        /**
+         * Cleans up the dummy window and game.
+         */
+        void cleanup();
+
+        /**
+         * Generates a list of presaved game files to verify.
+         */
+        void verifyPresavedGame_data();
 
         /**
          * @test
-         * This testcase verifies a game that was saved after first round and the player didn't
-         * connect any stones yet can be saved again successfully.
+         * Tests if loading loadGame and afterwards saving saveGame is successful and both files
+         * are identical.
          */
-        void savegameNoConnectedStones();
+        void verifyPresavedGame();
 
         /**
          * @test
-         * This testcase verifies a game that was saved after first round and the player connected
-         * some stones can be saved again successfully.
+         * Verifies that all stones of a game can be saved and loaded properly and that all values
+         * are properly (re)stored.
          */
-        void savegameConnectedStones();
+        void verifyStoneSaveAndLoading();
+};
+
+/**
+ * A helper structure to store the data of a gamestone to be verified after loading.
+ */
+struct GamestoneData
+{
+    /**
+     * The x value of the stone position.
+     */
+    int posX;
+    /**
+    * The y value of the stone position.
+    */
+    int posY;
+    /**
+    * The stone parent.
+    */
+    Gamestone::StoneParent parent;
+    /**
+     * The previous stone of the current stone.
+     */
+    Gamestone* prev;
+    /**
+    * The next stone of the current stone.
+    */
+    Gamestone* next;
 };
 
 #endif /* GAME_GAMESAVINGTEST_H_ */

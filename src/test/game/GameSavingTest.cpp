@@ -24,76 +24,59 @@
 
 #include "GameSavingTest.h"
 
-#include "../../main/game/RummyCube.h"
-#include "../../main/game/Settings.h"
-
 #include <QFile>
 #include <QSaveFile>
 
-#define SAVE_GAME "saveGame.rcs"
+#include "../../main/game/Settings.h"
 
-void GameSavingTest::testGameLoadingAndSaving(QString loadGame)
+#define SAVE_GAME "saveGame.rcs"
+#define SAVE_GAME_PATH QString("../resources/savegames/")
+
+void GameSavingTest::init()
 {
     // First create a dummy window
-    QWidget* dummyWindow = new QWidget();
+    dummyWindow = new QWidget();
 
-    // Then create the game that is first loaded and then saved again
-    RummyCube* game = new RummyCube();
+    // Then create the game that is used for testing
+    game = new RummyCube();
     game->getStoneManager().createStones(dummyWindow);
 
-    QFile loadFile(loadGame);
-
-    if (!loadFile.open(QIODevice::ReadOnly))
+    // Move the stones to an initial position
+    QVector<Gamestone*> stones = game->getStoneManager().getStones();
+    for (QVector<Gamestone*>::iterator stone(stones.begin());
+           stone != stones.end();
+           ++stone)
     {
-        delete game;
-        delete dummyWindow;
-        Settings::cleanup();
-        QFAIL(QString("Could not open file %1 for loading. %2")
-                .arg(loadGame).arg(loadFile.errorString()).toUtf8());
-    }
-    else
-    {
-        QXmlStreamReader saveGameReader(&loadFile);
-        saveGameReader >> game;
+        (*stone)->move((*stone)->asInt(), (*stone)->asInt());
 
-        // Loading failure, show error message and return
-        if (saveGameReader.hasError())
+        // Spread the stones over the different stone parents
+        switch ((*stone)->getColor())
         {
-            delete game;
-            delete dummyWindow;
-            Settings::cleanup();
-            QFAIL(QString("Error during file loading. %1")
-                    .arg(saveGameReader.errorString()).toUtf8());
+            case Gamestone::StoneColor::BLUE:
+                (*stone)->setParent(Gamestone::StoneParent::HOLDER);
+                break;
+            case Gamestone::StoneColor::YELLOW:
+                (*stone)->setParent(Gamestone::StoneParent::AIHOLDER);
+                break;
+            case Gamestone::StoneColor::RED:
+                (*stone)->setParent(Gamestone::StoneParent::BOARD);
+                break;
+            default:
+                (*stone)->setParent(Gamestone::StoneParent::HEAP);
         }
     }
 
-    QFileInfo filename(SAVE_GAME);
-
-    QSaveFile saveFile(filename.absoluteFilePath());
-    if (!saveFile.open(QIODevice::WriteOnly))
+    // Store the stones to make sure "old*" values are set
+    for (QVector<Gamestone*>::iterator stone(stones.begin());
+           stone != stones.end();
+           ++stone)
     {
-        delete game;
-        delete dummyWindow;
-        Settings::cleanup();
-        QFAIL(QString("Could not open savegame file %1 to write. %2")
-                .arg(SAVE_GAME).arg(saveFile.errorString()).toUtf8());
+        (*stone)->storeStone();
     }
-    else
-    {
-        QXmlStreamWriter saveGameWriter(&saveFile);
-        saveGameWriter << game;
+}
 
-        if (!saveFile.commit())
-        {
-            delete game;
-            delete dummyWindow;
-            Settings::cleanup();
-            QFAIL(QString("Could not write savegame. %1").arg(saveFile.errorString()).toUtf8());
-        }
-    }
-
-    compareFiles(loadGame, SAVE_GAME);
-
+void GameSavingTest::cleanup()
+{
     delete game;
     delete dummyWindow;
     Settings::cleanup();
@@ -157,22 +140,158 @@ void GameSavingTest::compareFiles(QString orig, QString target)
     targetFile.close();
 }
 
-void GameSavingTest::savegameBeforeFirstRound()
+void GameSavingTest::verifyPresavedGame_data()
 {
-    testGameLoadingAndSaving(
-            "../resources/savegames/Test_Before_First_Round.rcs");
+    QTest::addColumn<QString>("loadGame");
+
+    /**
+     * This testcase verifies that a game that was saved before any player has played out
+     * can be loaded and saved again successfully.
+     */
+    QTest::newRow("savegameBeforeFirstRound")
+        << SAVE_GAME_PATH + "Test_Before_First_Round.rcs";
+
+    /*
+     * This testcase verifies a game that was saved after first round and the player didn't
+     * connect any stones yet can be saved again successfully.
+     */
+    QTest::newRow("savegameNoConnectedStones")
+        << SAVE_GAME_PATH + "Test_First_Round_No_Connected_Stones.rcs";
+
+    /**
+     * This testcase verifies a game that was saved after first round and the player connected
+     * some stones can be saved again successfully.
+     */
+    QTest::newRow("savegameConnectedStones")
+        << SAVE_GAME_PATH + "Test_First_Round_Stones_Connected.rcs";
 }
 
-void GameSavingTest::savegameNoConnectedStones()
+void GameSavingTest::verifyPresavedGame()
 {
-    testGameLoadingAndSaving(
-            "../resources/savegames/Test_First_Round_No_Connected_Stones.rcs");
+    QFETCH(QString, loadGame);
+
+    QFile loadFile(loadGame);
+
+    if (!loadFile.open(QIODevice::ReadOnly))
+    {
+        QFAIL(QString("Could not open file %1 for loading. %2")
+                .arg(loadGame).arg(loadFile.errorString()).toUtf8());
+    }
+    else
+    {
+        QXmlStreamReader saveGameReader(&loadFile);
+        saveGameReader >> game;
+
+        // Loading failure, show error message and return
+        if (saveGameReader.hasError())
+        {
+            QFAIL(QString("Error during file loading. %1")
+                    .arg(saveGameReader.errorString()).toUtf8());
+        }
+    }
+
+    QFileInfo filename(SAVE_GAME);
+
+    QSaveFile saveFile(filename.absoluteFilePath());
+    if (!saveFile.open(QIODevice::WriteOnly))
+    {
+        QFAIL(QString("Could not open savegame file %1 to write. %2")
+                .arg(SAVE_GAME).arg(saveFile.errorString()).toUtf8());
+    }
+    else
+    {
+        QXmlStreamWriter saveGameWriter(&saveFile);
+        saveGameWriter << game;
+
+        if (!saveFile.commit())
+        {
+            QFAIL(QString("Could not write savegame. %1").arg(saveFile.errorString()).toUtf8());
+        }
+    }
+
+    compareFiles(loadGame, SAVE_GAME);
 }
 
-void GameSavingTest::savegameConnectedStones()
+void GameSavingTest::verifyStoneSaveAndLoading()
 {
-    testGameLoadingAndSaving(
-            "../resources/savegames/Test_First_Round_Stones_Connected.rcs");
+    // TODO Combine several stones to create rows
+    // TODO create variants with joker and without joker
+
+    // First the stone information for later validation
+    QVector<GamestoneData> gamestoneData;
+    QVector<Gamestone*> stones = game->getStoneManager().getStones();
+    for (QVector<Gamestone*>::iterator stone(stones.begin());
+           stone != stones.end();
+           ++stone)
+    {
+        GamestoneData data = {
+            (*stone)->pos().x(),
+            (*stone)->pos().y(),
+            (*stone)->getParent(),
+            (*stone)->getPrev(),
+            (*stone)->getNext()
+        };
+        gamestoneData.push_back(data);
+    }
+
+    // Store game in string
+    QString xmlString;
+    QXmlStreamWriter writer(&xmlString);
+    writer << game;
+
+    // Move all stones to (0,0), change parent and store them again
+    for (QVector<Gamestone*>::iterator stone(stones.begin());
+           stone != stones.end();
+           ++stone)
+    {
+        (*stone)->move(0, 0);
+
+        if ((*stone)->getColor() == Gamestone::StoneColor::BLACK)
+        {
+            (*stone)->setParent(Gamestone::StoneParent::AIHOLDER);
+        }
+
+        // TODO Reset prev and next stones
+
+        (*stone)->storeStone();
+    }
+
+
+    // Load game and verify that all stones are at correct position
+    QXmlStreamReader reader(xmlString);
+    reader >> game;
+
+    for (int i = 0; i < stones.size(); i++)
+    {
+        Gamestone* stone = stones.at(i);
+        GamestoneData data = gamestoneData.at(i);
+
+        QCOMPARE(stone->pos().x(), data.posX);
+        QCOMPARE(stone->pos().y(), data.posY);
+        QCOMPARE(stone->getParent(), data.parent);
+        QCOMPARE(stone->getPrev(), data.prev);
+        QCOMPARE(stone->getNext(), data.next);
+    }
+
+    // Restore all stones and verify they have still the same data
+    for (QVector<Gamestone*>::iterator stone(stones.begin());
+           stone != stones.end();
+           ++stone)
+    {
+        (*stone)->restoreStone();
+    }
+
+    for (int i = 0; i < stones.size(); i++)
+    {
+        Gamestone* stone = stones.at(i);
+        GamestoneData data = gamestoneData.at(i);
+
+        QCOMPARE(stone->pos().x(), data.posX);
+        QCOMPARE(stone->pos().y(), data.posY);
+        QCOMPARE(stone->getParent(), data.parent);
+        QCOMPARE(stone->getPrev(), data.prev);
+        QCOMPARE(stone->getNext(), data.next);
+    }
 }
 
 QTEST_MAIN(GameSavingTest)
