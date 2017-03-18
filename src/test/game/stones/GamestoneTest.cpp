@@ -24,10 +24,12 @@
 
 #include "GamestoneTest.h"
 
+#include <QTest>
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
 
 #include "../../../main/game/Settings.h"
+#include "../../../main/game/stones/Gamestone.h"
 #include "../../../main/game/stones/StoneManager.h"
 #include "../../../main/game/stones/ParentChangedEvent.h"
 
@@ -90,6 +92,42 @@ void GamestoneTest::testInvalidation()
     QCOMPARE(testStone.isInvalid(), true);
     testStone.setInvalid(false);
     QCOMPARE(testStone.isInvalid(), false);
+}
+
+void GamestoneTest::testFromIntUniqueness()
+{
+    QWidget parent;
+    StoneManager stoneManager;
+    QString colorNames[] = { "Unknown", "Black", "Blue", "Yellow", "Red" };
+
+    stoneManager.createStones(&parent);
+
+    QVector<Gamestone*>& stones = stoneManager.getStones();
+    QVector<Gamestone*>& comparisonStones = stoneManager.getStones();
+
+    for (QVector<Gamestone*>::const_iterator stone(stones.begin());
+            stone != stones.end();
+            ++stone)
+    {
+        for (QVector<Gamestone*>::const_iterator comparisonStone(comparisonStones.begin());
+                comparisonStone != comparisonStones.end();
+                ++comparisonStone)
+        {
+            if (&(*stone) != &(*comparisonStone))
+            {
+                QVERIFY2((*stone)->asInt() != (*comparisonStone)->asInt(),
+                         QString("Duplicate value of 'asInt()' method, check coding.\n"
+                             "Stones: '%1 (%2) %3', '%4 (%5) %6'")
+                             .arg((*stone)->getNumber())
+                             .arg(colorNames[(*stone)->getColor() + 1])
+                             .arg((*stone)->isFirst())
+                             .arg((*comparisonStone)->getNumber())
+                             .arg(colorNames[(*comparisonStone)->getColor() + 1])
+                             .arg((*comparisonStone)->isFirst())
+                        .toUtf8().constData());
+            }
+        }
+    }
 }
 
 void GamestoneTest::testParentSwitching_data()

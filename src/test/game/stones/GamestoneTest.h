@@ -25,9 +25,7 @@
 #ifndef GAME_STONES_GAMESTONETEST_H_
 #define GAME_STONES_GAMESTONETEST_H_
 
-#include <QTest>
-
-#include "../../../main/game/stones/Gamestone.h"
+#include <QObject>
 
 #ifdef _DEBUG
     #ifdef _WIN32
@@ -48,7 +46,7 @@ class GamestoneTest: public QObject
 
     private slots:
         /**
-         * Cleans up the testcases
+         * Cleans up the testcases.
          */
         void cleanupTestCase();
 
@@ -69,6 +67,12 @@ class GamestoneTest: public QObject
          * Tests if invalidating works properly.
          */
         void testInvalidation();
+
+        /**
+         * @test
+         * Verifies that the fromInt() method is unique between the stones used for the game.
+         */
+        void testFromIntUniqueness();
 
         /**
          * Data generator for parent switching tests.
