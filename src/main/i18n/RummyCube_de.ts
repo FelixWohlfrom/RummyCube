@@ -29,7 +29,12 @@
         <translation>RummyCube</translation>
     </message>
     <message>
-        <location line="-72"/>
+        <location line="+91"/>
+        <source>Build Time (UTC):</source>
+        <translation>Build Zeitpunkt (UTC):</translation>
+    </message>
+    <message>
+        <location line="-163"/>
         <source>Copyright (C) Felix Wohlfrom</source>
         <translation>Copyright (C) Felix Wohlfrom</translation>
     </message>
