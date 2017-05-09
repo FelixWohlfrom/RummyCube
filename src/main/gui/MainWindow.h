@@ -252,6 +252,11 @@ class MainWindow : public QMainWindow
         void saveGameEvent();
 
         /**
+         * The handler for the "tutorial" menu entry.
+         */
+        void tutorialEvent();
+
+        /**
          * The handler for the "settings" menu entry.
          */
         void settingsEvent();

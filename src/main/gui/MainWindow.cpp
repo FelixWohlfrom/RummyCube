@@ -25,6 +25,7 @@
 #include "MainWindow.h"
 #include "ui_MainWindow.h"
 
+#include "Tutorial.h"
 #include "SettingsWindow.h"
 #include "CreateNetworkGameWindow.h"
 #include "JoinNetworkGameWindow.h"
@@ -1069,6 +1070,41 @@ void MainWindow::saveGameEvent()
             }
         }
     }
+
+    // Resume timer if was running
+    if (timeLimitRunning)
+    {
+        game->getTimer()->resume();
+    }
+}
+
+void MainWindow::tutorialEvent()
+{
+    // First stop timer
+    bool timeLimitRunning = game->getTimer()->isRunning();
+    game->getTimer()->pause();
+
+    // Save game to restore status after tutorials have been finished
+    QString saveGame;
+    QXmlStreamWriter saveGameWriter(&saveGame);
+    saveGameWriter << game;
+
+    QVector<Gamestone*> gamestones(game->getStoneManager().getStones());
+    for (QVector<Gamestone*>::iterator stone(gamestones.begin());
+            stone != gamestones.end();
+            ++stone)
+    {
+        (*stone)->hide();
+    }
+
+    Tutorial(this, this->ui->heap, this->ui->gameboard, this->ui->holder).exec();
+
+    // Restore game
+    this->setEnabled(false);
+    QXmlStreamReader gameReader(saveGame);
+    gameReader >> game;
+
+    this->setEnabled(true);
 
     // Resume timer if was running
     if (timeLimitRunning)

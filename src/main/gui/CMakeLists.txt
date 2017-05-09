@@ -1,6 +1,10 @@
+# The subdirectories to build
+set(SUBDIRS animations)
+
 # Build all files in this directory
 SET(SOURCE
     MainWindow.cpp
+    Tutorial.cpp
     ImagePanel.cpp
     SettingsWindow.cpp
     CreateNetworkGameWindow.cpp
@@ -10,12 +14,20 @@ SET(SOURCE
 
 SET(HEADERS
     MainWindow.h
+    Tutorial.h
     ImagePanel.h
     SettingsWindow.h
     CreateNetworkGameWindow.h
     JoinNetworkGameWindow.h
     AboutWindow.h
 )
+
+# Build subdirs and include for build
+foreach(SUB ${SUBDIRS})
+    include_directories(${SUB})
+    link_directories(${PROJECT_BINARY_DIR}/${SUB})
+    add_subdirectory(${SUB})
+endforeach(SUB)
 
 # build time in UTC ISO 8601
 # Will create a new header "Timestamp.h" which will define timestamp in _TIMESTAMP_
@@ -32,4 +44,4 @@ add_custom_target (
 source_group("Header Files" FILES ${HEADERS} Timestamp.h)
 add_library(Gui ${SOURCE} ${HEADERS})
 add_dependencies(Gui Timestamp)
-target_link_libraries(Gui Game Network Qt5::Widgets)
+target_link_libraries(Gui Game Network Animations Qt5::Widgets)

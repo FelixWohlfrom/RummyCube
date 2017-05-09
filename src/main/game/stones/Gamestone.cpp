@@ -177,9 +177,8 @@ void Gamestone::setParent(Gamestone::StoneParent newParent, bool stoneMoved)
          setAcceptDrops(true);
      }
 
-     // Show stone if not on heap and ai holder
-     if (newParent != Gamestone::HEAP &&
-             newParent != Gamestone::AIHOLDER)
+     // Hide stones just on ai holder, otherwise show them
+     if (newParent != Gamestone::AIHOLDER)
      {
          this->showRow(true);
      }
@@ -971,7 +970,7 @@ void Gamestone::dropEvent(QDropEvent *event)
 void Gamestone::dropEvent(QDropEvent *event, bool redirected)
 {
     if (event->mimeData()->hasFormat(GAMESTONE_MIMETYPE)
-            && !event->dropAction() == Qt::IgnoreAction)
+            && event->dropAction() != Qt::IgnoreAction)
     {
         // If not moving from heap to holder, check if stone is dragging over another
         Q_ASSERT(stoneManager->draggedStone != NULL);

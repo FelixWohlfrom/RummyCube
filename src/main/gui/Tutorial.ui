@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ *  RummyCube. A small board game.                                       *
+ *  Copyright (C) 2016 Felix Wohlfrom                                    *
+ *                                                                       *
+ *  This program is free software: you can redistribute it and/or modify *
+ *  it under the terms of the GNU General Public License as published by *
+ *  the Free Software Foundation, either version 3 of the License, or    *
+ *  (at your option) any later version.                                  *
+ *                                                                       *
+ *  This program is distributed in the hope that it will be useful,      *
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of       *
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the        *
+ *  GNU General Public License for more details.                         *
+ *                                                                       *
+ *  You should have received a copy of the GNU General Public License    *
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.*
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ -->
+<ui version="4.0">
+ <class>Tutorial</class>
+ <widget class="QWizard" name="Tutorial">
+  <property name="windowModality">
+   <enum>Qt::ApplicationModal</enum>
+  </property>
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>500</width>
+    <height>406</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="windowTitle">
+   <string>Tutorial</string>
+  </property>
+  <property name="wizardStyle">
+   <enum>QWizard::ModernStyle</enum>
+  </property>
+  <property name="options">
+   <set>QWizard::NoCancelButtonOnLastPage</set>
+  </property>
+  <widget class="QWizardPage" name="tutorialSelectorPage">
+   <property name="title">
+    <string>Select your Tutorial</string>
+   </property>
+   <property name="subTitle">
+    <string>Please select here the tutorial you want to play</string>
+   </property>
+   <layout class="QVBoxLayout" name="tutorialSelectorLayout">
+    <item>
+     <widget class="QRadioButton" name="gameRulesTutorial">
+      <property name="text">
+       <string>Game Rules - The basic game rules</string>
+      </property>
+      <property name="checked">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QRadioButton" name="playingOutStonesTutorial">
+      <property name="text">
+       <string>Playing out stones - How to play out your stones on the gameboard</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QRadioButton" name="playingOutInFirstRoundTutorial">
+      <property name="text">
+       <string>Playing out in first round - The additional rules that apply in the first round</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QRadioButton" name="jokerTutorial">
+      <property name="text">
+       <string>The Joker - How to use the Joker stone</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QWizardPage" name="gameRulesPage">
+   <property name="title">
+    <string>Game Rules</string>
+   </property>
+   <property name="subTitle">
+    <string>The basic game rules</string>
+   </property>
+   <attribute name="pageId">
+    <string notr="true">10</string>
+   </attribute>
+   <layout class="QVBoxLayout" name="gameRulesLayout">
+    <item>
+     <widget class="QLabel" name="gameRules">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+      <property name="text">
+       <string notr="true">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;b&gt;Objective of the game&lt;/b&gt;&lt;br/&gt;The objective of the game is to move all stones from your &lt;a href=&quot;blinkHolder&quot;&gt;holder&lt;/a&gt; to the &lt;a href=&quot;blinkGameboard&quot;&gt;gameboard&lt;/a&gt;.&lt;br/&gt;Your enemy will also try the same with his stones.&lt;br/&gt;The player who first moves all his stones from his holder to the gameboard wins.&lt;/p&gt;&lt;p&gt;&lt;b&gt;Begin of the game&lt;/b&gt;&lt;br /&gt;
+In the first round, each player needs to pick a number of stones from the &lt;a href=&quot;blinkHeap&quot;&gt;heap&lt;/a&gt; at the top of the page. The number of stones to pick up in first round can be changed in &quot;Options&quot; -&gt; &quot;Settings...&quot; menu. The default number is 14 stones per player.&lt;/p&gt;&lt;p&gt;&lt;b&gt;Begin of each round&lt;/b&gt;&lt;br /&gt;At the begin of each round you need to pick up a stone from the heap. Afterwards you can combine your stones and play them out.&lt;/p&gt;&lt;br /&gt;&lt;p&gt;In the next tutorial you will learn how to combine your stones to rows and play them out on the gameboard.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+      <property name="wordWrap">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QWizardPage" name="playingOutStonesPage">
+   <property name="title">
+    <string>Playing out stones</string>
+   </property>
+   <property name="subTitle">
+    <string>How to play out your stones on the gameboard</string>
+   </property>
+   <attribute name="pageId">
+    <string notr="true">20</string>
+   </attribute>
+   <layout class="QVBoxLayout" name="playingOutStonesLayout">
+    <item>
+     <widget class="QLabel" name="playingOutStones">
+      <property name="text">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;There are several ways to play out your stones.
+&lt;ol&gt;
+    &lt;li&gt;Playing out a new row of stones&lt;/li&gt;
+    &lt;li&gt;Adding stones to already existing rows.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;For both possibilities there apply some basic rules: &lt;/p&gt;
+&lt;ol&gt;
+    &lt;li&gt;Each row needs to contain at least 3 stones before the next player can continue&lt;/li&gt;
+    &lt;li&gt;A row can either contain
+        &lt;ol&gt;
+            &lt;li&gt;&lt;a href=&quot;sameNumberDifferentColor&quot;&gt;stones with same number and unique colors&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;or &lt;a href=&quot;sameColorIncrementingNumber&quot;&gt;stones with same color and consecutive numbers&lt;/a&gt;&lt;/li&gt;
+         &lt;/ol&gt;
+    &lt;/li&gt;
+&lt;/ol&gt;
+On the next page you will find some examples about valid combinations.&lt;/p&gt;
+&lt;p&gt;To play out a stone or a row, pick it up and drag it from the holder to the gameboard.&lt;br /&gt;
+&lt;b&gt;Hint: &lt;/b&gt;To switch between movement of a single stone, check the &quot;Move All Stones&quot; option in the context menu.&lt;/p&gt;
+&lt;br /&gt;
+&lt;p&gt;On the first time you are playing out your stones you need to consider several additional rules. These are described after the example page.&lt;/p&gt;
+&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+      </property>
+      <property name="wordWrap">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QWizardPage" name="playingOutStoneExamplesPage">
+   <property name="title">
+    <string>Examples</string>
+   </property>
+   <property name="subTitle">
+    <string>Here are some examples how stones can be combined.</string>
+   </property>
+   <layout class="QVBoxLayout" name="playingOutStoneExamplesLayout">
+    <item>
+     <widget class="QLabel" name="playingOutStoneExamples">
+      <property name="text">
+       <string>&lt;p&gt;A row contains already the following stones: &lt;span style=&quot;color:#00f&quot;&gt;1 Blue&lt;/span&gt;, &lt;span style=&quot;color:#f00&quot;&gt;1 Red&lt;/span&gt;, &lt;span style=&quot;color:#990&quot;&gt;1 Yellow&lt;/span&gt; you can just add a 1 Black. All other colors are already available in this row so they cannot be added anymore. Also no stone with number 2 can be added since a stone can either just contain the same number or the same color.&lt;/p&gt;
+&lt;p&gt;Another row contains already the following stones: &lt;span style=&quot;color:#00f&quot;&gt;3 Blue&lt;/span&gt;, &lt;span style=&quot;color:#00f&quot;&gt;4 Blue&lt;/span&gt;, &lt;span style=&quot;color:#00f&quot;&gt;5 Blue&lt;/span&gt;. Here you can add now either a &lt;span style=&quot;color:#00f&quot;&gt;2 Blue&lt;/span&gt; at the beggining of the row or a &lt;span style=&quot;color:#00f&quot;&gt;6 Blue&lt;/span&gt; at the end of the row.&lt;/p&gt;
+&lt;br /&gt;&lt;p&gt;On the next page you will find the additional rules that you need to consider before playing out your stones the first time.</string>
+      </property>
+      <property name="wordWrap">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QWizardPage" name="playingOutInFirstRoundPage">
+   <property name="title">
+    <string>Playing out in first round</string>
+   </property>
+   <property name="subTitle">
+    <string>The additional rules that apply in the first round</string>
+   </property>
+   <attribute name="pageId">
+    <string notr="true">30</string>
+   </attribute>
+   <layout class="QVBoxLayout" name="playingOutInFirstRoundLayout">
+    <item>
+     <widget class="QLabel" name="playingOutInFirstRound">
+      <property name="text">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;By default, if you want to play out the first time, you need to sum up the numbers on the stones you want to play out. You are allowed to play out the row if this sum is higher than 27.&lt;/p&gt;
+&lt;p&gt;Under &quot;Options&quot; -&gt; &quot;Settings&quot; you can adapt these settings to your personal demands. You can change the required sum and if the sum needs to be in a single row during first playout. Depending on the settings it could also be distributed to several rows.&lt;/p&gt;&lt;br /&gt;&lt;p&gt;The next tutorial will show you a special stone: The joker.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+      <property name="wordWrap">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QWizardPage" name="jokerPage">
+   <property name="title">
+    <string>The Joker</string>
+   </property>
+   <property name="subTitle">
+    <string>How to use the Joker stone</string>
+   </property>
+   <attribute name="pageId">
+    <string notr="true">40</string>
+   </attribute>
+   <layout class="QVBoxLayout" name="jokerLayout">
+    <item>
+     <widget class="QLabel" name="joker">
+      <property name="text">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;The &lt;a href=&quot;showJoker&quot;&gt;Joker&lt;/a&gt; stone is a special stone. You can easily recognice it with it's smiling face.&lt;/p&gt;
+&lt;p&gt;The joker is very flexible. It can replace every stone with any color and any number.&lt;/p&gt;
+&lt;p&gt;Here you have some examples:&lt;ol&gt;&lt;li&gt;In the &lt;a href=&quot;sameColorIncrementingNumberJoker&quot;&gt;first example&lt;/a&gt; the joker replaces a &lt;span style=&quot;color: #00f&quot;&gt;stone with color blue and number 4&lt;/span&gt;. This is the case since there is already a &lt;span style=&quot;color: #00f&quot;&gt;blue 3&lt;/span&gt; in the row and a &lt;span style=&quot;color:#00f&quot;&gt;blue 5&lt;/span&gt; is dragged over the row.&lt;/li&gt;
+&lt;li&gt;In the &lt;a href=&quot;sameNumberDifferentColorJoker&quot;&gt;second example&lt;/a&gt; the joker replaces a &lt;span style=&quot;color: #990&quot;&gt;stone with color yellow and number 6&lt;/span&gt;. This is the case since there is already a &lt;span style=&quot;color:#f00&quot;&gt;red 6&lt;/span&gt; and a &lt;span style=&quot;color#000&quot;&gt;black 6&lt;/span&gt;. Also a &lt;span style=&quot;color:#00f&quot;&gt;blue 6&lt;/span&gt; is added to the row.&lt;/li&gt;&lt;/ol&gt;
+&lt;/p&gt;
+&lt;br /&gt;
+&lt;p&gt;Now that you know the power of the joker you are ready to contine your game.&lt;/p&gt;
+&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+      <property name="wordWrap">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

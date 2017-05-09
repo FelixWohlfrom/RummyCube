@@ -4,7 +4,7 @@
 <context>
     <name>AboutWindow</name>
     <message>
-        <location filename="../gui/AboutWindow.ui" line="+17"/>
+        <location filename="../gui/AboutWindow.ui" line="+36"/>
         <source>About RummyCube</source>
         <translation>Über RummyCube</translation>
     </message>

@@ -106,6 +106,9 @@
       </item>
       <item>
        <widget class="QWidget" name="heap" native="true">
+        <property name="enabled">
+         <bool>true</bool>
+        </property>
         <property name="sizePolicy">
          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
           <horstretch>0</horstretch>
@@ -124,11 +127,10 @@
           <height>55</height>
          </size>
         </property>
-        <property name="autoFillBackground">
-         <bool>false</bool>
-        </property>
         <property name="styleSheet">
-         <string notr="true">background-color: rgb(0, 174, 0);</string>
+         <string notr="true">:enabled {
+	background-color: rgb(0, 174, 0);
+}</string>
         </property>
        </widget>
       </item>
@@ -480,6 +482,22 @@
    <signal>triggered()</signal>
    <receiver>MainWindow</receiver>
    <slot>saveGameEvent()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>tutorialAction</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>tutorialEvent()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>-1</x>
