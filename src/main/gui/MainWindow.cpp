@@ -49,7 +49,7 @@
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent), ui(new Ui::MainWindow), forceClose(false),
-	gameState(GAME_IDLE), nextGame(NULL)
+    gameState(GAME_IDLE), nextGame(NULL)
 {
     setWindowIcon(QIcon(":images/icon"));
 

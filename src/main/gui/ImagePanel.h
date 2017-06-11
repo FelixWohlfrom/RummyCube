@@ -41,7 +41,7 @@ class ImagePanel : public QLabel
          *
          * @param imagePath The image file to load
          * @param defaultImagePath The default image shown if the image file
-         * 						   can not be loaded
+         *                         can not be loaded
          * @param parent The parent window of the panel
          * @param flags The flags that describe the panel
          */

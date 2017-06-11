@@ -33,13 +33,13 @@
 
 void GamestoneDragNDropTest::initTestCase()
 {
-	manager = new StoneManager();
+    manager = new StoneManager();
 }
 
 void GamestoneDragNDropTest::cleanupTestCase()
 {
-	delete manager;
-	Settings::cleanup();
+    delete manager;
+    Settings::cleanup();
 }
 
 void GamestoneDragNDropTest::singleStone_SingleStone_SameNumber_DifferentColor()

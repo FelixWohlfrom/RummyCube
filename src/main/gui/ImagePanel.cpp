@@ -27,9 +27,8 @@
 #include <QPixmap>
 
 ImagePanel::ImagePanel(QString imagePath, QString defaultImagePath,
-		QWidget* parent, Qt::WindowFlags flags):
-    QLabel(parent, flags), imagePath(imagePath),
-	defaultImagePath(defaultImagePath)
+                QWidget* parent, Qt::WindowFlags flags):
+    QLabel(parent, flags), imagePath(imagePath), defaultImagePath(defaultImagePath)
 {
     QSizePolicy sizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     this->setSizePolicy(sizePolicy);

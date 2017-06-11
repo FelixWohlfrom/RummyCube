@@ -46,7 +46,7 @@ StoneMover::~StoneMover()
 {
     while (!gamestones.empty())
     {
-		gamestones.back()->hide();
+        gamestones.back()->hide();
         delete gamestones.back();
         gamestones.pop_back();
     }

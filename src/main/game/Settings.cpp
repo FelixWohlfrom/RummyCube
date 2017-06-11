@@ -39,7 +39,7 @@ Settings* Settings::getInstance()
     {
         QString settingsFile(
                 QStandardPaths::writableLocation(QStandardPaths::AppDataLocation)
-				+ "/settings.conf");
+                + "/settings.conf");
 
         INSTANCE = new Settings(settingsFile);
     }

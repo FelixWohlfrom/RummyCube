@@ -37,7 +37,7 @@ DisplayJoker::DisplayJoker(QWidget* parent):
 
 DisplayJoker::~DisplayJoker()
 {
-	stoneToDisplay->hide();
+    stoneToDisplay->hide();
     delete stoneToDisplay;
 }
 
