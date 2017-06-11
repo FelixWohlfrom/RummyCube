@@ -164,6 +164,12 @@ void GameSavingTest::verifyPresavedGame_data()
      */
     QTest::newRow("savegameConnectedStones")
         << SAVE_GAME_PATH + "Test_First_Round_Stones_Connected.rcs";
+
+    /**
+     * This testcase verifies a game where a user owns a joker stone.
+     */
+    QTest::newRow("userHasJoker")
+        << SAVE_GAME_PATH + "Test_User_Has_Joker.rcs";
 }
 
 void GameSavingTest::verifyPresavedGame()
