@@ -27,4 +27,4 @@ endif(WIN32)
 # Generate the main program
 source_group("Header Files" FILES Version.h)
 add_executable(RummyCube ${GUI_TYPE} ${RSRC} Main.cpp)
-target_link_libraries(RummyCube Gui I18n)
+target_link_libraries(RummyCube Gui)

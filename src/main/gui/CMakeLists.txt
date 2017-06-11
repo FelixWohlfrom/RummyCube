@@ -44,4 +44,4 @@ add_custom_target (
 source_group("Header Files" FILES ${HEADERS} Timestamp.h)
 add_library(Gui ${SOURCE} ${HEADERS})
 add_dependencies(Gui Timestamp)
-target_link_libraries(Gui Game Network Animations Qt5::Widgets)
+target_link_libraries(Gui Game Network Animations I18n Qt5::Widgets)
