@@ -169,6 +169,18 @@ void GamestoneTest::testParentSwitching()
     QCOMPARE(event.getVeto(), false);
 }
 
+void GamestoneTest::testSetFirstTimePlayedOut()
+{
+    StoneManager stoneManager;
+    QWidget parent;
+    Gamestone testStone(&parent, &stoneManager, true, Gamestone::StoneColor::BLUE, 10);
+
+    QVERIFY2(testStone.isFirstTimePlayedOut(), "First time played out should be set");
+
+    testStone.finishedFirstTimePlayedOut();
+    QVERIFY2(!testStone.isFirstTimePlayedOut(), "First time played out should not be set anymore");
+}
+
 void GamestoneTest::testStoneStoringAndRestoring()
 {
     StoneManager stoneManager;

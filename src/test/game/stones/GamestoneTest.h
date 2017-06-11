@@ -90,6 +90,12 @@ class GamestoneTest: public QObject
 
         /**
          * @test
+         * Verifies that setting first time played out is done correctly
+         */
+        void testSetFirstTimePlayedOut();
+
+        /**
+         * @test
          * Verifies that storing stone data and restoring the data works properly.
          */
         void testStoneStoringAndRestoring();
