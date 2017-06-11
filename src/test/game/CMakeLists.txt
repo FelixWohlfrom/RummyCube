@@ -12,10 +12,12 @@ set(CLASSESUNDERTESTDIR game)
 # Build all files in this directory
 SET(SOURCE
     GameSavingTest.cpp
+    GameLoadingTest.cpp
 )
 
 SET(HEADERS
     GameSavingTest.h
+    GameLoadingTest.h
 )
 
 foreach(SUB ${CLASSESUNDERTESTDIR})

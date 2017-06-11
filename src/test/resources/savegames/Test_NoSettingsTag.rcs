@@ -1,0 +1,436 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE Rummy>
+<RummyCube time="-1" timeLeft="0" opponents="1">
+    <player stonesLeftToTake="14" sumInFirstRound="27" stonesInOneRow="1" firstPlayOut="1" stoneCount="0"/>
+    <player stonesLeftToTake="14" sumInFirstRound="27" stonesInOneRow="1" firstPlayOut="1" stoneCount="0"/>
+    <otherStones>
+        <stone val="521">
+            <!-- <settings x="94" y="5" parent="0"/> -->
+            <oldSettings x="94" y="5" parent="0"/>
+        </stone>
+        <stone val="529">
+            <settings x="895" y="5" parent="0"/>
+            <oldSettings x="895" y="5" parent="0"/>
+        </stone>
+        <stone val="545">
+            <settings x="276" y="5" parent="0"/>
+            <oldSettings x="276" y="5" parent="0"/>
+        </stone>
+        <stone val="537">
+            <settings x="658" y="5" parent="0"/>
+            <oldSettings x="658" y="5" parent="0"/>
+        </stone>
+        <stone val="777">
+            <settings x="976" y="5" parent="0"/>
+            <oldSettings x="976" y="5" parent="0"/>
+        </stone>
+        <stone val="785">
+            <settings x="101" y="5" parent="0"/>
+            <oldSettings x="101" y="5" parent="0"/>
+        </stone>
+        <stone val="801">
+            <settings x="914" y="5" parent="0"/>
+            <oldSettings x="914" y="5" parent="0"/>
+        </stone>
+        <stone val="793">
+            <settings x="440" y="5" parent="0"/>
+            <oldSettings x="440" y="5" parent="0"/>
+        </stone>
+        <stone val="1033">
+            <settings x="1070" y="5" parent="0"/>
+            <oldSettings x="1070" y="5" parent="0"/>
+        </stone>
+        <stone val="1041">
+            <settings x="175" y="5" parent="0"/>
+            <oldSettings x="175" y="5" parent="0"/>
+        </stone>
+        <stone val="1057">
+            <settings x="335" y="5" parent="0"/>
+            <oldSettings x="335" y="5" parent="0"/>
+        </stone>
+        <stone val="1049">
+            <settings x="639" y="5" parent="0"/>
+            <oldSettings x="639" y="5" parent="0"/>
+        </stone>
+        <stone val="1289">
+            <settings x="553" y="5" parent="0"/>
+            <oldSettings x="553" y="5" parent="0"/>
+        </stone>
+        <stone val="1297">
+            <settings x="211" y="5" parent="0"/>
+            <oldSettings x="211" y="5" parent="0"/>
+        </stone>
+        <stone val="1313">
+            <settings x="815" y="5" parent="0"/>
+            <oldSettings x="815" y="5" parent="0"/>
+        </stone>
+        <stone val="1305">
+            <settings x="1080" y="5" parent="0"/>
+            <oldSettings x="1080" y="5" parent="0"/>
+        </stone>
+        <stone val="1545">
+            <settings x="726" y="5" parent="0"/>
+            <oldSettings x="726" y="5" parent="0"/>
+        </stone>
+        <stone val="1553">
+            <settings x="912" y="5" parent="0"/>
+            <oldSettings x="912" y="5" parent="0"/>
+        </stone>
+        <stone val="1569">
+            <settings x="142" y="5" parent="0"/>
+            <oldSettings x="142" y="5" parent="0"/>
+        </stone>
+        <stone val="1561">
+            <settings x="1019" y="5" parent="0"/>
+            <oldSettings x="1019" y="5" parent="0"/>
+        </stone>
+        <stone val="1801">
+            <settings x="419" y="5" parent="0"/>
+            <oldSettings x="419" y="5" parent="0"/>
+        </stone>
+        <stone val="1809">
+            <settings x="720" y="5" parent="0"/>
+            <oldSettings x="720" y="5" parent="0"/>
+        </stone>
+        <stone val="1825">
+            <settings x="859" y="5" parent="0"/>
+            <oldSettings x="859" y="5" parent="0"/>
+        </stone>
+        <stone val="1817">
+            <settings x="737" y="5" parent="0"/>
+            <oldSettings x="737" y="5" parent="0"/>
+        </stone>
+        <stone val="2057">
+            <settings x="879" y="5" parent="0"/>
+            <oldSettings x="879" y="5" parent="0"/>
+        </stone>
+        <stone val="2065">
+            <settings x="356" y="5" parent="0"/>
+            <oldSettings x="356" y="5" parent="0"/>
+        </stone>
+        <stone val="2081">
+            <settings x="1031" y="5" parent="0"/>
+            <oldSettings x="1031" y="5" parent="0"/>
+        </stone>
+        <stone val="2073">
+            <settings x="931" y="5" parent="0"/>
+            <oldSettings x="931" y="5" parent="0"/>
+        </stone>
+        <stone val="2313">
+            <settings x="768" y="5" parent="0"/>
+            <oldSettings x="768" y="5" parent="0"/>
+        </stone>
+        <stone val="2321">
+            <settings x="93" y="5" parent="0"/>
+            <oldSettings x="93" y="5" parent="0"/>
+        </stone>
+        <stone val="2337">
+            <settings x="780" y="5" parent="0"/>
+            <oldSettings x="780" y="5" parent="0"/>
+        </stone>
+        <stone val="2329">
+            <settings x="734" y="5" parent="0"/>
+            <oldSettings x="734" y="5" parent="0"/>
+        </stone>
+        <stone val="2569">
+            <settings x="787" y="5" parent="0"/>
+            <oldSettings x="787" y="5" parent="0"/>
+        </stone>
+        <stone val="2577">
+            <settings x="667" y="5" parent="0"/>
+            <oldSettings x="667" y="5" parent="0"/>
+        </stone>
+        <stone val="2593">
+            <settings x="1054" y="5" parent="0"/>
+            <oldSettings x="1054" y="5" parent="0"/>
+        </stone>
+        <stone val="2585">
+            <settings x="327" y="5" parent="0"/>
+            <oldSettings x="327" y="5" parent="0"/>
+        </stone>
+        <stone val="2825">
+            <settings x="440" y="5" parent="0"/>
+            <oldSettings x="440" y="5" parent="0"/>
+        </stone>
+        <stone val="2833">
+            <settings x="654" y="5" parent="0"/>
+            <oldSettings x="654" y="5" parent="0"/>
+        </stone>
+        <stone val="2849">
+            <settings x="742" y="5" parent="0"/>
+            <oldSettings x="742" y="5" parent="0"/>
+        </stone>
+        <stone val="2841">
+            <settings x="349" y="5" parent="0"/>
+            <oldSettings x="349" y="5" parent="0"/>
+        </stone>
+        <stone val="3081">
+            <settings x="45" y="5" parent="0"/>
+            <oldSettings x="45" y="5" parent="0"/>
+        </stone>
+        <stone val="3089">
+            <settings x="161" y="5" parent="0"/>
+            <oldSettings x="161" y="5" parent="0"/>
+        </stone>
+        <stone val="3105">
+            <settings x="1189" y="5" parent="0"/>
+            <oldSettings x="1189" y="5" parent="0"/>
+        </stone>
+        <stone val="3097">
+            <settings x="157" y="5" parent="0"/>
+            <oldSettings x="157" y="5" parent="0"/>
+        </stone>
+        <stone val="3337">
+            <settings x="647" y="5" parent="0"/>
+            <oldSettings x="647" y="5" parent="0"/>
+        </stone>
+        <stone val="3345">
+            <settings x="282" y="5" parent="0"/>
+            <oldSettings x="282" y="5" parent="0"/>
+        </stone>
+        <stone val="3361">
+            <settings x="623" y="5" parent="0"/>
+            <oldSettings x="623" y="5" parent="0"/>
+        </stone>
+        <stone val="3353">
+            <settings x="134" y="5" parent="0"/>
+            <oldSettings x="134" y="5" parent="0"/>
+        </stone>
+        <stone val="3593">
+            <settings x="1066" y="5" parent="0"/>
+            <oldSettings x="1066" y="5" parent="0"/>
+        </stone>
+        <stone val="3601">
+            <settings x="721" y="5" parent="0"/>
+            <oldSettings x="721" y="5" parent="0"/>
+        </stone>
+        <stone val="3617">
+            <settings x="160" y="5" parent="0"/>
+            <oldSettings x="160" y="5" parent="0"/>
+        </stone>
+        <stone val="3609">
+            <settings x="377" y="5" parent="0"/>
+            <oldSettings x="377" y="5" parent="0"/>
+        </stone>
+        <stone val="520">
+            <settings x="57" y="5" parent="0"/>
+            <oldSettings x="57" y="5" parent="0"/>
+        </stone>
+        <stone val="528">
+            <settings x="929" y="5" parent="0"/>
+            <oldSettings x="929" y="5" parent="0"/>
+        </stone>
+        <stone val="544">
+            <settings x="635" y="5" parent="0"/>
+            <oldSettings x="635" y="5" parent="0"/>
+        </stone>
+        <stone val="536">
+            <settings x="1150" y="5" parent="0"/>
+            <oldSettings x="1150" y="5" parent="0"/>
+        </stone>
+        <stone val="776">
+            <settings x="928" y="5" parent="0"/>
+            <oldSettings x="928" y="5" parent="0"/>
+        </stone>
+        <stone val="784">
+            <settings x="248" y="5" parent="0"/>
+            <oldSettings x="248" y="5" parent="0"/>
+        </stone>
+        <stone val="800">
+            <settings x="1121" y="5" parent="0"/>
+            <oldSettings x="1121" y="5" parent="0"/>
+        </stone>
+        <stone val="792">
+            <settings x="60" y="5" parent="0"/>
+            <oldSettings x="60" y="5" parent="0"/>
+        </stone>
+        <stone val="1032">
+            <settings x="995" y="5" parent="0"/>
+            <oldSettings x="995" y="5" parent="0"/>
+        </stone>
+        <stone val="1040">
+            <settings x="338" y="5" parent="0"/>
+            <oldSettings x="338" y="5" parent="0"/>
+        </stone>
+        <stone val="1056">
+            <settings x="268" y="5" parent="0"/>
+            <oldSettings x="268" y="5" parent="0"/>
+        </stone>
+        <stone val="1048">
+            <settings x="597" y="5" parent="0"/>
+            <oldSettings x="597" y="5" parent="0"/>
+        </stone>
+        <stone val="1288">
+            <settings x="1051" y="5" parent="0"/>
+            <oldSettings x="1051" y="5" parent="0"/>
+        </stone>
+        <stone val="1296">
+            <settings x="820" y="5" parent="0"/>
+            <oldSettings x="820" y="5" parent="0"/>
+        </stone>
+        <stone val="1312">
+            <settings x="509" y="5" parent="0"/>
+            <oldSettings x="509" y="5" parent="0"/>
+        </stone>
+        <stone val="1304">
+            <settings x="58" y="5" parent="0"/>
+            <oldSettings x="58" y="5" parent="0"/>
+        </stone>
+        <stone val="1544">
+            <settings x="823" y="5" parent="0"/>
+            <oldSettings x="823" y="5" parent="0"/>
+        </stone>
+        <stone val="1552">
+            <settings x="313" y="5" parent="0"/>
+            <oldSettings x="313" y="5" parent="0"/>
+        </stone>
+        <stone val="1568">
+            <settings x="295" y="5" parent="0"/>
+            <oldSettings x="295" y="5" parent="0"/>
+        </stone>
+        <stone val="1560">
+            <settings x="149" y="5" parent="0"/>
+            <oldSettings x="149" y="5" parent="0"/>
+        </stone>
+        <stone val="1800">
+            <settings x="239" y="5" parent="0"/>
+            <oldSettings x="239" y="5" parent="0"/>
+        </stone>
+        <stone val="1808">
+            <settings x="894" y="5" parent="0"/>
+            <oldSettings x="894" y="5" parent="0"/>
+        </stone>
+        <stone val="1824">
+            <settings x="830" y="5" parent="0"/>
+            <oldSettings x="830" y="5" parent="0"/>
+        </stone>
+        <stone val="1816">
+            <settings x="139" y="5" parent="0"/>
+            <oldSettings x="139" y="5" parent="0"/>
+        </stone>
+        <stone val="2056">
+            <settings x="76" y="5" parent="0"/>
+            <oldSettings x="76" y="5" parent="0"/>
+        </stone>
+        <stone val="2064">
+            <settings x="818" y="5" parent="0"/>
+            <oldSettings x="818" y="5" parent="0"/>
+        </stone>
+        <stone val="2080">
+            <settings x="1102" y="5" parent="0"/>
+            <oldSettings x="1102" y="5" parent="0"/>
+        </stone>
+        <stone val="2072">
+            <settings x="513" y="5" parent="0"/>
+            <oldSettings x="513" y="5" parent="0"/>
+        </stone>
+        <stone val="2312">
+            <settings x="484" y="5" parent="0"/>
+            <oldSettings x="484" y="5" parent="0"/>
+        </stone>
+        <stone val="2320">
+            <settings x="1128" y="5" parent="0"/>
+            <oldSettings x="1128" y="5" parent="0"/>
+        </stone>
+        <stone val="2336">
+            <settings x="623" y="5" parent="0"/>
+            <oldSettings x="623" y="5" parent="0"/>
+        </stone>
+        <stone val="2328">
+            <settings x="586" y="5" parent="0"/>
+            <oldSettings x="586" y="5" parent="0"/>
+        </stone>
+        <stone val="2568">
+            <settings x="667" y="5" parent="0"/>
+            <oldSettings x="667" y="5" parent="0"/>
+        </stone>
+        <stone val="2576">
+            <settings x="280" y="5" parent="0"/>
+            <oldSettings x="280" y="5" parent="0"/>
+        </stone>
+        <stone val="2592">
+            <settings x="84" y="5" parent="0"/>
+            <oldSettings x="84" y="5" parent="0"/>
+        </stone>
+        <stone val="2584">
+            <settings x="351" y="5" parent="0"/>
+            <oldSettings x="351" y="5" parent="0"/>
+        </stone>
+        <stone val="2824">
+            <settings x="482" y="5" parent="0"/>
+            <oldSettings x="482" y="5" parent="0"/>
+        </stone>
+        <stone val="2832">
+            <settings x="327" y="5" parent="0"/>
+            <oldSettings x="327" y="5" parent="0"/>
+        </stone>
+        <stone val="2848">
+            <settings x="467" y="5" parent="0"/>
+            <oldSettings x="467" y="5" parent="0"/>
+        </stone>
+        <stone val="2840">
+            <settings x="529" y="5" parent="0"/>
+            <oldSettings x="529" y="5" parent="0"/>
+        </stone>
+        <stone val="3080">
+            <settings x="615" y="5" parent="0"/>
+            <oldSettings x="615" y="5" parent="0"/>
+        </stone>
+        <stone val="3088">
+            <settings x="335" y="5" parent="0"/>
+            <oldSettings x="335" y="5" parent="0"/>
+        </stone>
+        <stone val="3104">
+            <settings x="353" y="5" parent="0"/>
+            <oldSettings x="353" y="5" parent="0"/>
+        </stone>
+        <stone val="3096">
+            <settings x="117" y="5" parent="0"/>
+            <oldSettings x="117" y="5" parent="0"/>
+        </stone>
+        <stone val="3336">
+            <settings x="1005" y="5" parent="0"/>
+            <oldSettings x="1005" y="5" parent="0"/>
+        </stone>
+        <stone val="3344">
+            <settings x="834" y="5" parent="0"/>
+            <oldSettings x="834" y="5" parent="0"/>
+        </stone>
+        <stone val="3360">
+            <settings x="134" y="5" parent="0"/>
+            <oldSettings x="134" y="5" parent="0"/>
+        </stone>
+        <stone val="3352">
+            <settings x="570" y="5" parent="0"/>
+            <oldSettings x="570" y="5" parent="0"/>
+        </stone>
+        <stone val="3592">
+            <settings x="78" y="5" parent="0"/>
+            <oldSettings x="78" y="5" parent="0"/>
+        </stone>
+        <stone val="3600">
+            <settings x="342" y="5" parent="0"/>
+            <oldSettings x="342" y="5" parent="0"/>
+        </stone>
+        <stone val="3616">
+            <settings x="615" y="5" parent="0"/>
+            <oldSettings x="615" y="5" parent="0"/>
+        </stone>
+        <stone val="3608">
+            <settings x="736" y="5" parent="0"/>
+            <oldSettings x="736" y="5" parent="0"/>
+        </stone>
+        <joker oldColor="-1" oldNumber="-1" val="3">
+            <stone val="3">
+                <settings x="1074" y="5" parent="0"/>
+                <oldSettings x="1074" y="5" parent="0"/>
+            </stone>
+        </joker>
+        <joker oldColor="-1" oldNumber="-1" val="2">
+            <stone val="2">
+                <settings x="413" y="5" parent="0"/>
+                <oldSettings x="413" y="5" parent="0"/>
+            </stone>
+        </joker>
+    </otherStones>
+</RummyCube>
