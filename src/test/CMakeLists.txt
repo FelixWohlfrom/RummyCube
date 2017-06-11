@@ -1,7 +1,7 @@
 find_package(Qt5Test REQUIRED)
 
 # The subdirectories to build
-set(SUBDIRS game network)
+set(SUBDIRS game gui network)
 
 # Build subdirs and include for build
 foreach(SUB ${SUBDIRS})
