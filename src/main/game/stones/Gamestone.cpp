@@ -177,8 +177,9 @@ void Gamestone::setParent(Gamestone::StoneParent newParent, bool stoneMoved)
          setAcceptDrops(true);
      }
 
-     // Hide stones just on ai holder, otherwise show them
-     if (newParent != Gamestone::AIHOLDER)
+     // Show stone if not on heap and ai holder
+     if (newParent != Gamestone::HEAP &&
+             newParent != Gamestone::AIHOLDER)
      {
          this->showRow(true);
      }
