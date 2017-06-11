@@ -28,9 +28,11 @@ find_package(Qt5Network REQUIRED)
 if(CMAKE_COMPILER_IS_GNUCXX)
     set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -s")
     # Here the -D_DEBUG is needed because it's not set under cmake in ubuntu
-    set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -D_DEBUG -ggdb -Wall -Wextra -O0")
+    set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -D_DEBUG -ggdb -Wall -Wextra -O0 -fprofile-arcs -ftest-coverage")
+    set(CMAKE_CXX_OUTPUT_EXTENSION_REPLACE 1)
+    SET(CMAKE_EXE_LINKER_FLAGS_DEBUG="-fprofile-arcs -ftest-coverage")
 endif(CMAKE_COMPILER_IS_GNUCXX)
-        
+
 # Set some Win Specific Settings
 if(WIN32)
     set(GUI_TYPE WIN32) # Disables console
@@ -56,6 +58,13 @@ endif(CMAKE_CXX_FLAGS_RELEASE)
 if(CMAKE_CXX_FLAGS_DEBUG)
     add_definitions(-DUSED_CXXFLAGS_DEBUG="${CMAKE_CXX_FLAGS_DEBUG}")
 endif(CMAKE_CXX_FLAGS_DEBUG)
+
+# Enable code coverage on linux
+if(UNIX)
+    add_custom_target (coverage
+        COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/coverage.sh
+        WORKING_DIRECTORY ${CMAKE_BINARY_DIR})
+endif(UNIX)
 
 # Set some Apple MacOS Specific settings
 if(APPLE)
