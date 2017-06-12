@@ -3,11 +3,11 @@ set(CLASSESUNDERTESTDIR network)
 
 # Build all files in this directory
 SET(SOURCE
-    NetworkTransmissionTest.cpp
+    NetworkTest.cpp
 )
 
 SET(HEADERS
-    NetworkTransmissionTest.h
+    NetworkTest.h
 )
 
 foreach(SUB ${CLASSESUNDERTESTDIR})

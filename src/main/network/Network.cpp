@@ -64,7 +64,7 @@ void Network::write(QTcpSocket& sock, QString toWrite)
 {
     int len = toWrite.toUtf8().size();
     #ifdef _DEBUG
-        std::cout << "len - " << len << std::endl;
+        std::cout << "write: len - " << len << std::endl;
     #endif
 
     // First send the size of the string
@@ -83,14 +83,14 @@ QString Network::read(QTcpSocket& sock)
     // Read the size of the following data
     int len = ArrayToInt(sock.read(4));
     #ifdef _DEBUG
-        std::cout << "len - " << len << std::endl;
+        std::cout << "read: len - " << len << std::endl;
     #endif
     while (len == 0)
     {
         sock.waitForReadyRead();
         len = ArrayToInt(sock.read(4));
         #ifdef _DEBUG
-            std::cout << "len - " << len << std::endl;
+            std::cout << "read: len - " << len << std::endl;
         #endif
     }
 
@@ -157,10 +157,7 @@ void Network::readBoardStatus(QTcpSocket& sock, StoneManager& stonemanager)
             stone != toAiHolder.end();
             ++stone)
     {
-        if ((*stone)->getParent() != Gamestone::HOLDER)
-        {
-            (*stone)->setParent(Gamestone::AIHOLDER);
-        }
+        (*stone)->setParent(Gamestone::AIHOLDER);
     }
 
     // Store stone previous positions
