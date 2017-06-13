@@ -89,7 +89,7 @@ void NetworkTest::testStringTransmissionLong()
 {
     // Create a long string to transmit
     QString transmittedString = "testString-";
-    for (int i = 0; i < 20; i++)
+    for (int i = 0; i < 17; i++)
     {
         transmittedString += transmittedString;
     }
