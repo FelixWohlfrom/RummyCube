@@ -21,7 +21,7 @@ ubuntu linux.
     - g++ 5.3.0
 
 - Linux:
-    - Ubuntu Linux 16.10 with the following packages installed:
+    - Ubuntu Linux (latest version + last two LTS versions) with the following packages installed:
       - g++
       - cmake
       - qt5-default
