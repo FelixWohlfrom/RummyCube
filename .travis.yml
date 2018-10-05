@@ -13,14 +13,21 @@ env:
 
 before_install:
   - docker pull ubuntu:$UBUNTU
-  - docker run -w /root --name test -d ubuntu:$UBUNTU sleep infinity
-  - docker cp . test:/root/
+  - docker run -w /root/rummy -v $PWD:/root/rummy --name test -d ubuntu:$UBUNTU sleep infinity
 
 install:
   - docker exec test apt-get update
-  - docker exec test apt-get install -y cmake qt5-default qttools5-dev qttools5-dev-tools g++ xvfb
+  - docker exec test apt-get install -y cmake qt5-default qttools5-dev qttools5-dev-tools g++ xvfb lcov
 
 script:
+  # First check release build
   - docker exec -t test bash -ic "mkdir build"
   - docker exec -t test bash -ic "cd build && cmake ../src && make"
   - docker exec -t test bash -ic "cd build && xvfb-run make test"
+
+  # Now the test build
+  - docker exec -t test bash -ic "cd build && cmake -DCMAKE_BUILD_TYPE=DEBUG ../src && make"
+  - docker exec -t test bash -ic "cd build && xvfb-run make test coverage"
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash)

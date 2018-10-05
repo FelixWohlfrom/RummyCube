@@ -1,4 +1,5 @@
-# RummyCube [![Build Status](https://travis-ci.org/FelixWohlfrom/RummyCube.svg?branch=master)](https://travis-ci.org/FelixWohlfrom/RummyCube)
+# RummyCube [![Build Status](https://travis-ci.org/FelixWohlfrom/RummyCube.svg?branch=master)](https://travis-ci.org/FelixWohlfrom/RummyCube) [![codecov](https://codecov.io/gh/FelixWohlfrom/RummyCube/branch/master/graph/badge.svg)](https://codecov.io/gh/FelixWohlfrom/RummyCube)
+
 **A small board game**
 
 ## What is RummyCube
