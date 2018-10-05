@@ -106,15 +106,23 @@ class JokerDragNDropTest: public QObject
 
         /**
          * @test
-         * Tests dragging a single joker over a row containing a joker with 
+         * Tests dragging a single joker over a row containing a joker with
          * multiple stones, all with different colors is accepted correctly.
          */
         void singleJoker_rowWithJoker_sameNumberDifferentColor();
 
         /**
          * @test
-         * Tests dragging a single joker over a row containing a joker with 
-         * multiple stones, all with same colors and ascending numbers is 
+         * Tests dragging a single joker over a row containing a joker with
+         * multiple stones, all with different colors is accepted correctly.
+         * A row will be build with three color stones and a joker.
+         */
+        void singleJoker_rowWithJoker_sameNumberDifferentColor_RotateColors();
+
+        /**
+         * @test
+         * Tests dragging a single joker over a row containing a joker with
+         * multiple stones, all with same colors and ascending numbers is
          * accepted correctly.
          */
         void singleJoker_rowWithJoker_sameColorDifferentNumbers();
@@ -124,8 +132,18 @@ class JokerDragNDropTest: public QObject
          * Tests dragging a row containing multiple stones containing a joker
          * over a row containing a joker with multiple stones, all with different
          * colors is accepted correctly.
+         * The joker replaces a stone with number 1.
          */
-        void rowWithJoker_rowWithJoker_sameNumberDifferentColor();
+        void rowWithJoker_rowWithJoker_sameNumberDifferentColor_JokerIsOne();
+
+        /**
+         * @test
+         * Tests dragging a row containing multiple stones containing a joker
+         * over a row containing a joker with multiple stones, all with different
+         * colors is accepted correctly.
+         * The joker replaces a stone with number 13.
+         */
+        void rowWithJoker_rowWithJoker_sameNumberDifferentColor_JokerIsThirteen();
 
         /**
          * @test
@@ -180,6 +198,12 @@ class JokerDragNDropTest: public QObject
          * right of joker is dragged over joker. This should fail.
          */
         void singleStone_rowWithJoker_sameNumberDifferentColor();
+
+        /**
+         * @test
+         * Tests if a single stone can be dragged over a row with two concatenated joker.
+         */
+        void singleStone_rowWithTwoJoker_sameColorWithDifferentNumbers();
 };
 
 #endif /* GAME_STONES_JOKERDRAGNDROPTEST_H_ */

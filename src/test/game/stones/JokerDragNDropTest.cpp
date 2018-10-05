@@ -141,6 +141,58 @@ void JokerDragNDropTest::singleJoker_rowWithJoker_sameNumberDifferentColor()
     testDragAndDrop(anotherOne, dragSource, false);
 }
 
+void JokerDragNDropTest::singleJoker_rowWithJoker_sameNumberDifferentColor_RotateColors()
+{
+    // Initialize the two stones to verify drag'n'drop
+    Joker dragSource(NULL, manager, true);
+    Joker dragTarget(NULL, manager, false);
+
+    // We have two stones appended to the target
+    Gamestone thirdStone(NULL, manager, false, Gamestone::BLACK, 1);
+    Gamestone fourthStone(NULL, manager, false, Gamestone::BLUE, 1);
+    Gamestone fifthStone(NULL, manager, false, Gamestone::YELLOW, 1);
+    Gamestone sixthStone(NULL, manager, false, Gamestone::RED, 1);
+
+    // Create a row and test dragging. It should fail all times.
+    dragTarget.setNext(&thirdStone);
+    thirdStone.setNext(&fourthStone);
+    fourthStone.setNext(&fifthStone);
+    testDragAndDrop(dragTarget, dragSource, false);
+    testDragAndDrop(dragSource, dragTarget, false);
+    testDragAndDrop(fifthStone, dragSource, false);
+    testDragAndDrop(dragSource, fifthStone, false);
+
+    // A second time...
+    thirdStone.setNext(NULL);
+    dragTarget.setNext(&fourthStone);
+    fourthStone.setNext(&fifthStone);
+    fifthStone.setNext(&sixthStone);
+    testDragAndDrop(dragTarget, dragSource, false);
+    testDragAndDrop(dragSource, dragTarget, false);
+    testDragAndDrop(sixthStone, dragSource, false);
+    testDragAndDrop(dragSource, sixthStone, false);
+
+    // A third time...
+    fourthStone.setNext(NULL);
+    dragTarget.setNext(&fifthStone);
+    fifthStone.setNext(&sixthStone);
+    sixthStone.setNext(&thirdStone);
+    testDragAndDrop(dragTarget, dragSource, false);
+    testDragAndDrop(dragSource, dragTarget, false);
+    testDragAndDrop(thirdStone, dragSource, false);
+    testDragAndDrop(dragSource, thirdStone, false);
+
+    // ... and a final time.
+    fifthStone.setNext(NULL);
+    dragTarget.setNext(&sixthStone);
+    sixthStone.setNext(&thirdStone);
+    thirdStone.setNext(&fourthStone);
+    testDragAndDrop(dragTarget, dragSource, false);
+    testDragAndDrop(dragSource, dragTarget, false);
+    testDragAndDrop(fourthStone, dragSource, false);
+    testDragAndDrop(dragSource, fourthStone, false);
+}
+
 void JokerDragNDropTest::singleJoker_rowWithJoker_sameColorDifferentNumbers()
 {
     // Initialize the two stones to verify drag'n'drop
@@ -198,7 +250,7 @@ void JokerDragNDropTest::singleJoker_rowWithJoker_sameColorDifferentNumbers()
     testDragAndDrop(seventhStone, dragSource, false);
 }
 
-void JokerDragNDropTest::rowWithJoker_rowWithJoker_sameNumberDifferentColor()
+void JokerDragNDropTest::rowWithJoker_rowWithJoker_sameNumberDifferentColor_JokerIsOne()
 {
     // Initialize the two stones to verify drag'n'drop
     Joker dragSource(NULL, manager, true);
@@ -226,6 +278,50 @@ void JokerDragNDropTest::rowWithJoker_rowWithJoker_sameNumberDifferentColor()
     // Now we add another stone, so dragging should not be accepted anymore
     Gamestone anotherOne(NULL, manager, false, Gamestone::YELLOW, 1);
     fourthStone.setNext(&anotherOne);
+
+    // Drag all stones from source over target
+    testDragAndDrop(dragSource, dragTarget, false);
+    testDragAndDrop(dragSource, fourthStone, false);
+    testDragAndDrop(dragSource, anotherOne, false);
+    testDragAndDrop(thirdStone, dragTarget, false);
+    testDragAndDrop(thirdStone, fourthStone, false);
+    testDragAndDrop(thirdStone, anotherOne, false);
+
+    // Drag stones from target over source. Middle stone can't be dragged
+    testDragAndDrop(dragTarget, dragSource, false);
+    testDragAndDrop(fourthStone, dragSource, false);
+    testDragAndDrop(dragTarget, thirdStone, false);
+    testDragAndDrop(anotherOne, thirdStone, false);
+}
+
+void JokerDragNDropTest::rowWithJoker_rowWithJoker_sameNumberDifferentColor_JokerIsThirteen()
+{
+    // Initialize the two stones to verify drag'n'drop
+    Joker dragSource(NULL, manager, true);
+    Joker dragTarget(NULL, manager, false);
+
+    // Verify, that appending to the last stone doesn't work if the last
+    // stone is a 13
+    Gamestone thirdStone(NULL, manager, false, Gamestone::BLACK, 13);
+    Gamestone fourthStone(NULL, manager, false, Gamestone::BLUE, 13);
+    dragSource.setPrev(&thirdStone);
+    dragTarget.setPrev(&fourthStone);
+
+    // Dragging source over target
+    testDragAndDrop(dragSource, dragTarget, false);
+    testDragAndDrop(dragSource, fourthStone, true);
+    testDragAndDrop(thirdStone, dragTarget, true);
+    testDragAndDrop(thirdStone, fourthStone, false);
+
+    // Dragging target stones over source
+    testDragAndDrop(dragTarget, dragSource, false);
+    testDragAndDrop(fourthStone, dragSource, true);
+    testDragAndDrop(dragTarget, thirdStone, true);
+    testDragAndDrop(fourthStone, thirdStone, false);
+
+    // Now we add another stone, so dragging should not be accepted anymore
+    Gamestone anotherOne(NULL, manager, false, Gamestone::YELLOW, 13);
+    fourthStone.setPrev(&anotherOne);
 
     // Drag all stones from source over target
     testDragAndDrop(dragSource, dragTarget, false);
@@ -396,6 +492,33 @@ void JokerDragNDropTest::singleStone_rowWithJoker_sameNumberDifferentColor()
 
     // Verify that dragging the source over the joker fails
     testDragAndDrop(dragSource, dragTarget, false);
+}
+
+void JokerDragNDropTest::singleStone_rowWithTwoJoker_sameColorWithDifferentNumbers()
+{
+    // Initialize the two joker
+    Joker firstJoker(NULL, manager, true);
+    Joker secondJoker(NULL, manager, false);
+
+    // Two additional stones to use for tests
+    Gamestone thirdStone(NULL, manager, true, Gamestone::BLUE, 2);
+    Gamestone fourthStone(NULL, manager, true, Gamestone::BLUE, 5);
+
+    // Build a row with two joker and the 5 at the end
+    firstJoker.setNext(&secondJoker);
+    secondJoker.setNext(&fourthStone);
+
+    // Now try to drag the 2 stone over the first joker, which should be possible
+    testDragAndDrop(thirdStone, firstJoker, true);
+    testDragAndDrop(firstJoker, thirdStone, true);
+
+    // Build a row with two joker and the 2 at the beginning
+    thirdStone.setNext(&firstJoker);
+    secondJoker.setNext(NULL);
+
+    // Now try to drag the 5 stone over the second joker, which should be possible
+    testDragAndDrop(fourthStone, secondJoker, true);
+    testDragAndDrop(secondJoker, fourthStone, true);
 }
 
 void JokerDragNDropTest::testDragAndDrop(Gamestone& source, Gamestone& target,
