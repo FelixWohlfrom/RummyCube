@@ -8,13 +8,13 @@ services:
   - docker
 
 before_install:
-  - docker pull ubuntu:16.10
-  - docker run -w /root --name test -d ubuntu:16.10 sleep infinity
+  - docker pull ubuntu:18.04
+  - docker run -w /root --name test -d ubuntu:18.04 sleep infinity
   - docker cp . test:/root/
 
 install:
   - docker exec test apt-get update
-  - docker exec test apt-get install -y cmake qt5-default qttools5-dev-tools g++ xvfb
+  - docker exec test apt-get install -y cmake qt5-default qttools5-dev qttools5-dev-tools g++ xvfb
 
 script:
   - docker exec -t test bash -ic "mkdir build"
