@@ -10,6 +10,7 @@ services:
 env:
   - UBUNTU=16.04
   - UBUNTU=18.04
+  - UBUNTU=18.10
 
 before_install:
   - docker pull ubuntu:$UBUNTU
