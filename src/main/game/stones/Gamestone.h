@@ -535,15 +535,6 @@ class Gamestone : public QWidget
         bool colorIsAlreadyInRow(Gamestone* firstStone, Gamestone* otherStone);
 
         /**
-         * Returns if the current stone is in same row as the given stone
-         *
-         * @param otherStone The stone for which should be checked if it's in same row as the
-         *                      current stone
-         * @return If otherStone is in same row as the current stone
-         */
-        bool isInSameRowAs(const Gamestone* otherStone) const;
-
-        /**
          * Returns if the row containing the current stone can be moved (back) to board.
          *
          * @return If the row can be moved to board

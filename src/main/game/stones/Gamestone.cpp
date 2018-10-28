@@ -489,41 +489,6 @@ int Gamestone::countStonesInRow() const
     return count;
 }
 
-bool Gamestone::isInSameRowAs(const Gamestone* otherStone) const
-{
-    if (otherStone == NULL)
-    {
-        return false;
-    }
-
-    if (this == otherStone)
-    {
-        return true;
-    }
-
-    Gamestone* prev(this->getPrev());
-    while (prev != NULL)
-    {
-        if (otherStone == prev)
-        {
-            return true;
-        }
-        prev = prev->getPrev();
-    }
-
-    Gamestone* next(this->getNext());
-    while (next != NULL)
-    {
-        if (otherStone == next)
-        {
-            return true;
-        }
-        next = next->getNext();
-    }
-
-    return false;
-}
-
 void Gamestone::moveAddedStones()
 {
     // Move next stones
