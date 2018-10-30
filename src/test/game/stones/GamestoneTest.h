@@ -97,14 +97,30 @@ class GamestoneTest: public QObject
         /**
          * @test
          * Verifies that storing stone data and restoring the data works properly.
+         * Just a single stone is stored and restored.
          */
-        void testStoneStoringAndRestoring();
+        void testStoneStoringAndRestoring_singleStone();
+
+        /**
+         * @test
+         * Verifies that storing stone data and restoring the data works properly.
+         * A stone within a row is tested.
+         */
+        void testStoneStoringAndRestoring_multipleStones();
 
         /**
          * @test
          * Verifies that storing and restoring to/from a stream works properly.
+         * Just a single stone is stored and restored.
          */
-        void testStoneStoringAndRestoringFromStream();
+        void testStoneStoringAndRestoringFromStream_singleStone();
+
+        /**
+         * @test
+         * Verifies that storing and restoring to/from a stream works properly.
+         * A stone within a row is tested.
+         */
+        void testStoneStoringAndRestoringFromStream_multipleStones();
 };
 
 #endif /* GAME_STONES_GAMESTONETEST_H_ */

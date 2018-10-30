@@ -181,13 +181,11 @@ void GamestoneTest::testSetFirstTimePlayedOut()
     QVERIFY2(!testStone.isFirstTimePlayedOut(), "First time played out should not be set anymore");
 }
 
-void GamestoneTest::testStoneStoringAndRestoring()
+void GamestoneTest::testStoneStoringAndRestoring_singleStone()
 {
     StoneManager stoneManager;
     QWidget parent;
     Gamestone testStone(&parent, &stoneManager, true, Gamestone::StoneColor::BLUE, 10);
-
-    // TODO Set prev and next stone
 
     testStone.move(10, 100);
     testStone.setParent(Gamestone::StoneParent::BOARD);
@@ -215,13 +213,60 @@ void GamestoneTest::testStoneStoringAndRestoring()
     QCOMPARE(testStone.getParent(), Gamestone::StoneParent::HOLDER);
 }
 
-void GamestoneTest::testStoneStoringAndRestoringFromStream()
+void GamestoneTest::testStoneStoringAndRestoring_multipleStones()
 {
     StoneManager stoneManager;
     QWidget parent;
     Gamestone testStone(&parent, &stoneManager, true, Gamestone::StoneColor::BLUE, 10);
+    Gamestone testStonePrev(&parent, &stoneManager, true, Gamestone::StoneColor::BLUE, 9);
+    Gamestone testStoneNext(&parent, &stoneManager, true, Gamestone::StoneColor::BLUE, 11);
 
-    // TODO Set prev and next stone
+    // Add stones to stone manager for loading
+    stoneManager.getStones().push_back(&testStone);
+    stoneManager.getStones().push_back(&testStonePrev);
+    stoneManager.getStones().push_back(&testStoneNext);
+
+    testStone.move(10, 100);
+    testStone.setParent(Gamestone::StoneParent::BOARD);
+    testStone.setPrev(&testStonePrev);
+    testStone.setNext(&testStoneNext);
+
+    testStone.storeStone();
+
+    testStone.move(20, 200);
+    testStone.setParent(Gamestone::StoneParent::HEAP);
+
+    testStone.restoreStone();
+
+    // Clear stone list here to avoid destructor call of
+    // gamestones during destruction of stone manager
+    stoneManager.getStones().clear();
+
+    QCOMPARE(testStone.pos().x(), 10);
+    QCOMPARE(testStone.pos().y(), 100);
+    QCOMPARE(testStone.getParent(), Gamestone::StoneParent::BOARD);
+    QVERIFY2(testStone.getPrev() == &testStonePrev, "Previous stone not restored correctly");
+    QVERIFY2(testStone.getNext() == &testStoneNext, "Next stone not restored correctly");
+
+    testStone.storeStone(Gamestone::StoneParent::HOLDER);
+
+    testStone.move(20, 200);
+    testStone.setParent(Gamestone::StoneParent::HEAP);
+
+    testStone.restoreStone();
+
+    QCOMPARE(testStone.pos().x(), 10);
+    QCOMPARE(testStone.pos().y(), 100);
+    QCOMPARE(testStone.getParent(), Gamestone::StoneParent::HOLDER);
+    QVERIFY2(testStone.getPrev() == &testStonePrev, "Previous stone not restored correctly");
+    QVERIFY2(testStone.getNext() == &testStoneNext, "Next stone not restored correctly");
+}
+
+void GamestoneTest::testStoneStoringAndRestoringFromStream_singleStone()
+{
+    StoneManager stoneManager;
+    QWidget parent;
+    Gamestone testStone(&parent, &stoneManager, true, Gamestone::StoneColor::BLUE, 10);
 
     testStone.move(10, 100);
     testStone.setParent(Gamestone::StoneParent::BOARD);
@@ -256,6 +301,74 @@ void GamestoneTest::testStoneStoringAndRestoringFromStream()
     QCOMPARE(testStone.pos().x(), 10);
     QCOMPARE(testStone.pos().y(), 100);
     QCOMPARE(testStone.getParent(), Gamestone::StoneParent::BOARD);
+
+    if (streamWriter.hasError())
+    {
+        QFAIL(qUtf8Printable(streamWriter.device()->errorString()));
+    }
+    if (streamReader.hasError())
+    {
+        QFAIL(qUtf8Printable(streamReader.errorString()));
+    }
+}
+
+void GamestoneTest::testStoneStoringAndRestoringFromStream_multipleStones()
+{
+    StoneManager stoneManager;
+    QWidget parent;
+    Gamestone testStone(&parent, &stoneManager, true, Gamestone::StoneColor::BLUE, 10);
+    Gamestone testStonePrev(&parent, &stoneManager, true, Gamestone::StoneColor::BLUE, 9);
+    Gamestone testStoneNext(&parent, &stoneManager, true, Gamestone::StoneColor::BLUE, 11);
+
+    // Add stones to stone manager for loading
+    stoneManager.getStones().push_back(&testStone);
+    stoneManager.getStones().push_back(&testStonePrev);
+    stoneManager.getStones().push_back(&testStoneNext);
+
+    testStone.move(10, 100);
+    testStone.setParent(Gamestone::StoneParent::BOARD);
+
+    testStone.storeStone();
+
+    testStone.move(20, 200);
+    testStone.setParent(Gamestone::StoneParent::HEAP);
+    testStone.setPrev(&testStonePrev);
+    testStone.setNext(&testStoneNext);
+
+    // Store data in string to restore it later
+    QString testString;
+    QXmlStreamWriter streamWriter(&testString);
+    streamWriter << &testStone;
+
+    // Update stone data
+    testStone.move(30, 300);
+    testStone.setNext(NULL);
+    testStone.setPrev(NULL);
+    testStone.setParent(Gamestone::StoneParent::HOLDER);
+    testStone.storeStone();
+
+    // Restore stone data
+    QXmlStreamReader streamReader(testString);
+    streamReader.readNextStartElement();
+    QCOMPARE(streamReader.name().toString(), QString("stone"));
+    streamReader >> &testStone;
+    // Clear stone list here to avoid destructor call of
+    // gamestones during destruction of stone manager
+    stoneManager.getStones().clear();
+
+    QCOMPARE(testStone.pos().x(), 20);
+    QCOMPARE(testStone.pos().y(), 200);
+    QCOMPARE(testStone.getParent(), Gamestone::StoneParent::HEAP);
+    QVERIFY2(testStone.getPrev() == &testStonePrev, "Previous stone not stored correctly");
+    QVERIFY2(testStone.getNext() == &testStoneNext, "Next stone not stored correctly");
+
+    testStone.restoreStone();
+
+    QCOMPARE(testStone.pos().x(), 10);
+    QCOMPARE(testStone.pos().y(), 100);
+    QCOMPARE(testStone.getParent(), Gamestone::StoneParent::BOARD);
+    QVERIFY2(testStone.getPrev() == NULL, "Previous stone not set correctly");
+    QVERIFY2(testStone.getNext() == NULL, "Next stone not set correctly");
 
     if (streamWriter.hasError())
     {

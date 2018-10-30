@@ -42,83 +42,7 @@ void GamestoneDragNDropTest::cleanupTestCase()
     Settings::cleanup();
 }
 
-void GamestoneDragNDropTest::singleStone_SingleStone_SameNumber_DifferentColor()
-{
-    // Initialize the two stones to verify drag'n'drop
-    Gamestone dragSource(NULL, manager, true, Gamestone::BLACK, 1);
-    Gamestone dragTarget(NULL, manager, true, Gamestone::BLUE, 1);
-
-    testDragAndDrop(dragSource, dragTarget, true);
-}
-
-void GamestoneDragNDropTest::singleStone_SingleStone_SameNumber_SameColor()
-{
-    // Initialize the two stones to verify drag'n'drop
-    Gamestone dragSource(NULL, manager, true, Gamestone::BLACK, 1);
-    Gamestone dragTarget(NULL, manager, false, Gamestone::BLACK, 1);
-
-    testDragAndDrop(dragSource, dragTarget, false);
-}
-
-void GamestoneDragNDropTest::singleStone_MultiStone_SameNumber_DifferentColor()
-{
-    // Initialize the two stones to verify drag'n'drop
-    Gamestone dragSource(NULL, manager, true, Gamestone::BLACK, 1);
-    Gamestone dragTarget(NULL, manager, true, Gamestone::BLUE, 1);
-
-    // We have a third stone appended to the target
-    Gamestone thirdStone(NULL, manager, true, Gamestone::YELLOW, 1);
-    dragTarget.setNext(&thirdStone);
-
-    // Drag over both stones and check if accepting is working correctly
-    testDragAndDrop(dragSource, dragTarget, true);
-    testDragAndDrop(dragSource, thirdStone, true);
-}
-
-void GamestoneDragNDropTest::singleStone_SingleStone_SameNumber_ColorAlreadyExists()
-{
-    // Initialize the two stones to verify drag'n'drop
-    Gamestone dragSource(NULL, manager, true, Gamestone::BLACK, 1);
-    Gamestone dragTarget(NULL, manager, true, Gamestone::BLUE, 1);
-
-    // We have a third stone appended to the target
-    Gamestone thirdStone(NULL, manager, false, Gamestone::BLACK, 1);
-    dragTarget.setNext(&thirdStone);
-
-    testDragAndDrop(dragSource, dragTarget, false);
-}
-
-void GamestoneDragNDropTest::multiStone_singleStone_SameNumber_DifferentColor()
-{
-    // Initialize the two stones to verify drag'n'drop
-    Gamestone dragSource(NULL, manager, true, Gamestone::BLACK, 1);
-    Gamestone dragTarget(NULL, manager, true, Gamestone::BLUE, 1);
-
-    // We have a third stone appended to the target
-    Gamestone thirdStone(NULL, manager, true, Gamestone::YELLOW, 1);
-    dragSource.setNext(&thirdStone);
-
-    // Drag both stones and check if accepting is working correctly
-    testDragAndDrop(dragSource, dragTarget, true);
-    testDragAndDrop(thirdStone, dragTarget, true);
-}
-
-void GamestoneDragNDropTest::multiStone_singleStone_SameNumber_ColorAlreadyExists()
-{
-    // Initialize the two stones to verify drag'n'drop
-    Gamestone dragSource(NULL, manager, true, Gamestone::BLACK, 1);
-    Gamestone dragTarget(NULL, manager, true, Gamestone::BLUE, 1);
-
-    // We have a third stone appended to the target
-    Gamestone thirdStone(NULL, manager, false, Gamestone::BLUE, 1);
-    dragSource.setNext(&thirdStone);
-
-    // Drag both stones and check if accepting is working correctly
-    testDragAndDrop(dragSource, dragTarget, false);
-    testDragAndDrop(thirdStone, dragTarget, false);
-}
-
-void GamestoneDragNDropTest::testDragAndDrop(Gamestone& source, Gamestone& target,
+void GamestoneDragNDropTest::testDragOverAcceptance(Gamestone& source, Gamestone& target,
         bool shouldAccept)
 {
     QMimeData *mimeData = new QMimeData;
@@ -144,6 +68,160 @@ void GamestoneDragNDropTest::testDragAndDrop(Gamestone& source, Gamestone& targe
 
     delete event;
     delete mimeData;
+}
+
+void GamestoneDragNDropTest::singleStone_SingleStone_SameNumber_DifferentColor()
+{
+    // Initialize the two stones to verify drag'n'drop
+    Gamestone dragSource(NULL, manager, true, Gamestone::BLACK, 1);
+    Gamestone dragTarget(NULL, manager, true, Gamestone::BLUE, 1);
+
+    testDragOverAcceptance(dragSource, dragTarget, true);
+}
+
+void GamestoneDragNDropTest::singleStone_SingleStone_SameNumber_SameColor()
+{
+    // Initialize the two stones to verify drag'n'drop
+    Gamestone dragSource(NULL, manager, true, Gamestone::BLACK, 1);
+    Gamestone dragTarget(NULL, manager, false, Gamestone::BLACK, 1);
+
+    testDragOverAcceptance(dragSource, dragTarget, false);
+}
+
+void GamestoneDragNDropTest::singleStone_MultiStone_SameNumber_DifferentColor()
+{
+    // Initialize the two stones to verify drag'n'drop
+    Gamestone dragSource(NULL, manager, true, Gamestone::BLACK, 1);
+    Gamestone dragTarget(NULL, manager, true, Gamestone::BLUE, 1);
+
+    // We have a third stone appended to the target
+    Gamestone thirdStone(NULL, manager, true, Gamestone::YELLOW, 1);
+    dragTarget.setNext(&thirdStone);
+
+    // Drag over both stones and check if accepting is working correctly
+    testDragOverAcceptance(dragSource, dragTarget, true);
+    testDragOverAcceptance(dragSource, thirdStone, true);
+}
+
+void GamestoneDragNDropTest::singleStone_SingleStone_SameNumber_ColorAlreadyExists()
+{
+    // Initialize the two stones to verify drag'n'drop
+    Gamestone dragSource(NULL, manager, true, Gamestone::BLACK, 1);
+    Gamestone dragTarget(NULL, manager, true, Gamestone::BLUE, 1);
+
+    // We have a third stone appended to the target
+    Gamestone thirdStone(NULL, manager, false, Gamestone::BLACK, 1);
+    dragTarget.setNext(&thirdStone);
+
+    testDragOverAcceptance(dragSource, dragTarget, false);
+}
+
+void GamestoneDragNDropTest::multiStone_singleStone_SameNumber_DifferentColor()
+{
+    // Initialize the two stones to verify drag'n'drop
+    Gamestone dragSource(NULL, manager, true, Gamestone::BLACK, 1);
+    Gamestone dragTarget(NULL, manager, true, Gamestone::BLUE, 1);
+
+    // We have a third stone appended to the target
+    Gamestone thirdStone(NULL, manager, true, Gamestone::YELLOW, 1);
+    dragSource.setNext(&thirdStone);
+
+    // Drag both stones and check if accepting is working correctly
+    testDragOverAcceptance(dragSource, dragTarget, true);
+    testDragOverAcceptance(thirdStone, dragTarget, true);
+}
+
+void GamestoneDragNDropTest::multiStone_singleStone_SameNumber_ColorAlreadyExists()
+{
+    // Initialize the two stones to verify drag'n'drop
+    Gamestone dragSource(NULL, manager, true, Gamestone::BLACK, 1);
+    Gamestone dragTarget(NULL, manager, true, Gamestone::BLUE, 1);
+
+    // We have a third stone appended to the target
+    Gamestone thirdStone(NULL, manager, false, Gamestone::BLUE, 1);
+    dragSource.setNext(&thirdStone);
+
+    // Drag both stones and check if accepting is working correctly
+    testDragOverAcceptance(dragSource, dragTarget, false);
+    testDragOverAcceptance(thirdStone, dragTarget, false);
+}
+
+void GamestoneDragNDropTest::dropStone_Left_SingleStone()
+{
+    Gamestone dropSource(NULL, manager, true, Gamestone::BLACK, 1);
+    Gamestone dropTarget(NULL, manager, true, Gamestone::BLACK, 2);
+
+    QVERIFY2(dropTarget.appendStone(dropSource), "Did not append stone although it should");
+
+    QVERIFY2(dropTarget.getPrev() == &dropSource, "Did not drop stone on left side");
+    QVERIFY2(dropSource.getNext() == &dropTarget, "Did not update drop source correctly");
+}
+
+void GamestoneDragNDropTest::dropStone_Left_MultipleStonesSource()
+{
+    Gamestone otherStone(NULL, manager, true, Gamestone::BLACK, 1);
+    Gamestone dropSource(NULL, manager, true, Gamestone::BLUE, 1);
+    Gamestone dropTarget(NULL, manager, true, Gamestone::YELLOW, 1);
+
+    dropSource.setPrev(&otherStone);
+
+    QVERIFY2(dropTarget.appendStone(dropSource), "Did not append stone although it should");
+
+    QVERIFY2(dropTarget.getPrev() == &dropSource, "Did not drop stone on left side");
+    QVERIFY2(dropSource.getNext() == &dropTarget, "Did not update drop source correctly");
+}
+
+void GamestoneDragNDropTest::dropStone_Left_MultipleStonesTarget()
+{
+    Gamestone otherStone(NULL, manager, true, Gamestone::BLACK, 1);
+    Gamestone dropSource(NULL, manager, true, Gamestone::BLUE, 1);
+    Gamestone dropTarget(NULL, manager, true, Gamestone::YELLOW, 1);
+
+    dropTarget.setNext(&otherStone);
+
+    QVERIFY2(dropTarget.appendStone(dropSource), "Did not append stone although it should");
+
+    QVERIFY2(dropTarget.getPrev() == &dropSource, "Did not drop stone on left side");
+    QVERIFY2(dropSource.getNext() == &dropTarget, "Did not update drop source correctly");
+}
+
+void GamestoneDragNDropTest::dropStone_Right_SingleStone()
+{
+    Gamestone dropSource(NULL, manager, true, Gamestone::BLACK, 2);
+    Gamestone dropTarget(NULL, manager, true, Gamestone::BLACK, 1);
+
+    dropTarget.appendStone(dropSource);
+
+    QVERIFY2(dropTarget.getNext() == &dropSource, "Did not drop stone on right side");
+    QVERIFY2(dropSource.getPrev() == &dropTarget, "Did not update drop source correctly");
+}
+
+void GamestoneDragNDropTest::dropStone_Right_MultipleStonesSource()
+{
+    Gamestone otherStone(NULL, manager, true, Gamestone::BLACK, 1);
+    Gamestone dropSource(NULL, manager, true, Gamestone::BLUE, 1);
+    Gamestone dropTarget(NULL, manager, true, Gamestone::YELLOW, 1);
+
+    dropSource.setNext(&otherStone);
+
+    QVERIFY2(dropTarget.appendStone(dropSource), "Did not append stone although it should");
+
+    QVERIFY2(dropTarget.getNext() == &dropSource, "Did not drop stone on left side");
+    QVERIFY2(dropSource.getPrev() == &dropTarget, "Did not update drop source correctly");
+}
+
+void GamestoneDragNDropTest::dropStone_Right_MultipleStonesTarget()
+{
+    Gamestone otherStone(NULL, manager, true, Gamestone::BLACK, 1);
+    Gamestone dropSource(NULL, manager, true, Gamestone::BLUE, 1);
+    Gamestone dropTarget(NULL, manager, true, Gamestone::YELLOW, 1);
+
+    dropTarget.setPrev(&otherStone);
+
+    QVERIFY2(dropTarget.appendStone(dropSource), "Did not append stone although it should");
+
+    QVERIFY2(dropTarget.getNext() == &dropSource, "Did not drop stone on left side");
+    QVERIFY2(dropSource.getPrev() == &dropTarget, "Did not update drop source correctly");
 }
 
 QTEST_MAIN(GamestoneDragNDropTest)

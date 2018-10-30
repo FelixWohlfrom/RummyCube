@@ -43,6 +43,8 @@
  * These test veriy that dragging a stone over another is working correctly.
  * This means that the checks if a stone can be dragged over another
  * is working correctly.
+ * There are also several checks if dropping a stone appends the stone
+ * on the correct side (left or right of the other stone).
  */
 class GamestoneDragNDropTest: public QObject
 {
@@ -62,7 +64,7 @@ class GamestoneDragNDropTest: public QObject
          * @param target The target stone on which the source should be dropped
          * @param shouldAccept If dropping should be accepted or not
          */
-        void testDragAndDrop(Gamestone& source, Gamestone& target,
+        void testDragOverAcceptance(Gamestone& source, Gamestone& target,
                 bool shouldAccept);
 
     private slots:
@@ -119,6 +121,48 @@ class GamestoneDragNDropTest: public QObject
          * existing in source colors. Should not be accepted.
          */
         void multiStone_singleStone_SameNumber_ColorAlreadyExists();
+
+        /**
+         * @test
+         * Tests dropping of a stone if known that the dropped stone will land on the left of
+         * the other stone.
+         */
+        void dropStone_Left_SingleStone();
+
+        /**
+         * @test
+         * Tests dropping of a stone if known that the dropped stone will land on the left of
+         * the other stone. Source is a row of two stones.
+         */
+        void dropStone_Left_MultipleStonesSource();
+
+        /**
+         * @test
+         * Tests dropping of a stone if known that the dropped stone will land on the left of
+         * the other stone. Target is a row of two stones.
+         */
+        void dropStone_Left_MultipleStonesTarget();
+
+        /**
+         * @test
+         * Tests dropping of a stone if known that the dropped stone will land on the right of
+         * the other stone.
+         */
+        void dropStone_Right_SingleStone();
+
+        /**
+         * @test
+         * Tests dropping of a stone if known that the dropped stone will land on the right of
+         * the other stone. Source is a row of two stones.
+         */
+        void dropStone_Right_MultipleStonesSource();
+
+        /**
+         * @test
+         * Tests dropping of a stone if known that the dropped stone will land on the right of
+         * the other stone. Target is a row of two stones.
+         */
+        void dropStone_Right_MultipleStonesTarget();
 };
 
 #endif /* GAME_STONES_GAMESTONEDRAGNDROPTEST_H_ */
