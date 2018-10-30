@@ -73,6 +73,7 @@ class Gamestone : public QWidget
     friend class Joker;
 
     // To test qt internal classes, the test classes need to be friend classes
+    friend class GamestoneTest;
     friend class GamestoneDragNDropTest;
     friend class JokerDragNDropTest;
 
