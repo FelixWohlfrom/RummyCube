@@ -52,6 +52,12 @@ class StoneManagerTest: public QObject
          * Tests if stone creation works properly.
          */
         void testStoneCreation();
+
+        /**
+         * @test
+         * Tests that the stone count on heap is properly counted
+         */
+        void testStoneCountOnHeap();
 };
 
 #endif /* STONEMANAGERTEST_H_ */
