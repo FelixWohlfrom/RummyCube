@@ -46,4 +46,14 @@ void StoneManagerTest::testStoneCreation()
     QVERIFY2(stones.size() > 0, "No stones where created");
 }
 
+void StoneManagerTest::testStoneCountOnHeap()
+{
+    QWidget testWidget;
+    StoneManager stoneManager;
+
+    stoneManager.createStones(&testWidget);
+
+    QVERIFY2(stoneManager.getStoneCountOnHeap() > 0, "Did not find any stones on heap");
+}
+
 QTEST_MAIN(StoneManagerTest)
