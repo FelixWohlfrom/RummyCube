@@ -1,5 +1,5 @@
 # The subdirectories to build
-set(SUBDIRS stones)
+set(SUBDIRS player stones)
 
 # Build subdirs
 foreach(SUB ${SUBDIRS})
